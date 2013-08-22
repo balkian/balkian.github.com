@@ -1,0 +1,197 @@
+#badge img {
+    width: 80%;
+}
+
+html,
+body {
+  margin:0;
+  padding:0;
+  height:100%;
+  font-family: 'Overlock', cursive;
+}
+
+body {
+  background: url(../img/noise.jpg);
+}
+
+#container {
+  margin: 1em;
+  padding: 0.2em;
+}
+
+#headline {
+  position: relative;
+  width: 100%;
+  margin: 0.5em;
+}
+
+#headline a {
+  font-size: 2em;
+  font-family: comfortaa;
+  text-decoration: none;
+}
+
+#headline a {
+  color: black;
+  padding: 0;
+  margin: 0;
+}
+
+#headline a:hover {
+  color: white;
+  text-shadow: 2px 2px #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+}
+
+#navbar {
+  position: relative;
+  font-size: 1.4em;
+  padding: 0.2em;
+}
+
+div.navbar {
+  background-color: black;
+}
+
+.navbar ul {
+  list-style-type:none;
+  margin:0;
+  padding:0;
+}
+
+.navbar li {
+  display:inline-block;
+  color: white;
+  text-align: center;
+  padding: 0;
+}  
+
+.navbar li.active a {
+  background-color: #F30;
+  color: white;
+  text-shadow: 0.1em 0.1em 0.1em black;
+  border-top: 1px solid #555;
+  border-bottom: 1px solid #555;
+}
+
+.navbar li a {
+  text-decoration: none;
+  display: inline;
+  text-decoration: none;
+  font-weight: bold;
+  color: #CCC;
+  border-right: 1px solid #555;
+  padding: 0.5em 1em;
+  display: block;
+}
+.navbar li:first-child a {
+  border-left: 1px double #ccc;
+}
+.navbar li a:hover {
+  position: relative;
+  color: #000;
+  background-color: #fff;
+  text-shadow: 2px 2px #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff;
+  border-top: 1px solid #555;
+  border-bottom: 1px solid #555;
+  z-index: 100;
+}
+
+
+.label {
+  font-family: comfortaa;
+  border-radius: 10px 0px 0px 10px;
+  padding: 5px;
+  background-color: #ffd700;
+  color: black;
+  font-size: 10px;
+  padding-left: 10px;
+  border: 1px solid #777;
+}
+
+.label:after{
+  content: " •";
+  color: #666;
+}
+a {
+  color: #069;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #FFF;
+  text-shadow: 1px 1px #069, -1px -1px 0 #069, 1px -1px 0 #069, -1px 1px 0 #069;
+}
+
+.navbar li.active a:hover {
+  color: #c00;
+}
+
+#sidebar {
+  display: none;
+}
+
+.postnav, .pagination {
+  height: 1em;
+  width: 100%;
+  padding: 15px 9px;
+  margin-left: -10px;
+  background-color: white;
+  border: dashed 1px #AAA;
+  text-align: center;
+}
+
+.nextpost, .nextpage {
+  float: right;
+}
+
+.previouspost, .previouspage {
+  float: left;
+}
+footer {
+  margin: 0 auto;
+  text-align: center;
+  padding: 1em;
+  background-color: black;
+  color: white;
+}
+#social {
+  margin: 0 auto;
+  padding: 0;
+}
+
+/*#social:after {*/
+  /*content: ".";*/
+  /*display: block;*/
+  /*clear: both;*/
+  /*visibility: hidden;*/
+  /*line-height: 0;*/
+  /*height: 0;*/
+/*}*/
+
+#social li {
+  position: relative;
+  list-style-type: none;
+  display: inline-block;
+  height: 100px;
+  width: 80px;
+  padding: 0;
+}
+
+#social li a {
+  margin: 0;
+  position: absolute;
+  text-align: center;
+  font-size: 60px;
+  left: 0;
+  top: 0;
+}
+
+#social li a:hover {
+  position: absolute;
+  font-size: 80px;
+  top: -15px;
+  left: -10px;
+  /*left: 10px;*/
+  /*top: -50px;*/
+  z-index: 100;
+}

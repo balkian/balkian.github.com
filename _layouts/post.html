@@ -1,0 +1,18 @@
+---
+layout: default
+---
+<div class="postnav">
+  <span class="previouspost"><i class="icon-chevron-sign-left"></i><a href="{{ page.previous.url }}"> {{ page.previous.title }}</a></span>
+  <span class='nextpost'><a href="{{ page.next.url }}">{{ page.next.title }} </a><i class="icon-chevron-sign-right"></i></span>
+</div>
+<div class="posthead">
+  <h2 class="title">{{ page.title }}</h2>
+  <span class="meta date">{{ page.date | date_to_string }}</span>
+  {% for c in page.tags %}
+    <span class="label label-success">{{ c }}</span>
+  {% endfor %}
+</div>
+
+<div class="post">
+{{ content }}
+</div>

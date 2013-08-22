@@ -1,0 +1,63 @@
+.site .footer {
+  font-size: 80%;
+  color: #666;
+  border-top: 4px solid #eee;
+  margin-top: 2em;
+  overflow: hidden;
+}
+
+.site .footer .contact {
+  float: left;
+  margin-right: 3em;
+}
+
+.site .footer .contact a {
+  color: #8085C1;
+}
+
+.site .footer .rss {
+  margin-top: 1.1em;
+  margin-right: -.2em;
+  float: right;
+}
+
+.site .footer .rss img {
+  border: 0;
+}
+
+.todo {
+  list-style-type: none;
+  font-weight: bold;
+}
+
+.todo ul {
+  font-weight: normal;
+}
+
+.todo li.done {
+}
+
+.todo li.done:after {
+   content: "\2714";
+   padding-left: 0.5em;
+   color: green;
+}
+
+.todo li.cancelled:after {
+   content: "\2718";
+   padding-left: 0.5em;
+}
+
+code {
+  display: block;
+  overflow: auto;
+  background-color: #EEE;
+  margin: 0 auto;
+  width: 80%;
+  padding: 1.5em 2em;
+  border: dashed 1px #AAA;
+  border-radius: 5px 0px 5px 5px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
+}
