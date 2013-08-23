@@ -437,12 +437,6 @@ a:hover {
 
 .clear { clear: both; }
 
-about ul {
-  position: relative;
-  width: 900px;
-  margin: 0 auto;
-}
-
 #about li {
   line-height:2em;
   vertical-align: middle
