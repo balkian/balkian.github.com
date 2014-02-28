@@ -13,7 +13,7 @@ I hadn't played with HTML and CSS for a while now, so I also wanted to use this 
 
 I think the code speaks for itself, so you can check out [my repository on Github](http://github.com/balkian/balkian.github.com). You can clone and deploy it easily like this:
 
-{% highlight bash %}
+{% highlight bash linenos %}
 git clone https://github.com/balkian/balkian.github.com
 cd balkian.github.com
 jekyll serve -w
