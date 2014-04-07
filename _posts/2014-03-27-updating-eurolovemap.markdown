@@ -25,17 +25,17 @@ Publishing a Python 3 app on Heroku
 
 [seen here](http://eurolovemap.herokuapp.com/)
 
-``` bash
+{% highlight bash %}
 mkvirtualenv -p /usr/bin/python3.3 eurolovemap
-```
+{% endhighlight %}
 
 Since Heroku uses python 2.7 by default, we have to tell it which version we want, although it supports python 3.4 as well.
 I couldn't get python 3.4 working using the [deadsnakes](https://launchpad.net/~fkrull/+archive/deadsnakes) ppa, so I used python 3.3 instead, which works fine but is not officially supported.
 Just create a file named *runtime.txt* in your project root, with the python version you want to use:
 
-```
+{% highlight bash %}
 python-3.3.1
-```
+{% endhighlight %}
 
 Don't forget to freeze your dependencies so Heroku can install them:
 {% highlight bash %}
