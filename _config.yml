@@ -1,3 +1,4 @@
 name: Balkian's Log 
 pygments: true
 paginate: 5
+markdown: kramdown
