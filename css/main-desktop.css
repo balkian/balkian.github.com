@@ -152,18 +152,6 @@
 }
 
 
-body {
-  overflow-y: scroll;
-  background: url(../img/noise.jpg);
-}
-
-html,
-body {
-  margin:0;
-  padding:0;
-  height:100%;
-  font-family: 'Overlock', cursive;
-}
 footer {
   height: 180px;
   position:absolute;
@@ -246,7 +234,7 @@ header {
 
 #headline a:hover {
   color: white;
-  text-shadow: 2px 2px #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+  text-shadow: 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
 
 
@@ -303,9 +291,7 @@ header {
 }
 
 #navbar {
-  position: relative;
-  font-size: 1.4em;
-  padding: 0.5em;
+  font-size: 1.2em;
   padding-left: 300px;
 }
 
@@ -350,7 +336,7 @@ div.navbar {
   position: relative;
   color: #000;
   background-color: #fff;
-  text-shadow: 2px 2px #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff;
+  text-shadow: 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
   border-top: 1px solid #555;
   border-bottom: 1px solid #555;
   z-index: 100;

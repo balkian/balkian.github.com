@@ -2,18 +2,6 @@
     width: 80%;
 }
 
-html,
-body {
-  margin:0;
-  padding:0;
-  height:100%;
-  font-family: 'Overlock', cursive;
-}
-
-body {
-  background: url(../img/noise.jpg);
-}
-
 #container {
   margin: 1em;
   padding: 0.2em;
@@ -43,8 +31,7 @@ body {
 }
 
 #navbar {
-  position: relative;
-  font-size: 1.4em;
+  font-size: 1em;
   padding: 0.2em;
 }
 

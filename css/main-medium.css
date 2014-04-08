@@ -150,23 +150,6 @@
     height: 0;
 }
 
-
-body {
-  overflow-y: scroll;
-  background: url(../img/noise.jpg);
-}
-
-html,
-body {
-  margin:0;
-  padding:0;
-  height:100%;
-  font-family: 'Overlock', cursive;
-  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-  box-sizing: border-box;         /* Opera/IE 8+ */
-}
-
 footer {
   height: 110px;
   position:absolute;
@@ -306,9 +289,7 @@ header {
 }
 
 #navbar {
-  position: relative;
-  font-size: 1.4em;
-  padding: 0.5em;
+  font-size: 1em;
   padding-left: 20%;;
 }
 
