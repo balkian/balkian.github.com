@@ -386,43 +386,6 @@ a:hover {
   float: left;
 }
 
-
-.pagination {
-  position: relative;
-  height: 1em;
-  width: 50%;
-  padding: 10px;
-  text-align: center;
-  background-color: #FFF;
-  z-index: 0;
-}
-
-.pag-top{
-  margin: -9px auto;
-  margin-bottom 0;
-  border-radius: 0 0 15px 15px;
-  border: dashed 1px #AAA;
-  border-top-width: 0;
-}
-
-.pag-bottom {
-  bottom: -10px;
-  margin: 0 auto;
-  border-radius: 15px 15px 0 0;
-  border: dashed 1px #AAA;
-  border-bottom-width: 0;
-}
-
-.previouspage {
-  float: left;
-}
-
-.nextpage {
-  float: right;
-}
-
-.clear { clear: both; }
-
 #about li {
   line-height:2em;
   vertical-align: middle
@@ -430,12 +393,6 @@ a:hover {
   float:left;
   display:inline;
   width: 33.333%;
-}
-
-#about i {
-  /*background-color: #ffd700;*/
-  /*padding: 5px;*/
-  /*border-radius: 10px;*/
 }
 
 @-webkit-keyframes toright {

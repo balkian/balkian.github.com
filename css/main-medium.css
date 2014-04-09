@@ -396,30 +396,20 @@ a:hover {
 }
 
 .pag-top{
-  margin: -9px auto;
-  margin-bottom 0;
-  border-radius: 0 0 15px 15px;
-  border: dashed 1px #AAA;
-  border-top-width: 0;
+  /*margin: -9px auto;*/
+  /*margin-bottom 0;*/
+  /*border-radius: 0 0 15px 15px;*/
+  /*border: dashed 1px #AAA;*/
+  /*border-top-width: 0;*/
 }
 
 .pag-bottom {
   bottom: -10px;
-  margin: 0 auto;
-  border-radius: 15px 15px 0 0;
-  border: dashed 1px #AAA;
-  border-bottom-width: 0;
+  /*margin: 0 auto;*/
+  /*border-radius: 15px 15px 0 0;*/
+  /*border: dashed 1px #AAA;*/
+  /*border-bottom-width: 0;*/
 }
-
-.previouspage {
-  float: left;
-}
-
-.nextpage {
-  float: right;
-}
-
-.clear { clear: both; }
 
 about ul {
   position: relative;
