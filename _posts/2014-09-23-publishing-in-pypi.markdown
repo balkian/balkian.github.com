@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Publishing in PyPi"
-date:   2014-10-27 10:00:00
+date:   2014-09-27 10:00:00
 tags: github python pypi
 ---
 
