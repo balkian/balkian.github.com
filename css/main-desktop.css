@@ -54,6 +54,7 @@
 .front, .back {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
   position: absolute;
   top: 0;
   left: 0;
@@ -67,14 +68,16 @@
 
 /* front pane, placed above back */
 .front {
-  z-index: 4;
+  z-index: 3;
 }
 
 /* back, initially hidden pane */
 .back {
   transform: rotateY(180deg);
   -webkit-transform: rotateY(180deg);
-  z-index: 3;
+  -moz-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+  z-index: 4;
 }
 
 .sticky:after {
@@ -92,15 +95,15 @@
   z-index: 1000;
   -webkit-transform:rotate(43deg);
   -moz-transform:rotate(43deg);
-  backface-visibility: visible;
-  -moz-backface-visibility: visible;
-  -webkit-backface-visibility: visible;
+  backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
-.sticky:hover:after {
-  content: "";
-  visibility: hidden;
-}
+/*.flip-container:hover .sticky:after {*/
+  /*content: "";*/
+  /*visibility: hidden;*/
+/*}*/
 
 #container {
   min-height: 100%;
