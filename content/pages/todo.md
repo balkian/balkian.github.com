@@ -1,7 +1,5 @@
----
-layout: default
-title:  "To-Do"
----
+title:  To-Do
+
 <h2>Things To Do</h2>
 This is intended as my public "todo.txt". Both to keep it accessible and to feel ashamed of the many things I leave undone:
 <ul class="todo">

@@ -1,9 +1,6 @@
----
-layout: default
 title: About
----
-<h2>This is me<span class="disappear">...</span></h2>
-<h3 id="subheadline">... I mean, my website</h3>
+
+<h2>This is <span class="disappear">me.</span><span id="subheadline"><span class="disappear">... I mean,</span> my website</span></h2>
 
 <div id="about">
   <ul>

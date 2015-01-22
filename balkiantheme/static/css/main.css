@@ -61,18 +61,38 @@ body {
    padding-left: 0.5em;
 }
 
-code {
+.highlighttable {
   display: block;
   overflow: auto;
+  position: relative;
   background-color: #EEE;
   margin: 0 auto;
   width: 80%;
-  padding: 1.5em 2em;
+  padding: 0;
   border: dashed 1px #AAA;
   border-radius: 5px 0px 5px 5px;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box;    /* Firefox, other Gecko */
   box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.highlight {
+  /*background-color: #EEE;*/
+  overflow: auto;
+  margin: 0;
+  padding: 0.5em;
+  position: relative;
+  overflow: auto;
+}
+
+.code {
+  width: 100%;
+}
+
+.linenos {
+  color: #AAA;
+  padding-right: 0.5em;
+  border-right: solid 1px #DDD;
 }
 
 #navbar {
@@ -121,4 +141,68 @@ code {
   display: block;
   margin-left: auto;
   margin-right: auto
+}
+
+#headline {
+  position: relative;
+  margin: 0em;
+  font-size: 4em;
+  padding-left: 300px;
+  padding-top: 5px;
+  font-family: comfortaa;
+}
+
+#headline a {
+  color: black;
+  padding: 0;
+  margin: 0;
+}
+
+#headline a.inv {
+  font-size: 0.8em;
+  color: white;
+  text-shadow: 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+}
+
+#headline a:hover {
+  color: white;
+  text-shadow: 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+}
+
+#social {
+  margin: 0 auto;
+  padding: 0;
+}
+
+.entries dt {
+  font-weight: bold;
+  clear: both;
+  border-top: dashed 1px #CCC;
+}
+.entries dd {
+  float: right;
+  margin: 2px;
+}
+
+a:hover {
+  text-shadow: 0.5px 0.5px #CCC, -0.5px -0.5px 0 #CCC, 0.5px -0.5px 0 #CCC, -0.5px 0.5px 0 #CCC;
+}
+
+.tag:hover * {
+  -webkit-transform: rotate(-4deg);
+  -moz-transform: rotate(-4deg);
+  transform: rotate(-4deg);
+  color: black;
+  text-shadow: none ;
+  transform-origin: 95% 50%;
+  -moz-transform-origin: 95% 50%;
+  -webkit-transform-origin: 95% 50%;
+}
+
+.tag * {
+  display: inline-block;
+}
+
+.hll {
+    background: yellow;
 }

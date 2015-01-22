@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="postnav">
+    {% if article.prev_article %}
+  <a href="{{ article.prev_article.url }}"><span class="previouspost"><i class="icon-chevron-sign-left"></i> {{ article.prev_article.title }}</a></span>
+  {% endif %}
+  {% if article.next_article %}
+  <span class='nextpost'><a href="{{ SITE_URL }}/{{ article.next_article.url }}">{{ article.next_article.title }} <i class="icon-chevron-sign-right"></i></span></a>
+  {%endif%}
+</div>
+<div class="posthead">
+  <h2 class="title">{{ article.title }}</h2>
+  <span class="meta date">{{ article.date | date_to_string }}</span>
+  {% for c in article.tags %}
+      <a class="tag" href="/tag/{{ c }}.html"><span class="label label-default">{{ c }}</span></a>
+  {% endfor %}
+</div>
+
+<div class="post">
+ {{ article.content }}
+</div>
+{% endblock %}

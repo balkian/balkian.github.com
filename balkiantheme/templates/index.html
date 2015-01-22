@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+<!-- Pagination links -->
+{% block content %}
+{% if articles_paginator.num_pages > 0 %}
+<div class="pagination pag-top">
+  {% if articles_page.has_previous() %}
+  <span class="previouspage"><i class="icon-chevron-sign-left"></i><a href="/{% if articles_page.has_previous() > 2 %}page{{ articles_page.previous_page_number() }}{% endif %}"> Newer Posts</a></span>
+  {% else %}
+  <span class="previouspage" style="visibility:hidden;"><i class="icon-chevron-sign-left"></i> Newer Posts</span>
+  {% endif %}
+  <span class="page_number ">Page {{ articles_page.number }} of {{ articles_paginator.num_pages }}</span>
+  {% if articles_page.has_next() %}
+    <span class="nextpage"><a href="/page{{ articles_page.next_page_number() }}"> Older Posts </a> <i class="icon-chevron-sign-right"></i></span>
+  {% else %}
+    <span class="nextpage" style="visibility:hidden;">Older Posts <i class="icon-chevron-sign-right"></i></span>
+  {% endif %}
+</div>
+{% endif %}
+
+{% block pre_articles %}
+{% endblock %}
+<!-- This loops through the paginated posts -->
+{% for post in articles_page.object_list %}
+  <div class="posthead">
+    <h2><a href="{{ SITE_URL }}/{{ post.url }}" class="title">{{ post.title }}</a></h2>
+  <span class="date">{{ post.date | date_to_string }}</span>
+  {% for c in post.tags %}
+      <a class="tag" href="{{ SITE_URL }}/tag/{{ c }}.html"><span class="label label-success tag">{{ c }}</span></a>
+  {% endfor %}
+  </div>
+  <div class="excerpt">
+    {{ post.summary }}
+  </div>
+  <span><a href="{{ SITE_URL }}/{{ post.url }}"><i class="icon-pl2s"></i> Read more...</a></span>
+{% endfor %}
+
+{% if articles_paginator.num_pages > 0 %}
+<div class="pagination pag-bottom">
+  {% if articles_page.has_previous() %}
+  <span class="previouspage"><i class="icon-chevron-sign-left"></i><a href="/{% if articles_page.next_page_number() > 2 %}page{{ articles_page.previous_page_number }}{% endif %}"> Newer Posts</a></span>
+  {% else %}
+  <span class="previouspage" style="display:none;"><i class="icon-chevron-sign-left"></i> Newer Posts</span>
+  {% endif %}
+  <span class="page_number ">Page {{ articles_page.number }} of {{ articles_paginator.num_pages }}</span>
+  {% if articles_page.has_next() %}
+    <span class="nextpage"><a href="/page{{ articles_page.next_page_number() }}"> Older Posts </a> <i class="icon-chevron-sign-right"></i></span>
+  {% else %}
+    <span class="nextpage" style="display:none;">Older Posts <i class="icon-chevron-sign-right"></i></span>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

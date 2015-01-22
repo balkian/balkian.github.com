@@ -1,7 +1,5 @@
----
+title:  Projects
 layout: default
-title:  "Projects"
----
 
 Ongoing Projects
 ================
