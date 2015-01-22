@@ -109,116 +109,109 @@
         </div>
         <div id="content">
           <!--Body content-->
-<div class="pagination pag-top">
-  <span class="previouspage" style="visibility:hidden;"><i class="icon-chevron-sign-left"></i> Newer Posts</span>
-  <span class="page_number ">Page 1 of 1</span>
-    <span class="nextpage" style="visibility:hidden;">Older Posts <i class="icon-chevron-sign-right"></i></span>
+<div class="postnav">
+  <a href="updating-eurolovemap.html"><span class="previouspost"><i class="icon-chevron-sign-left"></i> Updating EuroLoveMap</a></span>
+  <span class='nextpost'><a href="/proxies-with-apache-and-python.html">Proxies with Apache and python <i class="icon-chevron-sign-right"></i></span></a>
+</div>
+<div class="posthead">
+  <h2 class="title">Publishing in PyPi</h2>
+  <span class="meta date">2014-09-27</span>
+      <a class="tag" href="/tag/github.html"><span class="label label-default">github</span></a>
+      <a class="tag" href="/tag/python.html"><span class="label label-default">python</span></a>
+      <a class="tag" href="/tag/pypi.html"><span class="label label-default">pypi</span></a>
 </div>
 
-<!-- This loops through the paginated posts -->
-  <div class="posthead">
-    <h2><a href="/zotero.html" class="title">Zotero</a></h2>
-  <span class="date">2014-12-09</span>
-      <a class="tag" href="/tag/zotero.html"><span class="label label-success tag">zotero</span></a>
-      <a class="tag" href="/tag/webdav.html"><span class="label label-success tag">webdav</span></a>
-      <a class="tag" href="/tag/nginx.html"><span class="label label-success tag">nginx</span></a>
-      <a class="tag" href="/tag/apache.html"><span class="label label-success tag">apache</span></a>
-  </div>
-  <div class="excerpt">
-    <p><a class="reference external" href="https://www.zotero.org/">Zotero</a> is an Open Source tool that lets
-you organise your bibliography, syncing it with the cloud. Unlike other
-alternatives such as <a class="reference external" href="http://www.mendeley.com">Mendeley</a>, Zotero can
-upload the attachments and data to a private cloud via WebDav.</p>
-<p>If you use nginx as your web server, know that even though it provides ...</p>
-  </div>
-  <span><a href="/zotero.html"><i class="icon-pl2s"></i> Read more...</a></span>
-  <div class="posthead">
-    <h2><a href="/proxies-with-apache-and-python.html" class="title">Proxies with Apache and python</a></h2>
-  <span class="date">2014-10-09</span>
-      <a class="tag" href="/tag/python.html"><span class="label label-success tag">python</span></a>
-      <a class="tag" href="/tag/apache.html"><span class="label label-success tag">apache</span></a>
-      <a class="tag" href="/tag/proxy.html"><span class="label label-success tag">proxy</span></a>
-      <a class="tag" href="/tag/gunicorn.html"><span class="label label-success tag">gunicorn</span></a>
-      <a class="tag" href="/tag/uwsgi.html"><span class="label label-success tag">uwsgi</span></a>
-  </div>
-  <div class="excerpt">
-    <p>This is a quick note on proxying a local python application (e.g. flask)
-to a subdirectory in Apache. This assumes that the file wsgi.py contains
-a WSGI application with the name <em>application</em>. Hence, wsgi:application.</p>
-<div class="section" id="gunicorn">
-<h2>Gunicorn</h2>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;Location</span> <span class="s">/myapp/</span><span class="nt">&gt;</span>
-    <span class="nb">ProxyPass</span> http://127.0.0 ...</pre></div></td></tr></table></div>
-  </div>
-  <span><a href="/proxies-with-apache-and-python.html"><i class="icon-pl2s"></i> Read more...</a></span>
-  <div class="posthead">
-    <h2><a href="/publishing-in-pypi.html" class="title">Publishing in PyPi</a></h2>
-  <span class="date">2014-09-27</span>
-      <a class="tag" href="/tag/github.html"><span class="label label-success tag">github</span></a>
-      <a class="tag" href="/tag/python.html"><span class="label label-success tag">python</span></a>
-      <a class="tag" href="/tag/pypi.html"><span class="label label-success tag">pypi</span></a>
-  </div>
-  <div class="excerpt">
-    <p>Developing a python module and publishing it on Github is cool, but most
+<div class="post">
+ <p>Developing a python module and publishing it on Github is cool, but most
 of the times you want others to download and use it easily. That is the
 role of PyPi, the python package repository. In this post I show you how
-to publish your package in less than 10 ...</p>
-  </div>
-  <span><a href="/publishing-in-pypi.html"><i class="icon-pl2s"></i> Read more...</a></span>
-  <div class="posthead">
-    <h2><a href="/updating-eurolovemap.html" class="title">Updating EuroLoveMap</a></h2>
-  <span class="date">2014-03-27</span>
-      <a class="tag" href="/tag/javascript.html"><span class="label label-success tag">javascript</span></a>
-      <a class="tag" href="/tag/python.html"><span class="label label-success tag">python</span></a>
-      <a class="tag" href="/tag/heroku.html"><span class="label label-success tag">heroku</span></a>
-  </div>
-  <div class="excerpt">
-    <p>As part of the <a class="reference external" href="http://www.opener-project.org/2013/07/18/opener-hackathon-in-amsterdam/">OpeNER
-hackathon</a>
-we decided to build a prototype that would allow us to compare how
-different countries feel about several topics. We used the OpeNER
-pipeline to get the sentiment from a set of newspaper articles we
-gathered from media in several languages. Then we aggregated ...</p>
-  </div>
-  <span><a href="/updating-eurolovemap.html"><i class="icon-pl2s"></i> Read more...</a></span>
-  <div class="posthead">
-    <h2><a href="/remove-git-files-with-globbing.html" class="title">Remove git files with globbing</a></h2>
-  <span class="date">2013-08-22</span>
-      <a class="tag" href="/tag/git.html"><span class="label label-success tag">git</span></a>
-  </div>
-  <div class="excerpt">
-    <p>A simple trick. If you want to remove all the '.swp' files from a git
-repository, just use:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre>git rm --cached <span class="s1">&#39;\*\*.swp&#39;</span>
-</pre></div>
-</td></tr></table>
-  </div>
-  <span><a href="/remove-git-files-with-globbing.html"><i class="icon-pl2s"></i> Read more...</a></span>
-  <div class="posthead">
-    <h2><a href="/creating-my-web.html" class="title">Creating my web</a></h2>
-  <span class="date">2013-08-22</span>
-      <a class="tag" href="/tag/starters.html"><span class="label label-success tag">starters</span></a>
-      <a class="tag" href="/tag/javascript.html"><span class="label label-success tag">javascript</span></a>
-      <a class="tag" href="/tag/ruby.html"><span class="label label-success tag">ruby</span></a>
-      <a class="tag" href="/tag/github.html"><span class="label label-success tag">github</span></a>
-      <a class="tag" href="/tag/git.html"><span class="label label-success tag">git</span></a>
-  </div>
-  <div class="excerpt">
-    <p>Finally, I've decided to set up a decent personal page. I have settled
-for github-pages because I like the idea of keeping my site in a
-repository and having someone else host and deploy it for me. The site
-will be really simple, mostly static files. Thanks to Github ...</p>
-  </div>
-  <span><a href="/creating-my-web.html"><i class="icon-pl2s"></i> Read more...</a></span>
+to publish your package in less than 10 minutes.</p>
+<div class="section" id="choose-a-fancy-name">
+<h2>Choose a fancy name</h2>
+<p>If you haven't done so yet, take a minute or two to think about this. To
+publish on PyPi you need a name for your package that isn't taken.
+What's more, a catchy and unique name will help people remember your
+module and feel more inclined to at least try it.</p>
+<p>The package name should hint what your module does, but that's not
+always the case. That's your call. I personally put uniqueness and
+memorability over describing the functionality.</p>
+</div>
+<div class="section" id="create-a-pypirc-configuration-file">
+<h2>Create a .pypirc configuration file</h2>
+<pre class="code cfg literal-block">
+<span class="err">[distutils]</span> <span class="c1"># this tells distutils what package indexes you can push to</span>
+<span class="na">index-servers</span> <span class="o">=</span><span class="s">
+    pypi # the live PyPI
+    pypitest # test PyPI</span>
 
-<div class="pagination pag-bottom">
-  <span class="previouspage" style="display:none;"><i class="icon-chevron-sign-left"></i> Newer Posts</span>
-  <span class="page_number ">Page 1 of 1</span>
-    <span class="nextpage" style="display:none;">Older Posts <i class="icon-chevron-sign-right"></i></span>
+<span class="err">[pypi]</span> <span class="c1"># authentication details for live PyPI</span>
+<span class="na">repository</span> <span class="o">=</span> <span class="s">https://pypi.python.org/pypi</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">{ your_username }</span>
+<span class="na">password</span> <span class="o">=</span> <span class="s">{ your_password } # not necessary</span>
+
+<span class="err">[pypitest]</span> <span class="c1"># authentication details for test PyPI</span>
+<span class="na">repository</span> <span class="o">=</span> <span class="s">https://testpypi.python.org/pypi</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">{ your_username }</span>
+</pre>
+<p>As you can see, you need to register both in the <a class="reference external" href="https://pypi.python.org/pypi?%3Aaction=register_form">main pypi
+repository</a> and
+the <a class="reference external" href="https://testpypi.python.org/pypi?%3Aaction=register_form">testing
+server</a>.
+The usernames and passwords might be different, that is up to you!</p>
+</div>
+<div class="section" id="prepare-your-package">
+<h2>Prepare your package</h2>
+<pre class="literal-block">
+root-dir/    # Any name you want
+    setup.py
+    setup.cfg
+    LICENSE.txt
+    README.md
+    mypackage/
+        __init__.py
+        foo.py
+        bar.py
+        baz.py
+</pre>
+<div class="section" id="setup-cfg">
+<h3>setup.cfg</h3>
+<pre class="code cfg literal-block">
+<span class="k">[metadata]</span>
+<span class="na">description-file</span> <span class="o">=</span> <span class="s">README.md</span>
+</pre>
+<p>The markdown README is the <em>de facto</em> standard in Github, but you can
+also use rST (reStructuredText), the standard in the python community.</p>
+</div>
+<div class="section" id="setup-py">
+<h3>setup.py</h3>
+<p>{% highlight python %} from distutils.core import setup setup( name =
+'mypackage', packages = ['mypackage'], # this must be the same as the
+name above version = '{ version }', description = '{ description }',
+author = '{ name }', author_email = '{ email }', url =
+'<a class="reference external" href="https://github.com">https://github.com</a>/{user}/{package}', # URL to the github repo
+download_url = '<a class="reference external" href="https://github.com">https://github.com</a>/{user}/{repo}/tarball/{version}',
+keywords = ['websockets', 'display', 'd3'], # list of keywords that
+represent your package classifiers = [], ) {% endhighlight %}</p>
+<p>You might notice that the download_url points to a Github URL. We could
+host our package anywhere, but Github is a convenient option. To create
+the tarball and the zip packages, you only need to tag a tag in your
+repository and push it to github:</p>
+<pre class="literal-block">
+git tag {version} -m &quot;{ Description of this tag/version}&quot;
+git push --tags origin master
+</pre>
+</div>
+</div>
+<div class="section" id="push-to-the-testing-main-pypi-server">
+<h2>Push to the testing/main pypi server</h2>
+<p>It is advisable that you try your package on the test repository and fix
+any problems first. The process is simple:
+<tt class="docutils literal">python setup.py register <span class="pre">-r</span> {pypitest/pypi} python setup.py sdist upload <span class="pre">-r</span> {pypitest/pypi}</tt></p>
+<p>If everything went as expected, you can now install your package through
+pip and browse your package's page. For instance, check my senpy
+package: <a class="reference external" href="https://pypi.python.org/pypi/senpy">https://pypi.python.org/pypi/senpy</a> <tt class="docutils literal">pip install senpy</tt></p>
+</div>
+
 </div>
         </div>
         <div class="clear"></div>

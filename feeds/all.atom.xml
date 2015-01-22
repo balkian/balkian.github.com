@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>balkian.com</title><link href="http://balkian.com/" rel="alternate"></link><link href="http://balkian.com/feeds/all.atom.xml" rel="self"></link><id>http://balkian.com/</id><updated>2014-12-09T12:12:12+01:00</updated><entry><title>Zotero</title><link href="http://balkian.com/zotero.html" rel="alternate"></link><updated>2014-12-09T12:12:12+01:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2014-12-09:zotero.html</id><summary type="html">&lt;p&gt;&lt;a class="reference external" href="https://www.zotero.org/"&gt;Zotero&lt;/a&gt; is an Open Source tool that lets
+you organise your bibliography, syncing it with the cloud. Unlike other
+alternatives such as &lt;a class="reference external" href="http://www.mendeley.com"&gt;Mendeley&lt;/a&gt;, Zotero can
+upload the attachments and data to a private cloud via WebDav.&lt;/p&gt;
+&lt;p&gt;If you use nginx as your web server, know that even though it provides
+partial support for webdav, Zotero needs more than that. Hence, you will
+need another webdav server, and optionally let nginx proxy to it. This
+short post provides the basics to get that set-up working under
+Debian/Ubuntu.&lt;/p&gt;
+&lt;div class="section" id="setting-up-apache"&gt;
+&lt;h2&gt;Setting up Apache&lt;/h2&gt;
+&lt;p&gt;First we need to install Apache:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get install apache2
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Change the head of &amp;quot;/etc/apache2/sites-enabled/000-default&amp;quot; to:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;VirtualHost&lt;/span&gt; &lt;span class="s"&gt;*:880&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Then, create a file /etc/apache2/sites-available/webdav:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;Alias&lt;/span&gt; &lt;span class="sx"&gt;/dav&lt;/span&gt; &lt;span class="sx"&gt;/home/webdav/dav&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;Location&lt;/span&gt; &lt;span class="s"&gt;/dav&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nb"&gt;Dav&lt;/span&gt; &lt;span class="k"&gt;on&lt;/span&gt;
+    &lt;span class="nb"&gt;Order&lt;/span&gt; Allow,Deny
+    &lt;span class="nb"&gt;Allow&lt;/span&gt; from &lt;span class="k"&gt;all&lt;/span&gt;
+    &lt;span class="nb"&gt;Dav&lt;/span&gt; &lt;span class="k"&gt;On&lt;/span&gt;
+    &lt;span class="nb"&gt;Options&lt;/span&gt; +Indexes
+    &lt;span class="nb"&gt;AuthType&lt;/span&gt; Basic
+    &lt;span class="nb"&gt;AuthName&lt;/span&gt; DAV
+    &lt;span class="nb"&gt;AuthBasicProvider&lt;/span&gt; file
+    &lt;span class="nb"&gt;AuthUserFile&lt;/span&gt; &lt;span class="sx"&gt;/home/webdav/.htpasswd&lt;/span&gt;
+    &lt;span class="nb"&gt;Require&lt;/span&gt; valid-user
+&lt;span class="nt"&gt;&amp;lt;/Location&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Ideally, you want your webdav folders to be private, adding
+authentication to them. So you need to create the webdav and zotero
+users and add the passwords to an htpasswd file. Even though you could
+use a single user, since you will be configuring several clients with
+your credentials I encourage you to create the zotero user as well. This
+way you can always change the password for zotero without affecting any
+other application using webdav.&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;sudo adduser webdav
+sudo htpasswd -c /home/webdav/.htpasswd webdav
+sudo htpasswd /home/webdav/.htpasswd zotero
+sudo mkdir -p /home/webdav/dav/zotero
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Enable the site and restart apache:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;sudo a2enmod webdav
+sudo a2enmod dav_fs
+sudo a2ensite webdav
+sudo service apache2 restart
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;At this point everything should be working at
+&lt;a class="reference external" href="http:/"&gt;http:/&lt;/a&gt;/&amp;lt;your_host&amp;gt;:880/dav/zotero&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="setting-up-nginx"&gt;
+&lt;h2&gt;Setting up NGINX&lt;/h2&gt;
+&lt;p&gt;After the Apache side is working, we can use nginx as a proxy to get
+cleaner URIs. In your desired site/location, add this:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/dav&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kn"&gt;client_max_body_size&lt;/span&gt; &lt;span class="s"&gt;20M&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;X-Real-IP&lt;/span&gt;  &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;X-Forwarded-For&lt;/span&gt; &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;Host&lt;/span&gt; &lt;span class="nv"&gt;$host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kn"&gt;proxy_pass&lt;/span&gt; &lt;span class="s"&gt;http://127.0.0.1:880&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Now just reload nginx:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;sudo service nginx force-reload
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
+&lt;div class="section" id="extras"&gt;
+&lt;h2&gt;Extras&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://zoteroreader.com/"&gt;Zotero Reader&lt;/a&gt; - HTML5 client&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://github.com/ajlyon/zandy"&gt;Zandy&lt;/a&gt; - Android Open Source
+client&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</summary><category term="zotero"></category><category term="webdav"></category><category term="nginx"></category><category term="apache"></category></entry><entry><title>Proxies with Apache and python</title><link href="http://balkian.com/proxies-with-apache-and-python.html" rel="alternate"></link><updated>2014-10-09T10:00:00+02:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2014-10-09:proxies-with-apache-and-python.html</id><summary type="html">&lt;p&gt;This is a quick note on proxying a local python application (e.g. flask)
+to a subdirectory in Apache. This assumes that the file wsgi.py contains
+a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:application.&lt;/p&gt;
+&lt;div class="section" id="gunicorn"&gt;
+&lt;h2&gt;Gunicorn&lt;/h2&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;Location&lt;/span&gt; &lt;span class="s"&gt;/myapp/&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nb"&gt;ProxyPass&lt;/span&gt; http://127.0.0.1:8888/myapp/
+    &lt;span class="nb"&gt;ProxyPassReverse&lt;/span&gt; http://127.0.0.1:8888/myapp/
+    &lt;span class="nb"&gt;RequestHeader&lt;/span&gt; set SCRIPT_NAME &lt;span class="s2"&gt;&amp;quot;/myapp/&amp;quot;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/Location&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;strong&gt;Important&lt;/strong&gt;: &lt;em&gt;SCRIPT_NAME&lt;/em&gt; and the end of &lt;em&gt;ProxyPass&lt;/em&gt; URL &lt;strong&gt;MUST BE
+THE SAME&lt;/strong&gt;. Otherwise, Gunicorn will fail miserably.&lt;/p&gt;
+&lt;p&gt;Try it with:
+&lt;tt class="docutils literal"&gt;bash venv/bin/gunicorn &lt;span class="pre"&gt;-w&lt;/span&gt; 4 &lt;span class="pre"&gt;-b&lt;/span&gt; 127.0.0.1:8888 &lt;span class="pre"&gt;--log-file&lt;/span&gt; - &lt;span class="pre"&gt;--access-logfile&lt;/span&gt; - wsgi:application&lt;/tt&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="uwsgi"&gt;
+&lt;h2&gt;UWSGI&lt;/h2&gt;
+&lt;p&gt;This is a very simple configuration. I will try to upload one with more
+options for uwsgi (in a .ini file).&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;Location&lt;/span&gt; &lt;span class="s"&gt;/myapp/&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nb"&gt;SetHandler&lt;/span&gt; uwsgi_handler
+    &lt;span class="nb"&gt;uWSGISocker&lt;/span&gt; &lt;span class="m"&gt;127.0.0.1&lt;/span&gt;:8888
+&lt;span class="nt"&gt;&amp;lt;/Location&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Try it with:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;uwsgi --socket 127.0.0.1:8888 -w wsgi:application
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;div class="section" id="extra-supervisor"&gt;
+&lt;h3&gt;Extra: Supervisor&lt;/h3&gt;
+&lt;p&gt;If everything went as expected, you can wrap your command in a
+supervisor config file and let it handle the server for you.&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[unix_http_server]&lt;/span&gt;
+&lt;span class="na"&gt;file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/tmp/myapp.sock ; path to your socket file&lt;/span&gt;
+
+&lt;span class="k"&gt;[supervisord]&lt;/span&gt;
+&lt;span class="na"&gt;logfile&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;%(here)s/logs/supervisor.log&lt;/span&gt;
+&lt;span class="na"&gt;childlogdir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;%(here)s/logs/&lt;/span&gt;
+
+&lt;span class="k"&gt;[rpcinterface:supervisor]&lt;/span&gt;
+&lt;span class="na"&gt;supervisor.rpcinterface_factory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;supervisor.rpcinterface:make_main_rpcinterface&lt;/span&gt;
+
+&lt;span class="k"&gt;[supervisorctl]&lt;/span&gt;
+&lt;span class="na"&gt;logfile&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;%(here)s/logs/supervisorctl.log&lt;/span&gt;
+&lt;span class="na"&gt;serverurl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;unix:///tmp/supervisor.sock ; use a unix:// URL for a unix socket&lt;/span&gt;
+
+&lt;span class="k"&gt;[program:myapp]&lt;/span&gt;
+&lt;span class="na"&gt;command&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;venv/bin/gunicorn -w 4 -b 0.0.0.0:5000 --log-file %(here)s/logs/gunicorn.log --access-logfile - wsgi:application&lt;/span&gt;
+&lt;span class="na"&gt;directory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;%(here)s&lt;/span&gt;
+&lt;span class="na"&gt;environment&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;PATH=%(here)s/venv/bin/&lt;/span&gt;
+&lt;span class="na"&gt;logfile&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;%(here)s/logs/myapp.log&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
+&lt;/div&gt;
+</summary><category term="python"></category><category term="apache"></category><category term="proxy"></category><category term="gunicorn"></category><category term="uwsgi"></category></entry><entry><title>Publishing in PyPi</title><link href="http://balkian.com/publishing-in-pypi.html" rel="alternate"></link><updated>2014-09-27T10:00:00+02:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2014-09-27:publishing-in-pypi.html</id><summary type="html">&lt;p&gt;Developing a python module and publishing it on Github is cool, but most
+of the times you want others to download and use it easily. That is the
+role of PyPi, the python package repository. In this post I show you how
+to publish your package in less than 10 minutes.&lt;/p&gt;
+&lt;div class="section" id="choose-a-fancy-name"&gt;
+&lt;h2&gt;Choose a fancy name&lt;/h2&gt;
+&lt;p&gt;If you haven't done so yet, take a minute or two to think about this. To
+publish on PyPi you need a name for your package that isn't taken.
+What's more, a catchy and unique name will help people remember your
+module and feel more inclined to at least try it.&lt;/p&gt;
+&lt;p&gt;The package name should hint what your module does, but that's not
+always the case. That's your call. I personally put uniqueness and
+memorability over describing the functionality.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="create-a-pypirc-configuration-file"&gt;
+&lt;h2&gt;Create a .pypirc configuration file&lt;/h2&gt;
+&lt;pre class="code cfg literal-block"&gt;
+&lt;span class="err"&gt;[distutils]&lt;/span&gt; &lt;span class="c1"&gt;# this tells distutils what package indexes you can push to&lt;/span&gt;
+&lt;span class="na"&gt;index-servers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;
+    pypi # the live PyPI
+    pypitest # test PyPI&lt;/span&gt;
+
+&lt;span class="err"&gt;[pypi]&lt;/span&gt; &lt;span class="c1"&gt;# authentication details for live PyPI&lt;/span&gt;
+&lt;span class="na"&gt;repository&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;https://pypi.python.org/pypi&lt;/span&gt;
+&lt;span class="na"&gt;username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;{ your_username }&lt;/span&gt;
+&lt;span class="na"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;{ your_password } # not necessary&lt;/span&gt;
+
+&lt;span class="err"&gt;[pypitest]&lt;/span&gt; &lt;span class="c1"&gt;# authentication details for test PyPI&lt;/span&gt;
+&lt;span class="na"&gt;repository&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;https://testpypi.python.org/pypi&lt;/span&gt;
+&lt;span class="na"&gt;username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;{ your_username }&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;As you can see, you need to register both in the &lt;a class="reference external" href="https://pypi.python.org/pypi?%3Aaction=register_form"&gt;main pypi
+repository&lt;/a&gt; and
+the &lt;a class="reference external" href="https://testpypi.python.org/pypi?%3Aaction=register_form"&gt;testing
+server&lt;/a&gt;.
+The usernames and passwords might be different, that is up to you!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="prepare-your-package"&gt;
+&lt;h2&gt;Prepare your package&lt;/h2&gt;
+&lt;pre class="literal-block"&gt;
+root-dir/    # Any name you want
+    setup.py
+    setup.cfg
+    LICENSE.txt
+    README.md
+    mypackage/
+        __init__.py
+        foo.py
+        bar.py
+        baz.py
+&lt;/pre&gt;
+&lt;div class="section" id="setup-cfg"&gt;
+&lt;h3&gt;setup.cfg&lt;/h3&gt;
+&lt;pre class="code cfg literal-block"&gt;
+&lt;span class="k"&gt;[metadata]&lt;/span&gt;
+&lt;span class="na"&gt;description-file&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;README.md&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;The markdown README is the &lt;em&gt;de facto&lt;/em&gt; standard in Github, but you can
+also use rST (reStructuredText), the standard in the python community.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="setup-py"&gt;
+&lt;h3&gt;setup.py&lt;/h3&gt;
+&lt;p&gt;{% highlight python %} from distutils.core import setup setup( name =
+'mypackage', packages = ['mypackage'], # this must be the same as the
+name above version = '{ version }', description = '{ description }',
+author = '{ name }', author_email = '{ email }', url =
+'&lt;a class="reference external" href="https://github.com"&gt;https://github.com&lt;/a&gt;/{user}/{package}', # URL to the github repo
+download_url = '&lt;a class="reference external" href="https://github.com"&gt;https://github.com&lt;/a&gt;/{user}/{repo}/tarball/{version}',
+keywords = ['websockets', 'display', 'd3'], # list of keywords that
+represent your package classifiers = [], ) {% endhighlight %}&lt;/p&gt;
+&lt;p&gt;You might notice that the download_url points to a Github URL. We could
+host our package anywhere, but Github is a convenient option. To create
+the tarball and the zip packages, you only need to tag a tag in your
+repository and push it to github:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+git tag {version} -m &amp;quot;{ Description of this tag/version}&amp;quot;
+git push --tags origin master
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="push-to-the-testing-main-pypi-server"&gt;
+&lt;h2&gt;Push to the testing/main pypi server&lt;/h2&gt;
+&lt;p&gt;It is advisable that you try your package on the test repository and fix
+any problems first. The process is simple:
+&lt;tt class="docutils literal"&gt;python setup.py register &lt;span class="pre"&gt;-r&lt;/span&gt; {pypitest/pypi} python setup.py sdist upload &lt;span class="pre"&gt;-r&lt;/span&gt; {pypitest/pypi}&lt;/tt&gt;&lt;/p&gt;
+&lt;p&gt;If everything went as expected, you can now install your package through
+pip and browse your package's page. For instance, check my senpy
+package: &lt;a class="reference external" href="https://pypi.python.org/pypi/senpy"&gt;https://pypi.python.org/pypi/senpy&lt;/a&gt; &lt;tt class="docutils literal"&gt;pip install senpy&lt;/tt&gt;&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="github"></category><category term="python"></category><category term="pypi"></category></entry><entry><title>Updating EuroLoveMap</title><link href="http://balkian.com/updating-eurolovemap.html" rel="alternate"></link><updated>2014-03-27T14:00:00+01:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2014-03-27:updating-eurolovemap.html</id><summary type="html">&lt;p&gt;As part of the &lt;a class="reference external" href="http://www.opener-project.org/2013/07/18/opener-hackathon-in-amsterdam/"&gt;OpeNER
+hackathon&lt;/a&gt;
+we decided to build a prototype that would allow us to compare how
+different countries feel about several topics. We used the OpeNER
+pipeline to get the sentiment from a set of newspaper articles we
+gathered from media in several languages. Then we aggregated those
+articles by category and country (using the source of the article or the
+language it was written in), obtaining the &amp;quot;overall feeling&amp;quot; of each
+country about each topic. Then, we used some fancy JavaScript to make
+sense out of the raw information.&lt;/p&gt;
+&lt;p&gt;It didn't go too bad, it turns out &lt;a class="reference external" href="http://eurosentiment.eu/wp-content/uploads/2013/07/BOLv9qnCIAAJEek.jpg"&gt;we
+won&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Now, it was time for a face-lift. I used this opportunity to play with
+new technologies and improve it:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Using Flask, this time using python 3.3 and Bootstrap 3.0&lt;/li&gt;
+&lt;li&gt;Cool HTML5+JS cards (thanks to
+&lt;a class="reference external" href="http://pastetophone.com"&gt;pastetophone&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Automatic generation of fake personal data to test the interface&lt;/li&gt;
+&lt;li&gt;Obfuscation of personal emails&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="publishing-a-python-3-app-on-heroku"&gt;
+&lt;h2&gt;Publishing a Python 3 app on Heroku&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://eurolovemap.herokuapp.com/"&gt;seen here&lt;/a&gt;&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;mkvirtualenv -p /usr/bin/python3.3 eurolovemap
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Since Heroku uses python 2.7 by default, we have to tell it which
+version we want, although it supports python 3.4 as well. I couldn't get
+python 3.4 working using the
+&lt;a class="reference external" href="https://launchpad.net/~fkrull/+archive/deadsnakes"&gt;deadsnakes&lt;/a&gt; ppa,
+so I used python 3.3 instead, which works fine but is not officially
+supported. Just create a file named &lt;em&gt;runtime.txt&lt;/em&gt; in your project root,
+with the python version you want to use:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;python-3.3.1
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Don't forget to freeze your dependencies so Heroku can install them:
+&lt;tt class="docutils literal"&gt;bash pip freze &amp;gt; requirements.txt&lt;/tt&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="publishing-personal-emails"&gt;
+&lt;h2&gt;Publishing personal emails&lt;/h2&gt;
+&lt;p&gt;There are really sophisticated and effective ways to obfuscate personal
+emails so that spammers cannot easily grab yours. However, this time I
+needed something really simple to hide our emails from the simplest form
+of crawlers. Most of the team are in academia somehow, so in the end all
+our emails are available in sites like Google Scholar. Anyway, nobody
+likes getting spammed so I settled for a custom &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Caesar_cipher"&gt;Caesar
+cipher&lt;/a&gt;. Please, don't
+use it for any serious application if you are concerned about being
+spammed.&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;blur_email&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="nb"&gt;chr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;ord&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;And this is the client side:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;onload&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+     &lt;span class="nx"&gt;elems&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementsByClassName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;profile-email&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+     &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;e&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;elems&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+        &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;blur&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;elems&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;innerHTML&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;email&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;s&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;blur&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+            &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;blur&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;charCodeAt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;s&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="nx"&gt;email&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;email&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;fromCharCode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="nx"&gt;elems&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;innerHTML&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;email&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+     &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Unfortunately, this approach does not hide your email from anyone using
+&lt;a class="reference external" href="http://phantomjs.org/"&gt;PhantomJS&lt;/a&gt;,
+&lt;a class="reference external" href="http://zombie.labnotes.org/"&gt;ZombieJS&lt;/a&gt; or similar. For that, other
+approaches like generating a picture with the address would be
+necessary. Nevertheless, it is overkill for a really simple ad-hoc
+application with custom formatting and just a bunch of emails that would
+easily be grabbed manually.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="generation-of-fake-data"&gt;
+&lt;h2&gt;Generation of fake data&lt;/h2&gt;
+&lt;p&gt;To test the contact section of the site, I wanted to populate it with
+fake data. &lt;a class="reference external" href="https://github.com/joke2k/faker"&gt;Fake-Factory&lt;/a&gt; is an
+amazing library that can generate fake data of almost any kind: emails,
+association names, acronyms... It even lets you localise the results
+(get Spanish names, for instance) and generate factories for certain
+classes (à la Django).&lt;/p&gt;
+&lt;p&gt;But I also wanted pictures, enter &lt;a class="reference external" href="http://lorempixel.com/"&gt;Lorem
+Pixel&lt;/a&gt;. With its API you can generate
+pictures of almost any size, for different topics (e.g. nightlife,
+people) and with a custom text. You can even use an index, so it will
+always show the same picture.&lt;/p&gt;
+&lt;p&gt;For instance, the picture below is served through Lorem Pixel.&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="This picture is generated with LoremIpsum" src="http://lorempixel.com/400/200/nightlife/" /&gt;
+&lt;p class="caption"&gt;This picture is generated with LoremIpsum&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;By the way, if you only want cat pictures, take a look at
+&lt;a class="reference external" href="http://placekitten.com/"&gt;Placekitten&lt;/a&gt;. And for NSFW text, there's
+the &lt;a class="reference external" href="http://slipsum.com/"&gt;Samuel L. Jackson Ipsum&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="javascript"></category><category term="python"></category><category term="heroku"></category></entry><entry><title>Remove git files with globbing</title><link href="http://balkian.com/remove-git-files-with-globbing.html" rel="alternate"></link><updated>2013-08-22T23:14:00+02:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2013-08-22:remove-git-files-with-globbing.html</id><summary type="html">&lt;p&gt;A simple trick. If you want to remove all the '.swp' files from a git
+repository, just use:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;git rm --cached &lt;span class="s1"&gt;&amp;#39;\*\*.swp&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</summary><category term="git"></category></entry><entry><title>Creating my web</title><link href="http://balkian.com/creating-my-web.html" rel="alternate"></link><updated>2013-08-22T14:14:22+02:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2013-08-22:creating-my-web.html</id><summary type="html">&lt;p&gt;Finally, I've decided to set up a decent personal page. I have settled
+for github-pages because I like the idea of keeping my site in a
+repository and having someone else host and deploy it for me. The site
+will be really simple, mostly static files. Thanks to Github,
+&lt;a class="reference external" href="http://jekyllrb.com"&gt;Jekyll&lt;/a&gt; will automatically generate static
+pages for my posts every time I commit anything new to this repository.&lt;/p&gt;
+&lt;p&gt;But Jekyll can be used independently, so if I ever choose to host the
+site myself, I can do it quite easily. Another thing that I liked about
+this approach is that the generated html files can be used in the
+future, and I will not need Jekyll to serve it. Jekyll is really simple
+and most of the things are written in plain html. That means that
+everything could be easily reused if I ever choose to change to another
+blogging framework (e.g. pelical). But, for the time being, I like the
+fact that Github takes care of the compilation as well, so I can simply
+modify or add files through the web interface should I need to.&lt;/p&gt;
+&lt;p&gt;I hadn't played with HTML and CSS for a while now, so I also wanted to
+use this site as a playground. At some point, I realised I was doing
+mostly everything in plain HTML and CSS, and decided to keep it like
+that for as long as possible. As of this writing, I haven't included any
+Javascript code in the page. Probably I will use some to add my
+&lt;a class="reference external" href="http://gist.github.com/balkian"&gt;gists&lt;/a&gt; and
+&lt;a class="reference external" href="http://github.com/balkian"&gt;repositories&lt;/a&gt;, but we will see about
+that.&lt;/p&gt;
+&lt;p&gt;I think the code speaks for itself, so you can check out &lt;a class="reference external" href="http://github.com/balkian/balkian.github.com"&gt;my repository
+on Github&lt;/a&gt;. You can
+clone and deploy it easily like this:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;git clone
+https://github.com/balkian/balkian.github.com &lt;span class="nb"&gt;cd &lt;/span&gt;balkian.github.com
+jekyll serve -w
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;I will keep updating this post with information about: * Some Jekyll
+plugins that might be useful * What CSS tricks I learnt * The webfonts
+I used * The badge on the left side of the page&lt;/p&gt;
+</summary><category term="starters"></category><category term="javascript"></category><category term="ruby"></category><category term="github"></category><category term="git"></category></entry></feed>

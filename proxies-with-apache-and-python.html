@@ -109,40 +109,22 @@
         </div>
         <div id="content">
           <!--Body content-->
-<div class="pagination pag-top">
-  <span class="previouspage" style="visibility:hidden;"><i class="icon-chevron-sign-left"></i> Newer Posts</span>
-  <span class="page_number ">Page 1 of 1</span>
-    <span class="nextpage" style="visibility:hidden;">Older Posts <i class="icon-chevron-sign-right"></i></span>
+<div class="postnav">
+  <a href="publishing-in-pypi.html"><span class="previouspost"><i class="icon-chevron-sign-left"></i> Publishing in PyPi</a></span>
+  <span class='nextpost'><a href="/zotero.html">Zotero <i class="icon-chevron-sign-right"></i></span></a>
+</div>
+<div class="posthead">
+  <h2 class="title">Proxies with Apache and python</h2>
+  <span class="meta date">2014-10-09</span>
+      <a class="tag" href="/tag/python.html"><span class="label label-default">python</span></a>
+      <a class="tag" href="/tag/apache.html"><span class="label label-default">apache</span></a>
+      <a class="tag" href="/tag/proxy.html"><span class="label label-default">proxy</span></a>
+      <a class="tag" href="/tag/gunicorn.html"><span class="label label-default">gunicorn</span></a>
+      <a class="tag" href="/tag/uwsgi.html"><span class="label label-default">uwsgi</span></a>
 </div>
 
-<!-- This loops through the paginated posts -->
-  <div class="posthead">
-    <h2><a href="/zotero.html" class="title">Zotero</a></h2>
-  <span class="date">2014-12-09</span>
-      <a class="tag" href="/tag/zotero.html"><span class="label label-success tag">zotero</span></a>
-      <a class="tag" href="/tag/webdav.html"><span class="label label-success tag">webdav</span></a>
-      <a class="tag" href="/tag/nginx.html"><span class="label label-success tag">nginx</span></a>
-      <a class="tag" href="/tag/apache.html"><span class="label label-success tag">apache</span></a>
-  </div>
-  <div class="excerpt">
-    <p><a class="reference external" href="https://www.zotero.org/">Zotero</a> is an Open Source tool that lets
-you organise your bibliography, syncing it with the cloud. Unlike other
-alternatives such as <a class="reference external" href="http://www.mendeley.com">Mendeley</a>, Zotero can
-upload the attachments and data to a private cloud via WebDav.</p>
-<p>If you use nginx as your web server, know that even though it provides ...</p>
-  </div>
-  <span><a href="/zotero.html"><i class="icon-pl2s"></i> Read more...</a></span>
-  <div class="posthead">
-    <h2><a href="/proxies-with-apache-and-python.html" class="title">Proxies with Apache and python</a></h2>
-  <span class="date">2014-10-09</span>
-      <a class="tag" href="/tag/python.html"><span class="label label-success tag">python</span></a>
-      <a class="tag" href="/tag/apache.html"><span class="label label-success tag">apache</span></a>
-      <a class="tag" href="/tag/proxy.html"><span class="label label-success tag">proxy</span></a>
-      <a class="tag" href="/tag/gunicorn.html"><span class="label label-success tag">gunicorn</span></a>
-      <a class="tag" href="/tag/uwsgi.html"><span class="label label-success tag">uwsgi</span></a>
-  </div>
-  <div class="excerpt">
-    <p>This is a quick note on proxying a local python application (e.g. flask)
+<div class="post">
+ <p>This is a quick note on proxying a local python application (e.g. flask)
 to a subdirectory in Apache. This assumes that the file wsgi.py contains
 a WSGI application with the name <em>application</em>. Hence, wsgi:application.</p>
 <div class="section" id="gunicorn">
@@ -152,73 +134,76 @@ a WSGI application with the name <em>application</em>. Hence, wsgi:application.<
 3
 4
 5</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;Location</span> <span class="s">/myapp/</span><span class="nt">&gt;</span>
-    <span class="nb">ProxyPass</span> http://127.0.0 ...</pre></div></td></tr></table></div>
-  </div>
-  <span><a href="/proxies-with-apache-and-python.html"><i class="icon-pl2s"></i> Read more...</a></span>
-  <div class="posthead">
-    <h2><a href="/publishing-in-pypi.html" class="title">Publishing in PyPi</a></h2>
-  <span class="date">2014-09-27</span>
-      <a class="tag" href="/tag/github.html"><span class="label label-success tag">github</span></a>
-      <a class="tag" href="/tag/python.html"><span class="label label-success tag">python</span></a>
-      <a class="tag" href="/tag/pypi.html"><span class="label label-success tag">pypi</span></a>
-  </div>
-  <div class="excerpt">
-    <p>Developing a python module and publishing it on Github is cool, but most
-of the times you want others to download and use it easily. That is the
-role of PyPi, the python package repository. In this post I show you how
-to publish your package in less than 10 ...</p>
-  </div>
-  <span><a href="/publishing-in-pypi.html"><i class="icon-pl2s"></i> Read more...</a></span>
-  <div class="posthead">
-    <h2><a href="/updating-eurolovemap.html" class="title">Updating EuroLoveMap</a></h2>
-  <span class="date">2014-03-27</span>
-      <a class="tag" href="/tag/javascript.html"><span class="label label-success tag">javascript</span></a>
-      <a class="tag" href="/tag/python.html"><span class="label label-success tag">python</span></a>
-      <a class="tag" href="/tag/heroku.html"><span class="label label-success tag">heroku</span></a>
-  </div>
-  <div class="excerpt">
-    <p>As part of the <a class="reference external" href="http://www.opener-project.org/2013/07/18/opener-hackathon-in-amsterdam/">OpeNER
-hackathon</a>
-we decided to build a prototype that would allow us to compare how
-different countries feel about several topics. We used the OpeNER
-pipeline to get the sentiment from a set of newspaper articles we
-gathered from media in several languages. Then we aggregated ...</p>
-  </div>
-  <span><a href="/updating-eurolovemap.html"><i class="icon-pl2s"></i> Read more...</a></span>
-  <div class="posthead">
-    <h2><a href="/remove-git-files-with-globbing.html" class="title">Remove git files with globbing</a></h2>
-  <span class="date">2013-08-22</span>
-      <a class="tag" href="/tag/git.html"><span class="label label-success tag">git</span></a>
-  </div>
-  <div class="excerpt">
-    <p>A simple trick. If you want to remove all the '.swp' files from a git
-repository, just use:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre>git rm --cached <span class="s1">&#39;\*\*.swp&#39;</span>
+    <span class="nb">ProxyPass</span> http://127.0.0.1:8888/myapp/
+    <span class="nb">ProxyPassReverse</span> http://127.0.0.1:8888/myapp/
+    <span class="nb">RequestHeader</span> set SCRIPT_NAME <span class="s2">&quot;/myapp/&quot;</span>
+<span class="nt">&lt;/Location&gt;</span>
 </pre></div>
-</td></tr></table>
-  </div>
-  <span><a href="/remove-git-files-with-globbing.html"><i class="icon-pl2s"></i> Read more...</a></span>
-  <div class="posthead">
-    <h2><a href="/creating-my-web.html" class="title">Creating my web</a></h2>
-  <span class="date">2013-08-22</span>
-      <a class="tag" href="/tag/starters.html"><span class="label label-success tag">starters</span></a>
-      <a class="tag" href="/tag/javascript.html"><span class="label label-success tag">javascript</span></a>
-      <a class="tag" href="/tag/ruby.html"><span class="label label-success tag">ruby</span></a>
-      <a class="tag" href="/tag/github.html"><span class="label label-success tag">github</span></a>
-      <a class="tag" href="/tag/git.html"><span class="label label-success tag">git</span></a>
-  </div>
-  <div class="excerpt">
-    <p>Finally, I've decided to set up a decent personal page. I have settled
-for github-pages because I like the idea of keeping my site in a
-repository and having someone else host and deploy it for me. The site
-will be really simple, mostly static files. Thanks to Github ...</p>
-  </div>
-  <span><a href="/creating-my-web.html"><i class="icon-pl2s"></i> Read more...</a></span>
+</td></tr></table><p><strong>Important</strong>: <em>SCRIPT_NAME</em> and the end of <em>ProxyPass</em> URL <strong>MUST BE
+THE SAME</strong>. Otherwise, Gunicorn will fail miserably.</p>
+<p>Try it with:
+<tt class="docutils literal">bash venv/bin/gunicorn <span class="pre">-w</span> 4 <span class="pre">-b</span> 127.0.0.1:8888 <span class="pre">--log-file</span> - <span class="pre">--access-logfile</span> - wsgi:application</tt></p>
+</div>
+<div class="section" id="uwsgi">
+<h2>UWSGI</h2>
+<p>This is a very simple configuration. I will try to upload one with more
+options for uwsgi (in a .ini file).</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;Location</span> <span class="s">/myapp/</span><span class="nt">&gt;</span>
+    <span class="nb">SetHandler</span> uwsgi_handler
+    <span class="nb">uWSGISocker</span> <span class="m">127.0.0.1</span>:8888
+<span class="nt">&lt;/Location&gt;</span>
+</pre></div>
+</td></tr></table><p>Try it with:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre>uwsgi --socket 127.0.0.1:8888 -w wsgi:application
+</pre></div>
+</td></tr></table><div class="section" id="extra-supervisor">
+<h3>Extra: Supervisor</h3>
+<p>If everything went as expected, you can wrap your command in a
+supervisor config file and let it handle the server for you.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">[unix_http_server]</span>
+<span class="na">file</span><span class="o">=</span><span class="s">/tmp/myapp.sock ; path to your socket file</span>
 
-<div class="pagination pag-bottom">
-  <span class="previouspage" style="display:none;"><i class="icon-chevron-sign-left"></i> Newer Posts</span>
-  <span class="page_number ">Page 1 of 1</span>
-    <span class="nextpage" style="display:none;">Older Posts <i class="icon-chevron-sign-right"></i></span>
+<span class="k">[supervisord]</span>
+<span class="na">logfile</span> <span class="o">=</span> <span class="s">%(here)s/logs/supervisor.log</span>
+<span class="na">childlogdir</span> <span class="o">=</span> <span class="s">%(here)s/logs/</span>
+
+<span class="k">[rpcinterface:supervisor]</span>
+<span class="na">supervisor.rpcinterface_factory</span> <span class="o">=</span> <span class="s">supervisor.rpcinterface:make_main_rpcinterface</span>
+
+<span class="k">[supervisorctl]</span>
+<span class="na">logfile</span> <span class="o">=</span> <span class="s">%(here)s/logs/supervisorctl.log</span>
+<span class="na">serverurl</span><span class="o">=</span><span class="s">unix:///tmp/supervisor.sock ; use a unix:// URL for a unix socket</span>
+
+<span class="k">[program:myapp]</span>
+<span class="na">command</span> <span class="o">=</span> <span class="s">venv/bin/gunicorn -w 4 -b 0.0.0.0:5000 --log-file %(here)s/logs/gunicorn.log --access-logfile - wsgi:application</span>
+<span class="na">directory</span> <span class="o">=</span> <span class="s">%(here)s</span>
+<span class="na">environment</span> <span class="o">=</span> <span class="s">PATH=%(here)s/venv/bin/</span>
+<span class="na">logfile</span> <span class="o">=</span> <span class="s">%(here)s/logs/myapp.log</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+
 </div>
         </div>
         <div class="clear"></div>
