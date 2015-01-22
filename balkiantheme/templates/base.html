@@ -74,7 +74,7 @@
           <div class="entries">
             <h1 class="title">Latest entries</h1>
             <dl>
-                {% for p in articles %}
+                {% for p in articles[:5] %}
                 <dt><a href="{{ SITE_URL }}/{{ p.url }}">{{ p.title }}</a></dt>
                   {% for c in p.tags %}
                   <a class="tag" href="/tag/{{ c }}.html"><dd class="label label-default">{{ c }}</dd></a>
