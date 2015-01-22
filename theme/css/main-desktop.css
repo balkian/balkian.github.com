@@ -421,10 +421,9 @@ a {
 
 @-webkit-keyframes disappear{
   to { 
-    visibility: hidden;
+    opacity: 0 ;
   }
   from { 
-    visibility: show;
     opacity: 1;
   }
 }
