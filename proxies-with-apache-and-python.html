@@ -141,9 +141,10 @@ a WSGI application with the name <em>application</em>. Hence, wsgi:application.<
 </pre></div>
 </td></tr></table><p><strong>Important</strong>: <em>SCRIPT_NAME</em> and the end of <em>ProxyPass</em> URL <strong>MUST BE
 THE SAME</strong>. Otherwise, Gunicorn will fail miserably.</p>
-<p>Try it with:
-<tt class="docutils literal">bash venv/bin/gunicorn <span class="pre">-w</span> 4 <span class="pre">-b</span> 127.0.0.1:8888 <span class="pre">--log-file</span> - <span class="pre">--access-logfile</span> - wsgi:application</tt></p>
-</div>
+<p>Try it with:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre>venv/bin/gunicorn -w <span class="m">4</span> -b 127.0.0.1:8888 --log-file - --access-logfile - wsgi:application<span class="sb">``</span>
+</pre></div>
+</td></tr></table></div>
 <div class="section" id="uwsgi">
 <h2>UWSGI</h2>
 <p>This is a very simple configuration. I will try to upload one with more
