@@ -118,9 +118,9 @@ a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:a
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;strong&gt;Important&lt;/strong&gt;: &lt;em&gt;SCRIPT_NAME&lt;/em&gt; and the end of &lt;em&gt;ProxyPass&lt;/em&gt; URL &lt;strong&gt;MUST BE
 THE SAME&lt;/strong&gt;. Otherwise, Gunicorn will fail miserably.&lt;/p&gt;
 &lt;p&gt;Try it with:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;venv/bin/gunicorn -w &lt;span class="m"&gt;4&lt;/span&gt; -b 127.0.0.1:8888 --log-file - --access-logfile - wsgi:application
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;venv/bin/gunicorn -w &lt;span class="m"&gt;4&lt;/span&gt; -b 127.0.0.1:8888 --log-file - --access-logfile - wsgi:application
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
 &lt;div class="section" id="uwsgi"&gt;
 &lt;h2&gt;UWSGI&lt;/h2&gt;
 &lt;p&gt;This is a very simple configuration. I will try to upload one with more
