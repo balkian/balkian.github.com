@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>balkian.com</title><link href="http://balkian.com/" rel="alternate"></link><link href="http://balkian.com/feeds/all.atom.xml" rel="self"></link><id>http://balkian.com/</id><updated>2014-12-09T12:12:12+01:00</updated><entry><title>Zotero</title><link href="http://balkian.com/zotero.html" rel="alternate"></link><updated>2014-12-09T12:12:12+01:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2014-12-09:zotero.html</id><summary type="html">&lt;p&gt;&lt;a class="reference external" href="https://www.zotero.org/"&gt;Zotero&lt;/a&gt; is an Open Source tool that lets
+<feed xmlns="http://www.w3.org/2005/Atom"><title>balkian.com</title><link href="http://balkian.com/" rel="alternate"></link><link href="http://balkian.com/feeds/all.atom.xml" rel="self"></link><id>http://balkian.com/</id><updated>2015-04-10T17:47:00+02:00</updated><entry><title>Sharing dotfiles</title><link href="http://balkian.com/sharing-dotfiles.html" rel="alternate"></link><updated>2015-04-10T17:47:00+02:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2015-04-10:sharing-dotfiles.html</id><summary type="html">&lt;p&gt;Today's post is half a quick note, half public shaming. In other words, it is a reminder to be very careful with OAuth tokens and passwords.&lt;/p&gt;
+&lt;p&gt;As part of moving to emacs, I starting using the incredibly useful &lt;a class="reference external" href="https://github.com/defunkt/gist.el"&gt;gh.el&lt;/a&gt;.
+When you first use it, the extension saves either your password or an OAuth token in your .gitconfig file.
+This is cool and convenient, unless you &lt;a class="reference external" href="https://github.com/balkian/dotfiles"&gt;happen to be publishing your .gitconfig file in a public repo&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;So, how can you still share your gitconfig without sharing your password/token with the rest of the world?
+Since Git 1.7.0, you can &lt;a class="reference external" href="http://stackoverflow.com/questions/1557183/is-it-possible-to-include-a-file-in-your-gitconfig"&gt;include other files in your gitconfig&lt;/a&gt;.&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;[include]
+    path = ~/.gitconfig_secret
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;And now, in your .gitconfig_secret file, you just have to add this:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;[github]
+    user = balkian
+    token = &amp;quot;&amp;lt; Your secret token &amp;gt;&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</summary><category term="github"></category><category term="git"></category><category term="dotfiles"></category></entry><entry><title>Zotero</title><link href="http://balkian.com/zotero.html" rel="alternate"></link><updated>2014-12-09T12:12:12+01:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2014-12-09:zotero.html</id><summary type="html">&lt;p&gt;&lt;a class="reference external" href="https://www.zotero.org/"&gt;Zotero&lt;/a&gt; is an Open Source tool that lets
 you organise your bibliography, syncing it with the cloud. Unlike other
 alternatives such as &lt;a class="reference external" href="http://www.mendeley.com"&gt;Mendeley&lt;/a&gt;, Zotero can
 upload the attachments and data to a private cloud via WebDav.&lt;/p&gt;

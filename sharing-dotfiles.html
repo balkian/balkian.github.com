@@ -105,10 +105,37 @@
         </div>
         <div id="content">
           <!--Body content-->
-    <h1>Authors on balkian.com</h1>
+<div class="postnav">
+  <a href="zotero.html"><span class="previouspost"><i class="icon-chevron-sign-left"></i> Zotero</a></span>
+</div>
+<div class="posthead">
+  <h2 class="title">Sharing dotfiles</h2>
+  <span class="meta date">2015-04-10</span>
+      <a class="tag" href="/tag/github.html"><span class="label label-default">github</span></a>
+      <a class="tag" href="/tag/git.html"><span class="label label-default">git</span></a>
+      <a class="tag" href="/tag/dotfiles.html"><span class="label label-default">dotfiles</span></a>
+</div>
 
-    <ul>        <li><a href="http://balkian.com/author/j-fernando-sanchez.html">J. Fernando Sánchez</a> (7)</li>
-    </ul>
+<div class="post">
+ <p>Today's post is half a quick note, half public shaming. In other words, it is a reminder to be very careful with OAuth tokens and passwords.</p>
+<p>As part of moving to emacs, I starting using the incredibly useful <a class="reference external" href="https://github.com/defunkt/gist.el">gh.el</a>.
+When you first use it, the extension saves either your password or an OAuth token in your .gitconfig file.
+This is cool and convenient, unless you <a class="reference external" href="https://github.com/balkian/dotfiles">happen to be publishing your .gitconfig file in a public repo</a>.</p>
+<p>So, how can you still share your gitconfig without sharing your password/token with the rest of the world?
+Since Git 1.7.0, you can <a class="reference external" href="http://stackoverflow.com/questions/1557183/is-it-possible-to-include-a-file-in-your-gitconfig">include other files in your gitconfig</a>.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre>[include]
+    path = ~/.gitconfig_secret
+</pre></div>
+</td></tr></table><p>And now, in your .gitconfig_secret file, you just have to add this:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre>[github]
+    user = balkian
+    token = &quot;&lt; Your secret token &gt;&quot;
+</pre></div>
+</td></tr></table>
+</div>
         </div>
         <div class="clear"></div>
       </div>
