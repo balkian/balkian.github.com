@@ -54,3 +54,5 @@ EXTRA_PATH_METADATA = {
     'extra/CNAME': {'path': 'CNAME'},
     'extra/favicon': {'path': 'favicon'},
 }
+
+IGNORE_FILES = ['.*']
