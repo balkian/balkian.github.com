@@ -114,8 +114,6 @@ For instance, the picture below is served through Lorem Pixel.
 .. figure:: http://lorempixel.com/400/200/nightlife/
    :alt: This picture is generated with LoremIpsum
 
-   This picture is generated with LoremIpsum
-
 By the way, if you only want cat pictures, take a look at
 `Placekitten <http://placekitten.com/>`__. And for NSFW text, there's
 the `Samuel L. Jackson Ipsum <http://slipsum.com/>`__
