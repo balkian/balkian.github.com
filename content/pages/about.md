@@ -1,7 +1,5 @@
 title: About
 
-<h2>This is <span class="disappear">me.</span><span id="subheadline"><span class="disappear">... I mean,</span> my website</span></h2>
-
 <div id="about">
   <ul>
     <li> <span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-linux"></i> </span> GNU/Linux Fanboy</li>

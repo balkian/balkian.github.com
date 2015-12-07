@@ -1,6 +1,6 @@
 #badge{
   position: relative;
-  margin: -40px auto 10px;
+  margin: 0px auto 10px;
   width: 80%;
   height: 180px;
   padding: 0;
@@ -101,16 +101,8 @@
   visibility: hidden;
 }
 
-#container {
-  min-height: 100%;
-  position:relative;
-  padding: 1em 2em;
-  margin: 0 auto;
-}
-
 #contentwrapper {
   position: relative;
-  padding-bottom: 200px;
   background-color: rgba(255, 255, 255, 0.5);
   overflow: display;
   border: 1px solid #CCC;
@@ -148,38 +140,6 @@
     visibility: hidden;
     line-height: 0;
     height: 0;
-}
-
-footer {
-  height: 110px;
-  position:absolute;
-  clear: both;
-  bottom: 0px;
-  left: -10px;
-  padding: 10px;
-  text-align: center;
-  width: 100%;
-  margin: 0;
-  background-color: #000;
-  color: white;
-  font-weight: bold;
-  /*text-shadow: 2px 2px 1px #AAA;*/
-}
-
-footer div, footer p, footer ul{
-  color: white;
-  padding: 2px;
-  margin: 3px;
-}
-
-footer a {
-  color: #069;
-  text-shadow: 1px 1px 1px #FFF;
-}
-
-footer a:hover {
-  text-shadow: 0.1em 0.1em 0.1em #333;
-  /*color: #ffd700;*/
 }
 
 .date {
@@ -220,35 +180,6 @@ header {
   padding-left: 20%;;
 }
 
-#social li {
-  position: relative;
-  list-style-type: none;
-  display: inline-block;
-  height: 50px;
-  width: 40px;
-  padding: 0;
-}
-
-#social li a {
-  margin: 0;
-  position: absolute;
-  text-align: center;
-  font-size: 30px;
-  left: 0;
-  top: 0;
-}
-
-#social li a:hover {
-  position: absolute;
-  font-size: 80px;
-  top: -15px;
-  left: -10px;
-  /*left: 10px;*/
-  /*top: -50px;*/
-  z-index: 100;
-}
-
-
 #navbar {
   font-size: 1em;
   padding-left: 20%;;
@@ -256,7 +187,6 @@ header {
 
 div.navbar {
   background-color: black;
-  border-radius: 20px 0px 0px;
 }
 
 .navbar ul {
@@ -308,22 +238,6 @@ div.navbar {
 a {
   color: #069;
   text-decoration: none;
-}
-
-.label {
-  font-family: comfortaa;
-  border-radius: 10px 0px 0px 10px;
-  padding: 5px;
-  background-color: #ffd700;
-  color: black;
-  font-size: 10px;
-  padding-left: 10px;
-  border: 1px solid #777;
-}
-
-.label:after{
-  content: " •";
-  color: #666;
 }
 
 .postnav {

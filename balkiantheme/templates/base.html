@@ -23,37 +23,40 @@
   <body>
     <div id="container" class="container">
       <header id="header">
-      <h1 id="headline"><a href="/">balkian</a><a class="inv" href="/">.com</a></h1>
         <div id="navbar" class="navbar navbar-inverse navbar-static-bottom">
           <div class="container">
             <div class="navbar-header">
               <ul class="nav navbar-nav">
                 <li {% if article or not page %}class="active" {% endif %}>
-                    <a href="/"><i class="icon-home icon-large"></i> Blog</a>
-                  </li>
+                  <a href="/"><i class="icon-home icon-large"></i></a>
+                </li>
                 {% for p in pages %} {% if "/page" in p.url %}
-                                     {% else %}
-                                         {% if p.url != "/index.html" %}
-                                              <li {% if page and p.url == page.url %} class="active"
-                                                  {% endif %} >
-                                               <a href="/{{ p.url }}">{{ p.title }}</a>
-                                      </li>
-                                          {% endif %}
-                                      {% endif %}
+                {% else %}
+                {% if p.url != "/index.html" %}
+                <li {% if page and p.url == page.url %} class="active"
+                    {% endif %} >
+                  <a href="/{{ p.url }}">{{ p.title }}</a>
+                </li>
+                {% endif %}
+                {% endif %}
                 {% endfor %}
+                <li>
+                  <a href="//jfernando.es" target="_">CV</a>
+                </li>
                 <!--<li class="dropdown">-->
                 <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>-->
                 <!--<ul class="dropdown-menu">-->
-                  <!--<li><a href="#">Action</a></li>-->
-                  <!--<li><a href="#">Another action</a></li>-->
-                  <!--<li><a href="#">Something else here</a></li>-->
-                  <!--<li class="divider"></li>-->
-                  <!--<li class="dropdown-header">Nav header</li>-->
-                  <!--<li><a href="#">Separated link</a></li>-->
-                  <!--<li><a href="#">One more separated link</a></li>-->
+                <!--<li><a href="#">Action</a></li>-->
+                <!--<li><a href="#">Another action</a></li>-->
+                <!--<li><a href="#">Something else here</a></li>-->
+                <!--<li class="divider"></li>-->
+                <!--<li class="dropdown-header">Nav header</li>-->
+                <!--<li><a href="#">Separated link</a></li>-->
+                <!--<li><a href="#">One more separated link</a></li>-->
                 <!--</ul>-->
                 <!--</li>-->
               </ul>
+            </div>
           </div>
         </div>
       </header>
@@ -67,7 +70,7 @@
                 </div>
                 <div class="back">
                   <!-- back content -->
-                  <img id="picture" width=100% src="{{ SITE_URL }}/theme/img/me.jpg">
+                  <img id="picture" width=100% src="{{ SITE_URL }}/theme/img/me-bat.png">
                 </div>
               </div>
           </div>

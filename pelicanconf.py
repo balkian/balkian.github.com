@@ -40,7 +40,7 @@ def date_to_string(date):
 
 JINJA_FILTERS = {'date_to_string': date_to_string}
 
-PLUGIN_PATH = ["plugins/",]
+PLUGIN_PATHS = ["plugins/",]
 PLUGINS = ["neighbors",]
 
 PYGMENTS_RST_OPTIONS = {'linenos': 'table'}
@@ -56,3 +56,7 @@ EXTRA_PATH_METADATA = {
 }
 
 IGNORE_FILES = ['.*']
+
+MENUITEMS=[('CV','http://jfernando.es')]
+
+DISPLAY_PAGES_ON_MENU=True
