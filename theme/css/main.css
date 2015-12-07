@@ -11,12 +11,61 @@ body {
   background: url(../img/noise.jpg);
 }
 
+#container {
+  min-height: 100%;
+  position:relative;
+  margin: 0 auto;
+}
+
+#contentwrapper {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.5);
+  overflow: display;
+  border: 1px solid #CCC;
+  padding-bottom: 12.5em;
+}
+
+a {
+  color: #069;
+  text-decoration: none;
+}
+
+footer {
+  height: 12em;
+  bottom: -0em;
+  position: absolute;
+  background-color: #000;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  overflow: auto;
+}
+
+footer div, footer p, footer ul{
+  color: white;
+  padding: 2px;
+  margin: 3px;
+}
+
 .site .footer {
   font-size: 80%;
   color: #666;
   border-top: 4px solid #eee;
   margin-top: 2em;
+  margin: 0em;
+  padding: 1em;
   overflow: hidden;
+}
+
+footer a {
+  color: #FFF;
+  text-shadow: 1px 1px 1px #069;
+}
+
+footer a:hover {
+  text-shadow: 0.1em 0.1em 0.1em #333;
 }
 
 .site .footer .contact {
@@ -59,6 +108,48 @@ body {
 .todo li.cancelled:after {
    content: "\2718";
    padding-left: 0.5em;
+}
+
+
+.nextpost, .nextpage {
+  float: right;
+}
+
+.previouspost, .previouspage {
+  float: left;
+}
+
+#social {
+  margin: 0 auto;
+  padding: 0;
+}
+
+#social li {
+  position: relative;
+  list-style-type: none;
+  display: inline-block;
+  height: 100px;
+  width: 80px;
+  padding: 0;
+}
+
+#social li a {
+  margin: 0;
+  position: absolute;
+  text-align: center;
+  font-size: 60px;
+  left: 0;
+  top: 0;
+}
+
+#social li a:hover {
+  position: absolute;
+  font-size: 80px;
+  top: -15px;
+  left: -10px;
+  /*left: 10px;*/
+  /*top: -50px;*/
+  z-index: 100;
 }
 
 .highlighttable {
@@ -113,7 +204,7 @@ body {
 
 .pag-top{
   margin: -9px auto;
-  margin-bottom 0;
+  margin-bottom: 0;
   border-radius: 0 0 15px 15px;
   border: dashed 1px #AAA;
   border-top-width: 0;
@@ -205,4 +296,20 @@ a:hover {
 
 .hll {
     background: yellow;
+}
+
+.label {
+  font-family: comfortaa;
+  border-radius: 10px 0px 0px 10px;
+  padding: 5px;
+  background-color: #ffd700;
+  color: black;
+  font-size: 10px;
+  padding-left: 10px;
+  border: 1px solid #777;
+}
+
+.label:after{
+  content: " •";
+  color: #666;
 }
