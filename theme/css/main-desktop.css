@@ -1,6 +1,6 @@
 #badge{
   position: relative;
-  margin: -100px auto 30px;
+  margin: 0 auto 30px;
   width: 180px;
   height: 210px;
   padding: 0;
@@ -265,7 +265,6 @@ header {
 
 div.navbar {
   background-color: black;
-  border-radius: 20px 0px 0px;
 }
 
 .navbar ul {
