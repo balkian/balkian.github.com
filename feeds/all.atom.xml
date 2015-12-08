@@ -197,7 +197,7 @@ supervisor config file and let it handle the server for you.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="python"></category><category term="apache"></category><category term="proxy"></category><category term="gunicorn"></category><category term="uwsgi"></category></entry><entry><title>Publishing in PyPi</title><link href="http://balkian.com/publishing-in-pypi.html" rel="alternate"></link><updated>2014-09-27T10:00:00+02:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2014-09-27:publishing-in-pypi.html</id><summary type="html">&lt;p&gt;Developing a python module and publishing it on Github is cool, but most
+</summary><category term="python"></category><category term="apache"></category><category term="proxy"></category><category term="gunicorn"></category><category term="uwsgi"></category></entry><entry><title>Publishing on PyPi</title><link href="http://balkian.com/publishing-on-pypi.html" rel="alternate"></link><updated>2014-09-27T10:00:00+02:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2014-09-27:publishing-on-pypi.html</id><summary type="html">&lt;p&gt;Developing a python module and publishing it on Github is cool, but most
 of the times you want others to download and use it easily. That is the
 role of PyPi, the python package repository. In this post I show you how
 to publish your package in less than 10 minutes.&lt;/p&gt;
