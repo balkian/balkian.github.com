@@ -1,4 +1,5 @@
 title:  To-Do
+status: hidden
 
 <h2>Things To Do</h2>
 This is intended as my public "todo.txt". Both to keep it accessible and to feel ashamed of the many things I leave undone:

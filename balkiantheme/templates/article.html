@@ -5,10 +5,10 @@
 {% block content %}
 <div class="postnav">
     {% if article.prev_article %}
-  <span class="previouspost"><i class="icon-double-angle-left"></i> <a href="{{ article.prev_article.url }}">{{ article.prev_article.title }}</a></span>
+  <span class="previouspost"><i class="fa fa-chevron-left"></i> <a href="{{ article.prev_article.url }}">{{ article.prev_article.title }}</a></span>
   {% endif %}
   {% if article.next_article %}
-  <span class='nextpost'><a href="{{ SITE_URL }}/{{ article.next_article.url }}">{{ article.next_article.title }}</a> <i class="icon-double-angle-right"></i></span>
+  <span class='nextpost'><a href="{{ SITE_URL }}/{{ article.next_article.url }}">{{ article.next_article.title }}</a> <i class="fa fa-chevron-right"></i></span>
   {%endif%}
 </div>
 <div class="posthead">
