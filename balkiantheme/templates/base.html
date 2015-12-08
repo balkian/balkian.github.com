@@ -19,22 +19,6 @@
     <link rel="stylesheet" media="only screen and (min-width: 600px) and (max-width: 1199px)" href="{{ SITE_URL }}/theme/css/main-medium.css">
     <link rel="stylesheet" media="only screen and (min-width: 1200px)" href="{{ SITE_URL }}/theme/css/main-desktop.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300|Comfortaa' rel='stylesheet' type='text/css'>
-<!-- Piwik -->
-    <script type="text/javascript">
-    var _paq = _paq || [];
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-    var u="//piwik.sinpapel.es/";
-    _paq.push(['setTrackerUrl', u+'piwik.php']);
-    _paq.push(['setSiteId', 2]);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-    })();
-    </script>
-    <noscript><p><img src="//piwik.sinpapel.es/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
-    <!-- End Piwik Code -->
-
   </head>
   <body>
     <div id="container" class="container">
@@ -142,6 +126,22 @@
     </div>
 
     <script src="{{ SITE_URL }}/theme/js/jquery-2.0.2.min.js"></script>
+<!-- Piwik -->
+    <script type="text/javascript">
+    var _paq = _paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+    var u="//piwik.sinpapel.es/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 2]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+    </script>
+    <noscript><p><img src="//piwik.sinpapel.es/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
+    <!-- End Piwik Code -->
+
     <!--<script src="/js/bootstrap.min.js"></script>-->
   </body>
 </html>
