@@ -23,7 +23,7 @@ memorability over describing the functionality.
 Create a .pypirc configuration file
 -----------------------------------
 
-.. code:: cfg
+.. code-block:: cfg
 
     [distutils] # this tells distutils what package indexes you can push to
     index-servers =
@@ -47,6 +47,7 @@ The usernames and passwords might be different, that is up to you!
 
 Prepare your package
 --------------------
+This should be the structure:
 
 ::
 
@@ -64,7 +65,7 @@ Prepare your package
 setup.cfg
 ~~~~~~~~~
 
-.. code:: cfg
+.. code-block:: cfg
 
     [metadata]
     description-file = README.md
@@ -75,21 +76,27 @@ also use rST (reStructuredText), the standard in the python community.
 setup.py
 ~~~~~~~~
 
-{% highlight python %} from distutils.core import setup setup( name =
-'mypackage', packages = ['mypackage'], # this must be the same as the
-name above version = '{ version }', description = '{ description }',
-author = '{ name }', author\_email = '{ email }', url =
-'https://github.com/{user}/{package}', # URL to the github repo
-download\_url = 'https://github.com/{user}/{repo}/tarball/{version}',
-keywords = ['websockets', 'display', 'd3'], # list of keywords that
-represent your package classifiers = [], ) {% endhighlight %}
+.. code-block:: python
+
+          from distutils.core import setup
+
+          setup(name = 'mypackage',
+                packages = ['mypackage'], # this must be the same as the name above
+                version = '{ version }',
+                description = '{ description }',
+                author = '{ name }',
+                email = '{ email }',
+                url = 'https://github.com/{user}/{package}', # URL to the github repo
+                download\_url = 'https://github.com/{user}/{repo}/tarball/{version}',
+                keywords = ['websockets', 'display', 'd3'], # list of keywords that represent your package
+                classifiers = [], )
 
 You might notice that the download\_url points to a Github URL. We could
 host our package anywhere, but Github is a convenient option. To create
 the tarball and the zip packages, you only need to tag a tag in your
 repository and push it to github:
 
-::
+.. code-block:: bash
 
     git tag {version} -m "{ Description of this tag/version}"
     git push --tags origin master

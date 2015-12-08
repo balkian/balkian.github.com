@@ -39,6 +39,9 @@ clone and deploy it easily like this:
     https://github.com/balkian/balkian.github.com cd balkian.github.com
     jekyll serve -w
 
-I will keep updating this post with information about: \* Some Jekyll
-plugins that might be useful \* What CSS tricks I learnt \* The webfonts
-I used \* The badge on the left side of the page
+I will keep updating this post with information about:
+
+* Some Jekyll plugins that might be useful
+* What CSS tricks I learnt
+* The webfonts I used
+* The badge on the left side of the page

@@ -239,16 +239,6 @@ div.navbar {
   color: #c00;
 }
 
-.postnav {
-  height: 1em;
-  width: 100%;
-  padding: 15px 9px;
-  margin-left: -10px;
-  background-color: white;
-  text-align: right;
-  border: dashed 1px #AAA;
-}
-
 .previouspost {
   float: left;
 }

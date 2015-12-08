@@ -26,10 +26,11 @@ new technologies and improve it:
 -  Automatic generation of fake personal data to test the interface
 -  Obfuscation of personal emails
 
+The result can be `seen here <http://eurolovemap.herokuapp.com/>`_.
+ 
+
 Publishing a Python 3 app on Heroku
 -----------------------------------
-
-`seen here <http://eurolovemap.herokuapp.com/>`__
 
 .. code-block:: bash
 
