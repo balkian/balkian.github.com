@@ -19,6 +19,22 @@
     <link rel="stylesheet" media="only screen and (min-width: 600px) and (max-width: 1199px)" href="{{ SITE_URL }}/theme/css/main-medium.css">
     <link rel="stylesheet" media="only screen and (min-width: 1200px)" href="{{ SITE_URL }}/theme/css/main-desktop.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300|Comfortaa' rel='stylesheet' type='text/css'>
+<!-- Piwik -->
+    <script type="text/javascript">
+    var _paq = _paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+    var u="//piwik.sinpapel.es/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 2]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+    </script>
+    <noscript><p><img src="//piwik.sinpapel.es/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
+    <!-- End Piwik Code -->
+
   </head>
   <body>
     <div id="container" class="container">
@@ -62,8 +78,30 @@
                 </div>
               </div>
           </div>
+
+          <div id="about" style="clear:both;">
+            <!-- <h1 class="title">Interests</h1> -->
+            <div class="icons">
+              <span class="coolicon"><span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-linux"></i></span><span class="explanation">Linux lover</span></span>
+              <span class="coolicon"><span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-android"></i></span><span class="explanation">Android dev</span></span>
+              <span class="coolicon"><span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-github"></i> </span><span class="explanation">GitHub user</span></span>
+              <span class="coolicon"><span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-stackexchange"></i> </span><span class="explanation">StackExchange fan</span></span>
+              <span class="coolicon"><span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-music"></i> </span><span class="explanation">Music lover</span></span>
+              <span class="coolicon"><span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-film"></i> </span><span class="explanation">Movie fan</span></span>
+              <span class="coolicon"><span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-comments"></i> </span><span class="explanation">Always on IM</span></span>
+              <span class="coolicon"><span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-laptop"></i> </span><span class="explanation">Always on a PC</span></span>
+              <span class="coolicon"><span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-pencil"></i> </span><span class="explanation">Occassional writter</span></span>
+              <span class="coolicon"><span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-moon"></i> </span><span class="explanation">Night owl</span></span>
+              <span class="coolicon"><span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-terminal"></i></span>      <span class="explanation">CLI user</span></span>
+              <span class="coolicon"><span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-flag"></i></span>      <span class="explanation">Linguist wannabe</span></span>
+              <span class="coolicon"><span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-code"></i> </span>           <span class="explanation">Love to code</span></span>
+              <span class="coolicon"><span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-book"></i></span>      <span class="explanation">Keen reader</span></span>
+              <span class="coolicon"><span class="icon-stack"> <i class="icon-check-empty icon-stack-base" ></i><i class="icon-quote-right"></i></span>      <span class="explanation">Quotes on demand</span></span>
+            </div>
+          </div>
+          
           <div class="entries">
-            <h1 class="title">Latest entries</h1>
+            <h2 class="title">Latest entries</h2>
             <dl>
                 {% for p in articles[:5] %}
                 <dt><a href="{{ SITE_URL }}/{{ p.url }}">{{ p.title }}</a></dt>
@@ -73,7 +111,8 @@
                 {% endfor %}
             </dl>
           </div>
-            <!--Sidebar content-->
+
+          <!--Sidebar content-->
         </div>
         <div id="content">
           <!--Body content-->
