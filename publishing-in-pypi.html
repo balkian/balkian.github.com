@@ -122,11 +122,22 @@ memorability over describing the functionality.</p>
 </div>
 <div class="section" id="create-a-pypirc-configuration-file">
 <h2>Create a .pypirc configuration file</h2>
-<pre class="code cfg literal-block">
-<span class="err">[distutils]</span> <span class="c1"># this tells distutils what package indexes you can push to</span>
-<span class="na">index-servers</span> <span class="o">=</span><span class="s">
-    pypi # the live PyPI
-    pypitest # test PyPI</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span class="err">[distutils]</span> <span class="c1"># this tells distutils what package indexes you can push to</span>
+<span class="na">index-servers</span> <span class="o">=</span><span class="s"></span>
+<span class="s">    pypi # the live PyPI</span>
+<span class="s">    pypitest # test PyPI</span>
 
 <span class="err">[pypi]</span> <span class="c1"># authentication details for live PyPI</span>
 <span class="na">repository</span> <span class="o">=</span> <span class="s">https://pypi.python.org/pypi</span>
@@ -136,8 +147,8 @@ memorability over describing the functionality.</p>
 <span class="err">[pypitest]</span> <span class="c1"># authentication details for test PyPI</span>
 <span class="na">repository</span> <span class="o">=</span> <span class="s">https://testpypi.python.org/pypi</span>
 <span class="na">username</span> <span class="o">=</span> <span class="s">{ your_username }</span>
-</pre>
-<p>As you can see, you need to register both in the <a class="reference external" href="https://pypi.python.org/pypi?%3Aaction=register_form">main pypi
+</pre></div>
+</td></tr></table><p>As you can see, you need to register both in the <a class="reference external" href="https://pypi.python.org/pypi?%3Aaction=register_form">main pypi
 repository</a> and
 the <a class="reference external" href="https://testpypi.python.org/pypi?%3Aaction=register_form">testing
 server</a>.
@@ -145,6 +156,7 @@ The usernames and passwords might be different, that is up to you!</p>
 </div>
 <div class="section" id="prepare-your-package">
 <h2>Prepare your package</h2>
+<p>This should be the structure:</p>
 <pre class="literal-block">
 root-dir/    # Any name you want
     setup.py
@@ -159,32 +171,48 @@ root-dir/    # Any name you want
 </pre>
 <div class="section" id="setup-cfg">
 <h3>setup.cfg</h3>
-<pre class="code cfg literal-block">
-<span class="k">[metadata]</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">[metadata]</span>
 <span class="na">description-file</span> <span class="o">=</span> <span class="s">README.md</span>
-</pre>
-<p>The markdown README is the <em>de facto</em> standard in Github, but you can
+</pre></div>
+</td></tr></table><p>The markdown README is the <em>de facto</em> standard in Github, but you can
 also use rST (reStructuredText), the standard in the python community.</p>
 </div>
 <div class="section" id="setup-py">
 <h3>setup.py</h3>
-<p>{% highlight python %} from distutils.core import setup setup( name =
-'mypackage', packages = ['mypackage'], # this must be the same as the
-name above version = '{ version }', description = '{ description }',
-author = '{ name }', author_email = '{ email }', url =
-'<a class="reference external" href="https://github.com">https://github.com</a>/{user}/{package}', # URL to the github repo
-download_url = '<a class="reference external" href="https://github.com">https://github.com</a>/{user}/{repo}/tarball/{version}',
-keywords = ['websockets', 'display', 'd3'], # list of keywords that
-represent your package classifiers = [], ) {% endhighlight %}</p>
-<p>You might notice that the download_url points to a Github URL. We could
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">distutils.core</span> <span class="kn">import</span> <span class="n">setup</span>
+
+<span class="n">setup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;mypackage&#39;</span><span class="p">,</span>
+      <span class="n">packages</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;mypackage&#39;</span><span class="p">],</span> <span class="c"># this must be the same as the name above</span>
+      <span class="n">version</span> <span class="o">=</span> <span class="s">&#39;{ version }&#39;</span><span class="p">,</span>
+      <span class="n">description</span> <span class="o">=</span> <span class="s">&#39;{ description }&#39;</span><span class="p">,</span>
+      <span class="n">author</span> <span class="o">=</span> <span class="s">&#39;{ name }&#39;</span><span class="p">,</span>
+      <span class="n">email</span> <span class="o">=</span> <span class="s">&#39;{ email }&#39;</span><span class="p">,</span>
+      <span class="n">url</span> <span class="o">=</span> <span class="s">&#39;https://github.com/{user}/{package}&#39;</span><span class="p">,</span> <span class="c"># URL to the github repo</span>
+      <span class="n">download</span>\<span class="n">_url</span> <span class="o">=</span> <span class="s">&#39;https://github.com/{user}/{repo}/tarball/{version}&#39;</span><span class="p">,</span>
+      <span class="n">keywords</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;websockets&#39;</span><span class="p">,</span> <span class="s">&#39;display&#39;</span><span class="p">,</span> <span class="s">&#39;d3&#39;</span><span class="p">],</span> <span class="c"># list of keywords that represent your package</span>
+      <span class="n">classifiers</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">)</span>
+</pre></div>
+</td></tr></table><p>You might notice that the download_url points to a Github URL. We could
 host our package anywhere, but Github is a convenient option. To create
 the tarball and the zip packages, you only need to tag a tag in your
 repository and push it to github:</p>
-<pre class="literal-block">
-git tag {version} -m &quot;{ Description of this tag/version}&quot;
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre>git tag <span class="o">{</span>version<span class="o">}</span> -m <span class="s2">&quot;{ Description of this tag/version}&quot;</span>
 git push --tags origin master
-</pre>
-</div>
+</pre></div>
+</td></tr></table></div>
 </div>
 <div class="section" id="push-to-the-testing-main-pypi-server">
 <h2>Push to the testing/main pypi server</h2>

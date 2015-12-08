@@ -110,6 +110,14 @@ footer a:hover {
    padding-left: 0.5em;
 }
 
+.postnav {
+  height: 1em;
+  width: 100%;
+  padding: 15px 9px;
+  margin-left: -10px;
+  background-color: white;
+  text-align: right;
+}
 
 .nextpost, .nextpage {
   float: right;
@@ -117,6 +125,22 @@ footer a:hover {
 
 .previouspost, .previouspage {
   float: left;
+}
+
+.pag-top{
+  /*margin: -9px auto;*/
+  /*margin-bottom 0;*/
+  /*border-radius: 0 0 15px 15px;*/
+  /*border: dashed 1px #AAA;*/
+  /*border-top-width: 0;*/
+}
+
+.pag-bottom {
+  bottom: -10px;
+  /*margin: 0 auto;*/
+  /*border-radius: 15px 15px 0 0;*/
+  /*border: dashed 1px #AAA;*/
+  /*border-bottom-width: 0;*/
 }
 
 #social {
@@ -200,21 +224,19 @@ footer a:hover {
   text-align: center;
   background-color: #FFF;
   z-index: 0;
+  text-weight: bold;
+  color: #AAA;
 }
 
 .pag-top{
   margin: -9px auto;
   margin-bottom: 0;
-  border-radius: 0 0 15px 15px;
-  border: dashed 1px #AAA;
   border-top-width: 0;
 }
 
 .pag-bottom {
   bottom: -10px;
   margin: 0 auto;
-  border-radius: 15px 15px 0 0;
-  border: dashed 1px #AAA;
   border-bottom-width: 0;
 }
 

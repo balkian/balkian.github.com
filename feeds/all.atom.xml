@@ -213,11 +213,22 @@ memorability over describing the functionality.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="create-a-pypirc-configuration-file"&gt;
 &lt;h2&gt;Create a .pypirc configuration file&lt;/h2&gt;
-&lt;pre class="code cfg literal-block"&gt;
-&lt;span class="err"&gt;[distutils]&lt;/span&gt; &lt;span class="c1"&gt;# this tells distutils what package indexes you can push to&lt;/span&gt;
-&lt;span class="na"&gt;index-servers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;
-    pypi # the live PyPI
-    pypitest # test PyPI&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;[distutils]&lt;/span&gt; &lt;span class="c1"&gt;# this tells distutils what package indexes you can push to&lt;/span&gt;
+&lt;span class="na"&gt;index-servers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&lt;/span&gt;
+&lt;span class="s"&gt;    pypi # the live PyPI&lt;/span&gt;
+&lt;span class="s"&gt;    pypitest # test PyPI&lt;/span&gt;
 
 &lt;span class="err"&gt;[pypi]&lt;/span&gt; &lt;span class="c1"&gt;# authentication details for live PyPI&lt;/span&gt;
 &lt;span class="na"&gt;repository&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;https://pypi.python.org/pypi&lt;/span&gt;
@@ -227,8 +238,8 @@ memorability over describing the functionality.&lt;/p&gt;
 &lt;span class="err"&gt;[pypitest]&lt;/span&gt; &lt;span class="c1"&gt;# authentication details for test PyPI&lt;/span&gt;
 &lt;span class="na"&gt;repository&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;https://testpypi.python.org/pypi&lt;/span&gt;
 &lt;span class="na"&gt;username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;{ your_username }&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;As you can see, you need to register both in the &lt;a class="reference external" href="https://pypi.python.org/pypi?%3Aaction=register_form"&gt;main pypi
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;As you can see, you need to register both in the &lt;a class="reference external" href="https://pypi.python.org/pypi?%3Aaction=register_form"&gt;main pypi
 repository&lt;/a&gt; and
 the &lt;a class="reference external" href="https://testpypi.python.org/pypi?%3Aaction=register_form"&gt;testing
 server&lt;/a&gt;.
@@ -236,6 +247,7 @@ The usernames and passwords might be different, that is up to you!&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="prepare-your-package"&gt;
 &lt;h2&gt;Prepare your package&lt;/h2&gt;
+&lt;p&gt;This should be the structure:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
 root-dir/    # Any name you want
     setup.py
@@ -250,32 +262,48 @@ root-dir/    # Any name you want
 &lt;/pre&gt;
 &lt;div class="section" id="setup-cfg"&gt;
 &lt;h3&gt;setup.cfg&lt;/h3&gt;
-&lt;pre class="code cfg literal-block"&gt;
-&lt;span class="k"&gt;[metadata]&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[metadata]&lt;/span&gt;
 &lt;span class="na"&gt;description-file&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;README.md&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;The markdown README is the &lt;em&gt;de facto&lt;/em&gt; standard in Github, but you can
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;The markdown README is the &lt;em&gt;de facto&lt;/em&gt; standard in Github, but you can
 also use rST (reStructuredText), the standard in the python community.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="setup-py"&gt;
 &lt;h3&gt;setup.py&lt;/h3&gt;
-&lt;p&gt;{% highlight python %} from distutils.core import setup setup( name =
-'mypackage', packages = ['mypackage'], # this must be the same as the
-name above version = '{ version }', description = '{ description }',
-author = '{ name }', author_email = '{ email }', url =
-'&lt;a class="reference external" href="https://github.com"&gt;https://github.com&lt;/a&gt;/{user}/{package}', # URL to the github repo
-download_url = '&lt;a class="reference external" href="https://github.com"&gt;https://github.com&lt;/a&gt;/{user}/{repo}/tarball/{version}',
-keywords = ['websockets', 'display', 'd3'], # list of keywords that
-represent your package classifiers = [], ) {% endhighlight %}&lt;/p&gt;
-&lt;p&gt;You might notice that the download_url points to a Github URL. We could
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;distutils.core&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;setup&lt;/span&gt;
+
+&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;mypackage&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="n"&gt;packages&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;mypackage&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="c"&gt;# this must be the same as the name above&lt;/span&gt;
+      &lt;span class="n"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{ version }&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="n"&gt;description&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{ description }&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="n"&gt;author&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{ name }&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="n"&gt;email&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{ email }&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="n"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;https://github.com/{user}/{package}&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="c"&gt;# URL to the github repo&lt;/span&gt;
+      &lt;span class="n"&gt;download&lt;/span&gt;\&lt;span class="n"&gt;_url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;https://github.com/{user}/{repo}/tarball/{version}&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="n"&gt;keywords&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;websockets&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;display&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;d3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="c"&gt;# list of keywords that represent your package&lt;/span&gt;
+      &lt;span class="n"&gt;classifiers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[],&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;You might notice that the download_url points to a Github URL. We could
 host our package anywhere, but Github is a convenient option. To create
 the tarball and the zip packages, you only need to tag a tag in your
 repository and push it to github:&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-git tag {version} -m &amp;quot;{ Description of this tag/version}&amp;quot;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;git tag &lt;span class="o"&gt;{&lt;/span&gt;version&lt;span class="o"&gt;}&lt;/span&gt; -m &lt;span class="s2"&gt;&amp;quot;{ Description of this tag/version}&amp;quot;&lt;/span&gt;
 git push --tags origin master
-&lt;/pre&gt;
-&lt;/div&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="push-to-the-testing-main-pypi-server"&gt;
 &lt;h2&gt;Push to the testing/main pypi server&lt;/h2&gt;
@@ -307,9 +335,9 @@ new technologies and improve it:&lt;/p&gt;
 &lt;li&gt;Automatic generation of fake personal data to test the interface&lt;/li&gt;
 &lt;li&gt;Obfuscation of personal emails&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;The result can be &lt;a class="reference external" href="http://eurolovemap.herokuapp.com/"&gt;seen here&lt;/a&gt;.&lt;/p&gt;
 &lt;div class="section" id="publishing-a-python-3-app-on-heroku"&gt;
 &lt;h2&gt;Publishing a Python 3 app on Heroku&lt;/h2&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://eurolovemap.herokuapp.com/"&gt;seen here&lt;/a&gt;&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;mkvirtualenv -p /usr/bin/python3.3 eurolovemap
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Since Heroku uses python 2.7 by default, we have to tell it which
@@ -429,7 +457,11 @@ clone and deploy it easily like this:&lt;/p&gt;
 https://github.com/balkian/balkian.github.com &lt;span class="nb"&gt;cd &lt;/span&gt;balkian.github.com
 jekyll serve -w
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;I will keep updating this post with information about: * Some Jekyll
-plugins that might be useful * What CSS tricks I learnt * The webfonts
-I used * The badge on the left side of the page&lt;/p&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;I will keep updating this post with information about:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Some Jekyll plugins that might be useful&lt;/li&gt;
+&lt;li&gt;What CSS tricks I learnt&lt;/li&gt;
+&lt;li&gt;The webfonts I used&lt;/li&gt;
+&lt;li&gt;The badge on the left side of the page&lt;/li&gt;
+&lt;/ul&gt;
 </summary><category term="starters"></category><category term="javascript"></category><category term="ruby"></category><category term="github"></category><category term="git"></category></entry></feed>
