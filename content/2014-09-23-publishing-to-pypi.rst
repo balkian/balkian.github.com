@@ -1,4 +1,4 @@
-Publishing in PyPi
+Publishing on PyPi
 ##################
 :date: 2014-09-27 10:00:00
 :tags: github, python, pypi
