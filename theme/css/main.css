@@ -312,22 +312,24 @@ footer a:hover {
   height: 80px;
   width: 80px;
   padding: 0;
+  text-align: center;
 }
 
 #social li a {
-  margin: 0;
-  position: absolute;
   text-align: center;
-  font-size: 60px;
-  left: 0;
-  top: 0;
+    width:100%;
+    margin: 0;
+    position: absolute;
+    font-size: 60px;
+    left: 0;
+    top: 0;
 }
 
 #social li a:hover {
   position: absolute;
   font-size: 80px;
-  top: -15px;
-  left: -10px;
+  top: -20px;
+  left: 0px;
   /*left: 10px;*/
   /*top: -50px;*/
   z-index: 100;
