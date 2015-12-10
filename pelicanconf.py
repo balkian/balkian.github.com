@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
+from functools import partial
+from collections import Counter
 
 AUTHOR = u'J. Fernando S\xe1nchez'
 SITENAME = u'balkian.com'
@@ -35,11 +37,6 @@ DEFAULT_PAGINATION = 10
 #RELATIVE_URLS = True
 THEME = "balkiantheme"
 
-def date_to_string(date):
-    return date.strftime('%Y-%m-%d')
-
-JINJA_FILTERS = {'date_to_string': date_to_string}
-
 PLUGIN_PATHS = ["plugins/",]
 PLUGINS = ["neighbors",]
 
@@ -60,3 +57,31 @@ IGNORE_FILES = ['.*']
 MENUITEMS=[('CV','http://jfernando.es')]
 
 DISPLAY_PAGES_ON_MENU=True
+DISPLAY_CATEGORIES_ON_MENU = True
+
+CATEGORY_URL = 'category/{slug}.html'
+CATEGORY_SAVE_AS = 'category/{slug}.html'
+
+CATEGORIES_SAVE_AS = 'categories.html'
+DEFAULT_CATEGORY = 'misc'
+
+
+def date_to_string(date):
+    return date.strftime('%Y-%m-%d')
+
+def sort_by_article_count(x):
+    return sorted(x, key=lambda tags: len(tags[1]), reverse=True)
+
+def normalize_count(x):
+    articles, tag = x
+    counter = Counter()
+    for i in articles:
+        counter.update(i.tags)        
+    maximum = counter.most_common(1)[0][1]
+    return 100*counter[tag]/maximum
+    
+JINJA_FILTERS = {
+    'sort_by_article_count': sort_by_article_count,
+    'date_to_string': date_to_string,
+    'normalize_count': normalize_count
+}

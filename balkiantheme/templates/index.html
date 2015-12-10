@@ -28,13 +28,13 @@ balkian.com
     <h2><a href="{{ SITE_URL }}/{{ post.url }}" class="title">{{ post.title }}</a></h2>
   <span class="date">{{ post.date | date_to_string }}</span>
   {% for c in post.tags %}
-      <a class="tag" href="{{ SITE_URL }}/tag/{{ c }}.html"><span class="label label-success tag">{{ c }}</span></a>
+      <a class="tag" href="{{ SITE_URL }}/tag/{{ c }}.html"><span class="label">{{ c }}</span></a>
   {% endfor %}
   </div>
   <div class="excerpt">
     {{ post.summary }}
   </div>
-  <span><a href="{{ SITE_URL }}/{{ post.url }}"><i class="icon-pl2s"></i> Read more...</a></span>
+  <div class="readmore"><a href="{{ SITE_URL }}/{{ post.url }}"><i class="fa fa-external-link"></i> Read more...</a></div>
 {% endfor %}
 
 {% if articles_paginator.num_pages > 0 %}

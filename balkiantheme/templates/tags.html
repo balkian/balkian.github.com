@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content_title %}
+{{ page_name }}
+{% endblock %}
+{% block content %}
+<h2>Post tags</h2>
+{% for tag, carticles in tags | sort_by_article_count %}
+<a class="tag" href="/tag/{{ tag }}.html"><span style="font-size: {{ (articles, tag) | normalize_count * 2 }}%;" class="label label-default">{{ tag }} ({{ carticles | length }})</span></a>
+{% endfor %}
+{% endblock %}

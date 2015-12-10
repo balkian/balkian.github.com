@@ -15,7 +15,7 @@
   <h2 class="title">{{ article.title }}</h2>
   <span class="meta date">{{ article.date | date_to_string }}</span>
   {% for c in article.tags %}
-      <a class="tag" href="/tag/{{ c }}.html"><span class="label label-default">{{ c }}</span></a>
+      <span class="tag"><a href="/tag/{{ c }}.html" class="label label-default">{{ c }}</a></span>
   {% endfor %}
 </div>
 
