@@ -27,8 +27,17 @@
           <div class="container">
             <div class="navbar-header">
               <ul class="nav navbar-nav">
-                <li class="active" >
+                <li >
                   <a href="/"><i class="fa fa-home fa-large"></i></a>
+                </li>
+                <li  >
+                  <a href="/category/cheats.html">Cheats</a>
+                </li>
+                <li  >
+                  <a href="/category/misc.html">Misc</a>
+                </li>
+                <li >
+                  <a href="/tags.html">Tags</a>
                 </li>
                  <li  >
                   <a href="/pages/projects.html">Projects</a>
@@ -81,16 +90,16 @@
             <h2 class="title">Latest entries</h2>
             <dl>
                 <dt><a href="/zotero.html">Zotero</a></dt>
-                  <a class="tag" href="/tag/zotero.html"><dd class="label label-default">zotero</dd></a>
-                  <a class="tag" href="/tag/webdav.html"><dd class="label label-default">webdav</dd></a>
-                  <a class="tag" href="/tag/nginx.html"><dd class="label label-default">nginx</dd></a>
-                  <a class="tag" href="/tag/apache.html"><dd class="label label-default">apache</dd></a>
+                  <dd class="tag"><a class="label" href="/tag/zotero.html">zotero</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/webdav.html">webdav</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/nginx.html">nginx</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/apache.html">apache</a></dd>
                 <dt><a href="/proxies-with-apache-and-python.html">Proxies with Apache and python</a></dt>
-                  <a class="tag" href="/tag/python.html"><dd class="label label-default">python</dd></a>
-                  <a class="tag" href="/tag/apache.html"><dd class="label label-default">apache</dd></a>
-                  <a class="tag" href="/tag/proxy.html"><dd class="label label-default">proxy</dd></a>
-                  <a class="tag" href="/tag/gunicorn.html"><dd class="label label-default">gunicorn</dd></a>
-                  <a class="tag" href="/tag/uwsgi.html"><dd class="label label-default">uwsgi</dd></a>
+                  <dd class="tag"><a class="label" href="/tag/python.html">python</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/apache.html">apache</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/proxy.html">proxy</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/gunicorn.html">gunicorn</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/uwsgi.html">uwsgi</a></dd>
             </dl>
           </div>
 
@@ -109,10 +118,10 @@
   <div class="posthead">
     <h2><a href="/zotero.html" class="title">Zotero</a></h2>
   <span class="date">2014-12-09</span>
-      <a class="tag" href="/tag/zotero.html"><span class="label label-success tag">zotero</span></a>
-      <a class="tag" href="/tag/webdav.html"><span class="label label-success tag">webdav</span></a>
-      <a class="tag" href="/tag/nginx.html"><span class="label label-success tag">nginx</span></a>
-      <a class="tag" href="/tag/apache.html"><span class="label label-success tag">apache</span></a>
+      <a class="tag" href="/tag/zotero.html"><span class="label">zotero</span></a>
+      <a class="tag" href="/tag/webdav.html"><span class="label">webdav</span></a>
+      <a class="tag" href="/tag/nginx.html"><span class="label">nginx</span></a>
+      <a class="tag" href="/tag/apache.html"><span class="label">apache</span></a>
   </div>
   <div class="excerpt">
     <p><a class="reference external" href="https://www.zotero.org/">Zotero</a> is an Open Source tool that lets
@@ -121,15 +130,15 @@ alternatives such as <a class="reference external" href="http://www.mendeley.com
 upload the attachments and data to a private cloud via WebDav.</p>
 <p>If you use nginx as your web server, know that even though it provides ...</p>
   </div>
-  <span><a href="/zotero.html"><i class="icon-pl2s"></i> Read more...</a></span>
+  <div class="readmore"><a href="/zotero.html"><i class="fa fa-external-link"></i> Read more...</a></div>
   <div class="posthead">
     <h2><a href="/proxies-with-apache-and-python.html" class="title">Proxies with Apache and python</a></h2>
   <span class="date">2014-10-09</span>
-      <a class="tag" href="/tag/python.html"><span class="label label-success tag">python</span></a>
-      <a class="tag" href="/tag/apache.html"><span class="label label-success tag">apache</span></a>
-      <a class="tag" href="/tag/proxy.html"><span class="label label-success tag">proxy</span></a>
-      <a class="tag" href="/tag/gunicorn.html"><span class="label label-success tag">gunicorn</span></a>
-      <a class="tag" href="/tag/uwsgi.html"><span class="label label-success tag">uwsgi</span></a>
+      <a class="tag" href="/tag/python.html"><span class="label">python</span></a>
+      <a class="tag" href="/tag/apache.html"><span class="label">apache</span></a>
+      <a class="tag" href="/tag/proxy.html"><span class="label">proxy</span></a>
+      <a class="tag" href="/tag/gunicorn.html"><span class="label">gunicorn</span></a>
+      <a class="tag" href="/tag/uwsgi.html"><span class="label">uwsgi</span></a>
   </div>
   <div class="excerpt">
     <p>This is a quick note on proxying a local python application (e.g. flask)
@@ -144,7 +153,7 @@ a WSGI application with the name <em>application</em>. Hence, wsgi:application.<
 5</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;Location</span> <span class="s">/myapp/</span><span class="nt">&gt;</span>
     <span class="nb">ProxyPass</span> http://127.0.0 ...</pre></div></td></tr></table></div>
   </div>
-  <span><a href="/proxies-with-apache-and-python.html"><i class="icon-pl2s"></i> Read more...</a></span>
+  <div class="readmore"><a href="/proxies-with-apache-and-python.html"><i class="fa fa-external-link"></i> Read more...</a></div>
 
 <div class="pagination pag-bottom">
   <span class="previouspage" style="display:none;"><i class="icon-chevron-sign-left"></i> Newer Posts</span>
@@ -169,7 +178,7 @@ a WSGI application with the name <em>application</em>. Hence, wsgi:application.<
           <li><a href="http://facebook.com/balkian"><i class="fa fa-facebook"></i></a></li>
         </ul>
           <p>
-          Creative Commons A-SA-NC
+          <i class="fa fa-creative-commons"></i> Creative Commons A-SA-NC
           </p>
       </footer>
     </div>

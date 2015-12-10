@@ -450,7 +450,10 @@ footer a:hover {
   font-weight: bold;
   clear: both;
   border-top: dashed 1px #CCC;
+  padding: 0.2em;
+  padding-top: 0.5em;
 }
+
 .entries dd {
   float: right;
   margin: 2px;
@@ -471,8 +474,13 @@ a:hover {
   -webkit-transform-origin: 95% 50%;
 }
 
+.tag {
+  margin: 2px;
+}
+
 .tag * {
   display: inline-block;
+  color: black;
 }
 
 .hll {
@@ -493,4 +501,21 @@ a:hover {
 .label:after{
   content: " •";
   color: #666;
+}
+
+.readmore {
+    background: #EAEAEA;
+    padding: 0.5em;
+    color: white;
+    border-radius: 0.5em;
+    margin: 1em auto;
+    display: inline-block;
+}
+
+.readmore:hover {
+    background: #DADADA;
+}
+
+.readmore a {
+    color: black;
 }

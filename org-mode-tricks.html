@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>balkian.com - Zotero
+    <title>balkian.com - Org-mode tricks
 </title>
     <meta name="viewport" content="width=device-width">
 
@@ -122,120 +122,23 @@
         <div id="content">
           <!--Body content-->
 <div class="postnav">
-  <span class="previouspost"><i class="fa fa-chevron-left"></i> <a href="proxies-with-apache-and-python.html">Proxies with Apache and python</a></span>
-  <span class='nextpost'><a href="/sharing-dotfiles.html">Sharing dotfiles</a> <i class="fa fa-chevron-right"></i></span>
+  <span class="previouspost"><i class="fa fa-chevron-left"></i> <a href="sharing-dotfiles.html">Sharing dotfiles</a></span>
 </div>
 <div class="posthead">
-  <h2 class="title">Zotero</h2>
-  <span class="meta date">2014-12-09</span>
-      <span class="tag"><a href="/tag/zotero.html" class="label label-default">zotero</a></span>
-      <span class="tag"><a href="/tag/webdav.html" class="label label-default">webdav</a></span>
-      <span class="tag"><a href="/tag/nginx.html" class="label label-default">nginx</a></span>
-      <span class="tag"><a href="/tag/apache.html" class="label label-default">apache</a></span>
+  <h2 class="title">Org-mode tricks</h2>
+  <span class="meta date">2015-12-10</span>
+      <span class="tag"><a href="/tag/emacs.html" class="label label-default">emacs</a></span>
+      <span class="tag"><a href="/tag/productivity.html" class="label label-default">productivity</a></span>
+      <span class="tag"><a href="/tag/editor.html" class="label label-default">editor</a></span>
+      <span class="tag"><a href="/tag/org.html" class="label label-default">org</a></span>
 </div>
 
 <div class="post">
- <p><a class="reference external" href="https://www.zotero.org/">Zotero</a> is an Open Source tool that lets
-you organise your bibliography, syncing it with the cloud. Unlike other
-alternatives such as <a class="reference external" href="http://www.mendeley.com">Mendeley</a>, Zotero can
-upload the attachments and data to a private cloud via WebDav.</p>
-<p>If you use nginx as your web server, know that even though it provides
-partial support for webdav, Zotero needs more than that. Hence, you will
-need another webdav server, and optionally let nginx proxy to it. This
-short post provides the basics to get that set-up working under
-Debian/Ubuntu.</p>
-<div class="section" id="setting-up-apache">
-<h2>Setting up Apache</h2>
-<p>First we need to install Apache:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre>sudo apt-get install apache2
-</pre></div>
-</td></tr></table><p>Change the head of &quot;/etc/apache2/sites-enabled/000-default&quot; to:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;VirtualHost</span> <span class="s">*:880</span><span class="nt">&gt;</span>
-</pre></div>
-</td></tr></table><p>Then, create a file /etc/apache2/sites-available/webdav:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span class="nb">Alias</span> <span class="sx">/dav</span> <span class="sx">/home/webdav/dav</span>
-<span class="nt">&lt;Location</span> <span class="s">/dav</span><span class="nt">&gt;</span>
-    <span class="nb">Dav</span> <span class="k">on</span>
-    <span class="nb">Order</span> Allow,Deny
-    <span class="nb">Allow</span> from <span class="k">all</span>
-    <span class="nb">Dav</span> <span class="k">On</span>
-    <span class="nb">Options</span> +Indexes
-    <span class="nb">AuthType</span> Basic
-    <span class="nb">AuthName</span> DAV
-    <span class="nb">AuthBasicProvider</span> file
-    <span class="nb">AuthUserFile</span> <span class="sx">/home/webdav/.htpasswd</span>
-    <span class="nb">Require</span> valid-user
-<span class="nt">&lt;/Location&gt;</span>
-</pre></div>
-</td></tr></table><p>Ideally, you want your webdav folders to be private, adding
-authentication to them. So you need to create the webdav and zotero
-users and add the passwords to an htpasswd file. Even though you could
-use a single user, since you will be configuring several clients with
-your credentials I encourage you to create the zotero user as well. This
-way you can always change the password for zotero without affecting any
-other application using webdav.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre>sudo adduser webdav
-sudo htpasswd -c /home/webdav/.htpasswd webdav
-sudo htpasswd /home/webdav/.htpasswd zotero
-sudo mkdir -p /home/webdav/dav/zotero
-</pre></div>
-</td></tr></table><p>Enable the site and restart apache:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre>sudo a2enmod webdav
-sudo a2enmod dav_fs
-sudo a2ensite webdav
-sudo service apache2 restart
-</pre></div>
-</td></tr></table><p>At this point everything should be working at
-<a class="reference external" href="http:/">http:/</a>/&lt;your_host&gt;:880/dav/zotero</p>
-</div>
-<div class="section" id="setting-up-nginx">
-<h2>Setting up NGINX</h2>
-<p>After the Apache side is working, we can use nginx as a proxy to get
-cleaner URIs. In your desired site/location, add this:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">location</span> <span class="s">/dav</span> <span class="p">{</span>
-    <span class="kn">client_max_body_size</span> <span class="s">20M</span><span class="p">;</span>
-    <span class="kn">proxy_set_header</span> <span class="s">X-Real-IP</span>  <span class="nv">$remote_addr</span><span class="p">;</span>
-    <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-For</span> <span class="nv">$remote_addr</span><span class="p">;</span>
-    <span class="kn">proxy_set_header</span> <span class="s">Host</span> <span class="nv">$host</span><span class="p">;</span>
-    <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:880</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</td></tr></table><p>Now just reload nginx:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre>sudo service nginx force-reload
+ <div class="section" id="show-plain-text-version">
+<h2>Show plain text version</h2>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="p">(</span><span class="nv">font-lock-mode</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<div class="section" id="extras">
-<h2>Extras</h2>
-<ul class="simple">
-<li><a class="reference external" href="http://zoteroreader.com/">Zotero Reader</a> - HTML5 client</li>
-<li><a class="reference external" href="https://github.com/ajlyon/zandy">Zandy</a> - Android Open Source
-client</li>
-</ul>
-</div>
 
 </div>
         </div>

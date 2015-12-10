@@ -27,8 +27,17 @@
           <div class="container">
             <div class="navbar-header">
               <ul class="nav navbar-nav">
-                <li class="active" >
+                <li >
                   <a href="/"><i class="fa fa-home fa-large"></i></a>
+                </li>
+                <li  >
+                  <a href="/category/cheats.html">Cheats</a>
+                </li>
+                <li  >
+                  <a href="/category/misc.html">Misc</a>
+                </li>
+                <li >
+                  <a href="/tags.html">Tags</a>
                 </li>
                  <li  >
                   <a href="/pages/projects.html">Projects</a>
@@ -81,19 +90,19 @@
             <h2 class="title">Latest entries</h2>
             <dl>
                 <dt><a href="/proxies-with-apache-and-python.html">Proxies with Apache and python</a></dt>
-                  <a class="tag" href="/tag/python.html"><dd class="label label-default">python</dd></a>
-                  <a class="tag" href="/tag/apache.html"><dd class="label label-default">apache</dd></a>
-                  <a class="tag" href="/tag/proxy.html"><dd class="label label-default">proxy</dd></a>
-                  <a class="tag" href="/tag/gunicorn.html"><dd class="label label-default">gunicorn</dd></a>
-                  <a class="tag" href="/tag/uwsgi.html"><dd class="label label-default">uwsgi</dd></a>
+                  <dd class="tag"><a class="label" href="/tag/python.html">python</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/apache.html">apache</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/proxy.html">proxy</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/gunicorn.html">gunicorn</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/uwsgi.html">uwsgi</a></dd>
                 <dt><a href="/publishing-on-pypi.html">Publishing on PyPi</a></dt>
-                  <a class="tag" href="/tag/github.html"><dd class="label label-default">github</dd></a>
-                  <a class="tag" href="/tag/python.html"><dd class="label label-default">python</dd></a>
-                  <a class="tag" href="/tag/pypi.html"><dd class="label label-default">pypi</dd></a>
+                  <dd class="tag"><a class="label" href="/tag/github.html">github</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/python.html">python</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/pypi.html">pypi</a></dd>
                 <dt><a href="/updating-eurolovemap.html">Updating EuroLoveMap</a></dt>
-                  <a class="tag" href="/tag/javascript.html"><dd class="label label-default">javascript</dd></a>
-                  <a class="tag" href="/tag/python.html"><dd class="label label-default">python</dd></a>
-                  <a class="tag" href="/tag/heroku.html"><dd class="label label-default">heroku</dd></a>
+                  <dd class="tag"><a class="label" href="/tag/javascript.html">javascript</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/python.html">python</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/heroku.html">heroku</a></dd>
             </dl>
           </div>
 
@@ -112,11 +121,11 @@
   <div class="posthead">
     <h2><a href="/proxies-with-apache-and-python.html" class="title">Proxies with Apache and python</a></h2>
   <span class="date">2014-10-09</span>
-      <a class="tag" href="/tag/python.html"><span class="label label-success tag">python</span></a>
-      <a class="tag" href="/tag/apache.html"><span class="label label-success tag">apache</span></a>
-      <a class="tag" href="/tag/proxy.html"><span class="label label-success tag">proxy</span></a>
-      <a class="tag" href="/tag/gunicorn.html"><span class="label label-success tag">gunicorn</span></a>
-      <a class="tag" href="/tag/uwsgi.html"><span class="label label-success tag">uwsgi</span></a>
+      <a class="tag" href="/tag/python.html"><span class="label">python</span></a>
+      <a class="tag" href="/tag/apache.html"><span class="label">apache</span></a>
+      <a class="tag" href="/tag/proxy.html"><span class="label">proxy</span></a>
+      <a class="tag" href="/tag/gunicorn.html"><span class="label">gunicorn</span></a>
+      <a class="tag" href="/tag/uwsgi.html"><span class="label">uwsgi</span></a>
   </div>
   <div class="excerpt">
     <p>This is a quick note on proxying a local python application (e.g. flask)
@@ -131,13 +140,13 @@ a WSGI application with the name <em>application</em>. Hence, wsgi:application.<
 5</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;Location</span> <span class="s">/myapp/</span><span class="nt">&gt;</span>
     <span class="nb">ProxyPass</span> http://127.0.0 ...</pre></div></td></tr></table></div>
   </div>
-  <span><a href="/proxies-with-apache-and-python.html"><i class="icon-pl2s"></i> Read more...</a></span>
+  <div class="readmore"><a href="/proxies-with-apache-and-python.html"><i class="fa fa-external-link"></i> Read more...</a></div>
   <div class="posthead">
     <h2><a href="/publishing-on-pypi.html" class="title">Publishing on PyPi</a></h2>
   <span class="date">2014-09-27</span>
-      <a class="tag" href="/tag/github.html"><span class="label label-success tag">github</span></a>
-      <a class="tag" href="/tag/python.html"><span class="label label-success tag">python</span></a>
-      <a class="tag" href="/tag/pypi.html"><span class="label label-success tag">pypi</span></a>
+      <a class="tag" href="/tag/github.html"><span class="label">github</span></a>
+      <a class="tag" href="/tag/python.html"><span class="label">python</span></a>
+      <a class="tag" href="/tag/pypi.html"><span class="label">pypi</span></a>
   </div>
   <div class="excerpt">
     <p>Developing a python module and publishing it on Github is cool, but most
@@ -145,13 +154,13 @@ of the times you want others to download and use it easily. That is the
 role of PyPi, the python package repository. In this post I show you how
 to publish your package in less than 10 ...</p>
   </div>
-  <span><a href="/publishing-on-pypi.html"><i class="icon-pl2s"></i> Read more...</a></span>
+  <div class="readmore"><a href="/publishing-on-pypi.html"><i class="fa fa-external-link"></i> Read more...</a></div>
   <div class="posthead">
     <h2><a href="/updating-eurolovemap.html" class="title">Updating EuroLoveMap</a></h2>
   <span class="date">2014-03-27</span>
-      <a class="tag" href="/tag/javascript.html"><span class="label label-success tag">javascript</span></a>
-      <a class="tag" href="/tag/python.html"><span class="label label-success tag">python</span></a>
-      <a class="tag" href="/tag/heroku.html"><span class="label label-success tag">heroku</span></a>
+      <a class="tag" href="/tag/javascript.html"><span class="label">javascript</span></a>
+      <a class="tag" href="/tag/python.html"><span class="label">python</span></a>
+      <a class="tag" href="/tag/heroku.html"><span class="label">heroku</span></a>
   </div>
   <div class="excerpt">
     <p>As part of the <a class="reference external" href="http://www.opener-project.org/2013/07/18/opener-hackathon-in-amsterdam/">OpeNER
@@ -161,7 +170,7 @@ different countries feel about several topics. We used the OpeNER
 pipeline to get the sentiment from a set of newspaper articles we
 gathered from media in several languages. Then we aggregated ...</p>
   </div>
-  <span><a href="/updating-eurolovemap.html"><i class="icon-pl2s"></i> Read more...</a></span>
+  <div class="readmore"><a href="/updating-eurolovemap.html"><i class="fa fa-external-link"></i> Read more...</a></div>
 
 <div class="pagination pag-bottom">
   <span class="previouspage" style="display:none;"><i class="icon-chevron-sign-left"></i> Newer Posts</span>
@@ -186,7 +195,7 @@ gathered from media in several languages. Then we aggregated ...</p>
           <li><a href="http://facebook.com/balkian"><i class="fa fa-facebook"></i></a></li>
         </ul>
           <p>
-          Creative Commons A-SA-NC
+          <i class="fa fa-creative-commons"></i> Creative Commons A-SA-NC
           </p>
       </footer>
     </div>

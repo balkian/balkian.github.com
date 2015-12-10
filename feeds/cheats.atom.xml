@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>balkian.com</title><link href="http://balkian.com/" rel="alternate"></link><link href="http://balkian.com/feeds/cheats.atom.xml" rel="self"></link><id>http://balkian.com/</id><updated>2015-12-10T11:34:00+01:00</updated><entry><title>Org-mode tricks</title><link href="http://balkian.com/org-mode-tricks.html" rel="alternate"></link><updated>2015-12-10T11:34:00+01:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2015-12-10:org-mode-tricks.html</id><summary type="html">&lt;div class="section" id="show-plain-text-version"&gt;
+&lt;h2&gt;Show plain text version&lt;/h2&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;font-lock-mode&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
+</summary><category term="emacs"></category><category term="productivity"></category><category term="editor"></category><category term="org"></category></entry></feed>
