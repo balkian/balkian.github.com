@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>balkian.com - balkian.com - ruby</title>
+    <title>balkian.com - balkian.com - arch</title>
     <meta name="viewport" content="width=device-width">
 
     <!-- syntax highlighting CSS -->
@@ -89,12 +89,9 @@
           <div class="entries">
             <h2 class="title">Latest entries</h2>
             <dl>
-                <dt><a href="/creating-my-web.html">Creating my web</a></dt>
-                  <dd class="tag"><a class="label" href="/tag/starters.html">starters</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/javascript.html">javascript</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/ruby.html">ruby</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/github.html">github</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/git.html">git</a></dd>
+                <dt><a href="/arch-linux-fixes.html">Arch Linux Fixes</a></dt>
+                  <dd class="tag"><a class="label" href="/tag/arch.html">arch</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/linux.html">linux</a></dd>
             </dl>
           </div>
 
@@ -108,24 +105,26 @@
     <span class="nextpage" style="visibility:hidden;">Older Posts <i class="icon-chevron-sign-right"></i></span>
 </div>
 
-<h1>Entries tagged: ruby</h1>
+<h1>Entries tagged: arch</h1>
 <!-- This loops through the paginated posts -->
   <div class="posthead">
-    <h2><a href="/creating-my-web.html" class="title">Creating my web</a></h2>
-  <span class="date">2013-08-22</span>
-      <a class="tag" href="/tag/starters.html"><span class="label">starters</span></a>
-      <a class="tag" href="/tag/javascript.html"><span class="label">javascript</span></a>
-      <a class="tag" href="/tag/ruby.html"><span class="label">ruby</span></a>
-      <a class="tag" href="/tag/github.html"><span class="label">github</span></a>
-      <a class="tag" href="/tag/git.html"><span class="label">git</span></a>
+    <h2><a href="/arch-linux-fixes.html" class="title">Arch Linux Fixes</a></h2>
+  <span class="date">2016-02-03</span>
+      <a class="tag" href="/tag/arch.html"><span class="label">arch</span></a>
+      <a class="tag" href="/tag/linux.html"><span class="label">linux</span></a>
   </div>
   <div class="excerpt">
-    <p>Finally, I've decided to set up a decent personal page. I have settled
-for github-pages because I like the idea of keeping my site in a
-repository and having someone else host and deploy it for me. The site
-will be really simple, mostly static files. Thanks to Github ...</p>
+    <div class="section" id="black-screen-and-lightdm-doesn-t-unlock">
+<h2>Black screen and LightDM doesn't unlock</h2>
+<p>Add this to your <cite>/etc/lightdm/lightdm.conf</cite> file:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">[LightDM]</span>
+<span class="na">logind-check-graphical</span><span class="o">=</span><span class="s">true</span>
+</pre></div>
+</td></tr></table></div>
+
   </div>
-  <div class="readmore"><a href="/creating-my-web.html"><i class="fa fa-external-link"></i> Read more...</a></div>
+  <div class="readmore"><a href="/arch-linux-fixes.html"><i class="fa fa-external-link"></i> Read more...</a></div>
 
 <div class="pagination pag-bottom">
   <span class="previouspage" style="display:none;"><i class="icon-chevron-sign-left"></i> Newer Posts</span>

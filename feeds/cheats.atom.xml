@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>balkian.com</title><link href="http://balkian.com/" rel="alternate"></link><link href="http://balkian.com/feeds/cheats.atom.xml" rel="self"></link><id>http://balkian.com/</id><updated>2015-12-10T11:34:00+01:00</updated><entry><title>Org-mode tricks</title><link href="http://balkian.com/org-mode-tricks.html" rel="alternate"></link><updated>2015-12-10T11:34:00+01:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2015-12-10:org-mode-tricks.html</id><summary type="html">&lt;div class="section" id="show-plain-text-version"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>balkian.com</title><link href="http://balkian.com/" rel="alternate"></link><link href="http://balkian.com/feeds/cheats.atom.xml" rel="self"></link><id>http://balkian.com/</id><updated>2016-02-03T20:00:00+01:00</updated><entry><title>Arch Linux Fixes</title><link href="http://balkian.com/arch-linux-fixes.html" rel="alternate"></link><updated>2016-02-03T20:00:00+01:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2016-02-03:arch-linux-fixes.html</id><summary type="html">&lt;div class="section" id="black-screen-and-lightdm-doesn-t-unlock"&gt;
+&lt;h2&gt;Black screen and LightDM doesn't unlock&lt;/h2&gt;
+&lt;p&gt;Add this to your &lt;cite&gt;/etc/lightdm/lightdm.conf&lt;/cite&gt; file:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[LightDM]&lt;/span&gt;
+&lt;span class="na"&gt;logind-check-graphical&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
+</summary><category term="arch"></category><category term="linux"></category></entry><entry><title>Org-mode tricks</title><link href="http://balkian.com/org-mode-tricks.html" rel="alternate"></link><updated>2015-12-10T11:34:00+01:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2015-12-10:org-mode-tricks.html</id><summary type="html">&lt;div class="section" id="show-plain-text-version"&gt;
 &lt;h2&gt;Show plain text version&lt;/h2&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;font-lock-mode&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;

@@ -90,6 +90,9 @@
           <div class="entries">
             <h2 class="title">Latest entries</h2>
             <dl>
+                <dt><a href="/arch-linux-fixes.html">Arch Linux Fixes</a></dt>
+                  <dd class="tag"><a class="label" href="/tag/arch.html">arch</a></dd>
+                  <dd class="tag"><a class="label" href="/tag/linux.html">linux</a></dd>
                 <dt><a href="/org-mode-tricks.html">Org-mode tricks</a></dt>
                   <dd class="tag"><a class="label" href="/tag/emacs.html">emacs</a></dd>
                   <dd class="tag"><a class="label" href="/tag/productivity.html">productivity</a></dd>
@@ -110,10 +113,6 @@
                   <dd class="tag"><a class="label" href="/tag/proxy.html">proxy</a></dd>
                   <dd class="tag"><a class="label" href="/tag/gunicorn.html">gunicorn</a></dd>
                   <dd class="tag"><a class="label" href="/tag/uwsgi.html">uwsgi</a></dd>
-                <dt><a href="/publishing-on-pypi.html">Publishing on PyPi</a></dt>
-                  <dd class="tag"><a class="label" href="/tag/github.html">github</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/python.html">python</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/pypi.html">pypi</a></dd>
             </dl>
           </div>
 
@@ -128,6 +127,24 @@
 </div>
 
 <!-- This loops through the paginated posts -->
+  <div class="posthead">
+    <h2><a href="/arch-linux-fixes.html" class="title">Arch Linux Fixes</a></h2>
+  <span class="date">2016-02-03</span>
+      <a class="tag" href="/tag/arch.html"><span class="label">arch</span></a>
+      <a class="tag" href="/tag/linux.html"><span class="label">linux</span></a>
+  </div>
+  <div class="excerpt">
+    <div class="section" id="black-screen-and-lightdm-doesn-t-unlock">
+<h2>Black screen and LightDM doesn't unlock</h2>
+<p>Add this to your <cite>/etc/lightdm/lightdm.conf</cite> file:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">[LightDM]</span>
+<span class="na">logind-check-graphical</span><span class="o">=</span><span class="s">true</span>
+</pre></div>
+</td></tr></table></div>
+
+  </div>
+  <div class="readmore"><a href="/arch-linux-fixes.html"><i class="fa fa-external-link"></i> Read more...</a></div>
   <div class="posthead">
     <h2><a href="/org-mode-tricks.html" class="title">Org-mode tricks</a></h2>
   <span class="date">2015-12-10</span>
