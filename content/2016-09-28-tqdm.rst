@@ -1,0 +1,17 @@
+Progress bars in python
+=======================
+:date: 2016-09-28 18:47:00 
+:tags: python 
+
+
+`tqdm <https://github.com/noamraph/tqdm>`_ is a nice way to add progress bars in the command line or in a jupyter notebook.
+
+.. image:: https://camo.githubusercontent.com/48838faaa8d00ea297f18e5bf55d3c6bb4e0ba6b/68747470733a2f2f692e696d6775722e636f6d2f686539417735432e676966 
+
+.. code-block:: python
+
+                from tqdm import tqdm
+                import time
+
+                for i in tqdm(range(100)):
+                    time.sleep(1)
