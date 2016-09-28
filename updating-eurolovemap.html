@@ -91,6 +91,8 @@
           <div class="entries">
             <h2 class="title">Latest entries</h2>
             <dl>
+                <dt><a href="/progress-bars-in-python.html">Progress bars in python</a></dt>
+                  <dd class="tag"><a class="label" href="/tag/python.html">python</a></dd>
                 <dt><a href="/arch-linux-fixes.html">Arch Linux Fixes</a></dt>
                   <dd class="tag"><a class="label" href="/tag/arch.html">arch</a></dd>
                   <dd class="tag"><a class="label" href="/tag/linux.html">linux</a></dd>
@@ -108,12 +110,6 @@
                   <dd class="tag"><a class="label" href="/tag/webdav.html">webdav</a></dd>
                   <dd class="tag"><a class="label" href="/tag/nginx.html">nginx</a></dd>
                   <dd class="tag"><a class="label" href="/tag/apache.html">apache</a></dd>
-                <dt><a href="/proxies-with-apache-and-python.html">Proxies with Apache and python</a></dt>
-                  <dd class="tag"><a class="label" href="/tag/python.html">python</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/apache.html">apache</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/proxy.html">proxy</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/gunicorn.html">gunicorn</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/uwsgi.html">uwsgi</a></dd>
             </dl>
           </div>
 
@@ -158,7 +154,7 @@ new technologies and improve it:</p>
 <p>The result can be <a class="reference external" href="http://eurolovemap.herokuapp.com/">seen here</a>.</p>
 <div class="section" id="publishing-a-python-3-app-on-heroku">
 <h2>Publishing a Python 3 app on Heroku</h2>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre>mkvirtualenv -p /usr/bin/python3.3 eurolovemap
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>mkvirtualenv -p /usr/bin/python3.3 eurolovemap
 </pre></div>
 </td></tr></table><p>Since Heroku uses python 2.7 by default, we have to tell it which
 version we want, although it supports python 3.4 as well. I couldn't get
@@ -167,7 +163,7 @@ python 3.4 working using the
 so I used python 3.3 instead, which works fine but is not officially
 supported. Just create a file named <em>runtime.txt</em> in your project root,
 with the python version you want to use:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre>python-3.3.1
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>python-3.3.1
 </pre></div>
 </td></tr></table><p>Don't forget to freeze your dependencies so Heroku can install them:
 <tt class="docutils literal">bash pip freze &gt; requirements.txt</tt></p>
@@ -184,7 +180,7 @@ cipher</a>. Please, don't
 use it for any serious application if you are concerned about being
 spammed.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">blur_email</span><span class="p">(</span><span class="n">email</span><span class="p">):</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">blur_email</span><span class="p">(</span><span class="n">email</span><span class="p">):</span>
     <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">email</span><span class="p">])</span>
 </pre></div>
 </td></tr></table><p>And this is the client side:</p>
@@ -199,7 +195,7 @@ spammed.</p>
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
      <span class="nx">elems</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s1">&#39;profile-email&#39;</span><span class="p">);</span>
      <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">e</span> <span class="k">in</span> <span class="nx">elems</span><span class="p">){</span>
         <span class="kd">var</span> <span class="nx">blur</span> <span class="o">=</span> <span class="nx">elems</span><span class="p">[</span><span class="nx">e</span><span class="p">].</span><span class="nx">innerHTML</span><span class="p">;</span>

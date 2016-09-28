@@ -91,6 +91,8 @@
           <div class="entries">
             <h2 class="title">Latest entries</h2>
             <dl>
+                <dt><a href="/progress-bars-in-python.html">Progress bars in python</a></dt>
+                  <dd class="tag"><a class="label" href="/tag/python.html">python</a></dd>
                 <dt><a href="/arch-linux-fixes.html">Arch Linux Fixes</a></dt>
                   <dd class="tag"><a class="label" href="/tag/arch.html">arch</a></dd>
                   <dd class="tag"><a class="label" href="/tag/linux.html">linux</a></dd>
@@ -108,12 +110,6 @@
                   <dd class="tag"><a class="label" href="/tag/webdav.html">webdav</a></dd>
                   <dd class="tag"><a class="label" href="/tag/nginx.html">nginx</a></dd>
                   <dd class="tag"><a class="label" href="/tag/apache.html">apache</a></dd>
-                <dt><a href="/proxies-with-apache-and-python.html">Proxies with Apache and python</a></dt>
-                  <dd class="tag"><a class="label" href="/tag/python.html">python</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/apache.html">apache</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/proxy.html">proxy</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/gunicorn.html">gunicorn</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/uwsgi.html">uwsgi</a></dd>
             </dl>
           </div>
 
@@ -147,10 +143,10 @@ Debian/Ubuntu.</p>
 <div class="section" id="setting-up-apache">
 <h2>Setting up Apache</h2>
 <p>First we need to install Apache:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre>sudo apt-get install apache2
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo apt-get install apache2
 </pre></div>
 </td></tr></table><p>Change the head of &quot;/etc/apache2/sites-enabled/000-default&quot; to:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;VirtualHost</span> <span class="s">*:880</span><span class="nt">&gt;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;VirtualHost</span> <span class="s">*:880</span><span class="nt">&gt;</span>
 </pre></div>
 </td></tr></table><p>Then, create a file /etc/apache2/sites-available/webdav:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -165,7 +161,7 @@ Debian/Ubuntu.</p>
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span class="nb">Alias</span> <span class="sx">/dav</span> <span class="sx">/home/webdav/dav</span>
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">Alias</span> <span class="sx">/dav</span> <span class="sx">/home/webdav/dav</span>
 <span class="nt">&lt;Location</span> <span class="s">/dav</span><span class="nt">&gt;</span>
     <span class="nb">Dav</span> <span class="k">on</span>
     <span class="nb">Order</span> Allow,Deny
@@ -189,7 +185,7 @@ other application using webdav.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre>sudo adduser webdav
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo adduser webdav
 sudo htpasswd -c /home/webdav/.htpasswd webdav
 sudo htpasswd /home/webdav/.htpasswd zotero
 sudo mkdir -p /home/webdav/dav/zotero
@@ -198,7 +194,7 @@ sudo mkdir -p /home/webdav/dav/zotero
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre>sudo a2enmod webdav
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo a2enmod webdav
 sudo a2enmod dav_fs
 sudo a2ensite webdav
 sudo service apache2 restart
@@ -216,7 +212,7 @@ cleaner URIs. In your desired site/location, add this:</p>
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">location</span> <span class="s">/dav</span> <span class="p">{</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">location</span> <span class="s">/dav</span> <span class="p">{</span>
     <span class="kn">client_max_body_size</span> <span class="s">20M</span><span class="p">;</span>
     <span class="kn">proxy_set_header</span> <span class="s">X-Real-IP</span>  <span class="nv">$remote_addr</span><span class="p">;</span>
     <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-For</span> <span class="nv">$remote_addr</span><span class="p">;</span>
@@ -225,7 +221,7 @@ cleaner URIs. In your desired site/location, add this:</p>
 <span class="p">}</span>
 </pre></div>
 </td></tr></table><p>Now just reload nginx:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre>sudo service nginx force-reload
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo service nginx force-reload
 </pre></div>
 </td></tr></table></div>
 <div class="section" id="extras">

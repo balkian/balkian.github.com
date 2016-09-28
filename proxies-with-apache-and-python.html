@@ -91,6 +91,8 @@
           <div class="entries">
             <h2 class="title">Latest entries</h2>
             <dl>
+                <dt><a href="/progress-bars-in-python.html">Progress bars in python</a></dt>
+                  <dd class="tag"><a class="label" href="/tag/python.html">python</a></dd>
                 <dt><a href="/arch-linux-fixes.html">Arch Linux Fixes</a></dt>
                   <dd class="tag"><a class="label" href="/tag/arch.html">arch</a></dd>
                   <dd class="tag"><a class="label" href="/tag/linux.html">linux</a></dd>
@@ -108,12 +110,6 @@
                   <dd class="tag"><a class="label" href="/tag/webdav.html">webdav</a></dd>
                   <dd class="tag"><a class="label" href="/tag/nginx.html">nginx</a></dd>
                   <dd class="tag"><a class="label" href="/tag/apache.html">apache</a></dd>
-                <dt><a href="/proxies-with-apache-and-python.html">Proxies with Apache and python</a></dt>
-                  <dd class="tag"><a class="label" href="/tag/python.html">python</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/apache.html">apache</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/proxy.html">proxy</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/gunicorn.html">gunicorn</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/uwsgi.html">uwsgi</a></dd>
             </dl>
           </div>
 
@@ -145,7 +141,7 @@ a WSGI application with the name <em>application</em>. Hence, wsgi:application.<
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;Location</span> <span class="s">/myapp/</span><span class="nt">&gt;</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;Location</span> <span class="s">/myapp/</span><span class="nt">&gt;</span>
     <span class="nb">ProxyPass</span> http://127.0.0.1:8888/myapp/
     <span class="nb">ProxyPassReverse</span> http://127.0.0.1:8888/myapp/
     <span class="nb">RequestHeader</span> set SCRIPT_NAME <span class="s2">&quot;/myapp/&quot;</span>
@@ -154,7 +150,7 @@ a WSGI application with the name <em>application</em>. Hence, wsgi:application.<
 </td></tr></table><p><strong>Important</strong>: <em>SCRIPT_NAME</em> and the end of <em>ProxyPass</em> URL <strong>MUST BE
 THE SAME</strong>. Otherwise, Gunicorn will fail miserably.</p>
 <p>Try it with:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre>venv/bin/gunicorn -w <span class="m">4</span> -b 127.0.0.1:8888 --log-file - --access-logfile - wsgi:application
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>venv/bin/gunicorn -w <span class="m">4</span> -b 127.0.0.1:8888 --log-file - --access-logfile - wsgi:application
 </pre></div>
 </td></tr></table></div>
 <div class="section" id="uwsgi">
@@ -164,13 +160,13 @@ options for uwsgi (in a .ini file).</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;Location</span> <span class="s">/myapp/</span><span class="nt">&gt;</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">&lt;Location</span> <span class="s">/myapp/</span><span class="nt">&gt;</span>
     <span class="nb">SetHandler</span> uwsgi_handler
     <span class="nb">uWSGISocker</span> <span class="m">127.0.0.1</span>:8888
 <span class="nt">&lt;/Location&gt;</span>
 </pre></div>
 </td></tr></table><p>Try it with:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre>uwsgi --socket 127.0.0.1:8888 -w wsgi:application
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>uwsgi --socket 127.0.0.1:8888 -w wsgi:application
 </pre></div>
 </td></tr></table><div class="section" id="extra-supervisor">
 <h3>Extra: Supervisor</h3>
@@ -194,7 +190,7 @@ supervisor config file and let it handle the server for you.</p>
 16
 17
 18
-19</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">[unix_http_server]</span>
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">[unix_http_server]</span>
 <span class="na">file</span><span class="o">=</span><span class="s">/tmp/myapp.sock ; path to your socket file</span>
 
 <span class="k">[supervisord]</span>

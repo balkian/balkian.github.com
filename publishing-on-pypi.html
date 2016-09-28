@@ -91,6 +91,8 @@
           <div class="entries">
             <h2 class="title">Latest entries</h2>
             <dl>
+                <dt><a href="/progress-bars-in-python.html">Progress bars in python</a></dt>
+                  <dd class="tag"><a class="label" href="/tag/python.html">python</a></dd>
                 <dt><a href="/arch-linux-fixes.html">Arch Linux Fixes</a></dt>
                   <dd class="tag"><a class="label" href="/tag/arch.html">arch</a></dd>
                   <dd class="tag"><a class="label" href="/tag/linux.html">linux</a></dd>
@@ -108,12 +110,6 @@
                   <dd class="tag"><a class="label" href="/tag/webdav.html">webdav</a></dd>
                   <dd class="tag"><a class="label" href="/tag/nginx.html">nginx</a></dd>
                   <dd class="tag"><a class="label" href="/tag/apache.html">apache</a></dd>
-                <dt><a href="/proxies-with-apache-and-python.html">Proxies with Apache and python</a></dt>
-                  <dd class="tag"><a class="label" href="/tag/python.html">python</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/apache.html">apache</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/proxy.html">proxy</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/gunicorn.html">gunicorn</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/uwsgi.html">uwsgi</a></dd>
             </dl>
           </div>
 
@@ -162,7 +158,7 @@ memorability over describing the functionality.</p>
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span class="err">[distutils]</span> <span class="c1"># this tells distutils what package indexes you can push to</span>
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="err">[distutils]</span> <span class="c1"># this tells distutils what package indexes you can push to</span>
 <span class="na">index-servers</span> <span class="o">=</span><span class="s"></span>
 <span class="s">    pypi # the live PyPI</span>
 <span class="s">    pypitest # test PyPI</span>
@@ -200,7 +196,7 @@ root-dir/    # Any name you want
 <div class="section" id="setup-cfg">
 <h3>setup.cfg</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">[metadata]</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">[metadata]</span>
 <span class="na">description-file</span> <span class="o">=</span> <span class="s">README.md</span>
 </pre></div>
 </td></tr></table><p>The markdown README is the <em>de facto</em> standard in Github, but you can
@@ -219,7 +215,7 @@ also use rST (reStructuredText), the standard in the python community.</p>
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">distutils.core</span> <span class="kn">import</span> <span class="n">setup</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">distutils.core</span> <span class="kn">import</span> <span class="n">setup</span>
 
 <span class="n">setup</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;mypackage&#39;</span><span class="p">,</span>
       <span class="n">packages</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;mypackage&#39;</span><span class="p">],</span> <span class="c1"># this must be the same as the name above</span>
@@ -237,7 +233,7 @@ host our package anywhere, but Github is a convenient option. To create
 the tarball and the zip packages, you only need to tag a tag in your
 repository and push it to github:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre>git tag <span class="o">{</span>version<span class="o">}</span> -m <span class="s2">&quot;{ Description of this tag/version}&quot;</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git tag <span class="o">{</span>version<span class="o">}</span> -m <span class="s2">&quot;{ Description of this tag/version}&quot;</span>
 git push --tags origin master
 </pre></div>
 </td></tr></table></div>
