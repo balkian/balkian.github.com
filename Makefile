@@ -8,6 +8,12 @@ OUTPUTDIR=$(BASEDIR)/output
 CONFFILE=$(BASEDIR)/pelicanconf.py
 PUBLISHCONF=$(BASEDIR)/publishconf.py
 
+PAGESDIR=$(INPUTDIR)/pages
+DATE := $(shell date +'%Y-%m-%d %H:%M:%S')
+SLUG := $(shell echo '${NAME}' | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
+EXT ?= md
+
+
 FTP_HOST=localhost
 FTP_USER=anonymous
 FTP_TARGET_DIR=/
@@ -50,6 +56,8 @@ help:
 	@echo '   make s3_upload                   upload the web site via S3         '
 	@echo '   make cf_upload                   upload the web site via Cloud Files'
 	@echo '   make github                      upload the web site via gh-pages   '
+	@echo '   make newpost                     Add a new post                     '
+	@echo '   make newpage                     Add a new page                     '
 	@echo '                                                                       '
 	@echo 'Set the DEBUG variable to 1 to enable debugging, e.g. make DEBUG=1 html'
 	@echo '                                                                       '
@@ -106,5 +114,46 @@ cf_upload: publish
 github: publish
 	ghp-import -m "Generate Pelican site" -b $(GITHUB_PAGES_BRANCH) $(OUTPUTDIR)
 	git push origin $(GITHUB_PAGES_BRANCH)
+
+newpost:
+ifdef NAME
+	echo "Title: $(NAME)" >  $(INPUTDIR)/$(SLUG).$(EXT)
+	echo "Slug: $(SLUG)" >> $(INPUTDIR)/$(SLUG).$(EXT)
+	echo "Date: $(DATE)" >> $(INPUTDIR)/$(SLUG).$(EXT)
+	echo ""              >> $(INPUTDIR)/$(SLUG).$(EXT)
+	echo ""              >> $(INPUTDIR)/$(SLUG).$(EXT)
+	${EDITOR} ${INPUTDIR}/${SLUG}.${EXT} &
+else
+	@echo 'Variable NAME is not defined.'
+	@echo 'Do make newpost NAME='"'"'Post Name'"'"
+endif
+
+editpost:
+ifdef NAME
+	${EDITOR} ${INPUTDIR}/${SLUG}.${EXT} &
+else
+	@echo 'Variable NAME is not defined.'
+	@echo 'Do make editpost NAME='"'"'Post Name'"'"
+endif
+
+newpage:
+ifdef NAME
+	echo "Title: $(NAME)" >  $(PAGESDIR)/$(SLUG).$(EXT)
+	echo "Slug: $(SLUG)" >> $(PAGESDIR)/$(SLUG).$(EXT)
+	echo ""              >> $(PAGESDIR)/$(SLUG).$(EXT)
+	echo ""              >> $(PAGESDIR)/$(SLUG).$(EXT)
+	${EDITOR} ${PAGESDIR}/${SLUG}.$(EXT)
+else
+	@echo 'Variable NAME is not defined.'
+	@echo 'Do make newpage NAME='"'"'Page Name'"'"
+endif
+
+editpage:
+ifdef NAME
+	${EDITOR} ${PAGESDIR}/${SLUG}.$(EXT)
+else
+	@echo 'Variable NAME is not defined.'
+	@echo 'Do make editpage NAME='"'"'Page Name'"'"
+endif
 
 .PHONY: html help clean regenerate serve devserver publish ssh_upload rsync_upload dropbox_upload ftp_upload s3_upload cf_upload github
