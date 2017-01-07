@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>balkian.com - Projects
+    <title>balkian.com - HDMI-VGA adapter issues with Raspberry Pi
 </title>
     <meta name="viewport" content="width=device-width">
 
@@ -31,7 +31,8 @@
                 <li >
                   <a href="/"><i class="fa fa-home fa-large"></i></a>
                 </li>
-                <li  >
+                <li  class="active"
+ >
                   <a href="/category/cheats.html">Cheats</a>
                 </li>
                 <li  >
@@ -40,8 +41,7 @@
                 <li >
                   <a href="/tags.html">Tags</a>
                 </li>
-                 <li  class="active"
- >
+                 <li  >
                   <a href="/pages/projects.html">Projects</a>
                 </li>
                 <li>
@@ -114,23 +114,29 @@
         </div>
         <div id="content">
           <!--Body content-->
-<div class="section" id="ongoing-projects">
-<h2>Ongoing Projects</h2>
-<ul class="simple">
-<li><a class="reference external" href="http://gsi.dit.upm.es/ontologies/onyx">Onyx</a>: an ontology for emotion analysis that includes concepts from W3C's provenance.</li>
-<li><a class="reference external" href="http://gsi.dit.upm.es/ontologies/marl">Marl</a>: I updated this ontology, originally created by Adam Westerski, to make it compatible with the W3C's provenance ontology.</li>
-</ul>
+<div class="postnav">
+  <span class="previouspost"><i class="fa fa-chevron-left"></i> <a href="progress-bars-in-python.html">Progress bars in python</a></span>
 </div>
-<div class="section" id="past-projects">
-<h2>Past Projects</h2>
-<ul class="simple">
-<li><a class="reference external" href="http://github.com/balkian/hermes">Hermes</a>: one of my first projects, developed together with David Pérez as the special custom assignment in one of our courses. Hermes is an affective bot designed to mimic the behavour of humans. It included a plug-in system for its sensors and actuators. The information from its sensors changed its emotional state, which was shown via its actuators. Among others, it could fetch inforation from Twitter or its host system and change the expressions of an external Face made with servo motors or speak via its Text-To-Speech software. For instance, it could detect it was running out of battery, showing a sad face and sending an alerting tweet. You can see it in action in these two youtube videos: <a class="reference external" href="http://www.youtube.com/watch?v=KnEYahPD9z4">Part 1</a> and <a class="reference external" href="http://www.youtube.com/watch?v=lQZldCTPEJc">Part 2</a>.</li>
-<li><a class="reference external" href="http://github.com/eestec/eestec.portal">EESTEC.net</a>: the Plone based official portal of EESTEC. I fixed some bugs and implemented basic features. It's still an ongoing project.</li>
-<li><a class="reference external" href="http://github.com/gsi-upm/maia">Maia</a>: the Modular Architecture for Intelligent Agents is an evented agent architecture that aims to update the classical frameworks for intelligent agents with the concepts emerged from the Live Web.</li>
-</ul>
-<p>For more information, checl my [complete list of public repositories in <a href="http://github.com/balkian"><i class="icon-github"> Github</i></a>.</p>
+<div class="posthead">
+  <h2 class="title">HDMI-VGA adapter issues with Raspberry Pi</h2>
+  <span class="meta date">2017-01-07</span>
+      <span class="tag"><a href="/tag/rpi.html" class="label label-default">rpi</a></span>
 </div>
 
+<div class="post">
+ <p>Avoid HDMI flickering/intermittent blanking on RPI with a 1400x1050 VGA monitor.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">hdmi_drive</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">hdmi_group</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">hdmi_mode</span><span class="o">=</span><span class="mi">42</span>
+<span class="n">disable_overscan</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">config_hdmi_boost</span><span class="o">=</span><span class="mi">7</span>
+</pre></div>
+</td></tr></table>
+</div>
         </div>
         <div class="clear"></div>
       </div>

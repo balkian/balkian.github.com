@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>balkian.com - Projects
-</title>
+    <title>balkian.com - rpi</title>
     <meta name="viewport" content="width=device-width">
 
     <!-- syntax highlighting CSS -->
@@ -37,11 +36,10 @@
                 <li  >
                   <a href="/category/misc.html">Misc</a>
                 </li>
-                <li >
+                <li  class="active" >
                   <a href="/tags.html">Tags</a>
                 </li>
-                 <li  class="active"
- >
+                 <li  >
                   <a href="/pages/projects.html">Projects</a>
                 </li>
                 <li>
@@ -93,20 +91,6 @@
             <dl>
                 <dt><a href="/hdmi-vga-adapter-issues-with-raspberry-pi.html">HDMI-VGA adapter issues with Raspberry Pi</a></dt>
                   <dd class="tag"><a class="label" href="/tag/rpi.html">rpi</a></dd>
-                <dt><a href="/progress-bars-in-python.html">Progress bars in python</a></dt>
-                  <dd class="tag"><a class="label" href="/tag/python.html">python</a></dd>
-                <dt><a href="/arch-linux-fixes.html">Arch Linux Fixes</a></dt>
-                  <dd class="tag"><a class="label" href="/tag/arch.html">arch</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/linux.html">linux</a></dd>
-                <dt><a href="/org-mode-tricks.html">Org-mode tricks</a></dt>
-                  <dd class="tag"><a class="label" href="/tag/emacs.html">emacs</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/productivity.html">productivity</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/editor.html">editor</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/org.html">org</a></dd>
-                <dt><a href="/sharing-dotfiles.html">Sharing dotfiles</a></dt>
-                  <dd class="tag"><a class="label" href="/tag/github.html">github</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/git.html">git</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/dotfiles.html">dotfiles</a></dd>
             </dl>
           </div>
 
@@ -114,23 +98,40 @@
         </div>
         <div id="content">
           <!--Body content-->
-<div class="section" id="ongoing-projects">
-<h2>Ongoing Projects</h2>
-<ul class="simple">
-<li><a class="reference external" href="http://gsi.dit.upm.es/ontologies/onyx">Onyx</a>: an ontology for emotion analysis that includes concepts from W3C's provenance.</li>
-<li><a class="reference external" href="http://gsi.dit.upm.es/ontologies/marl">Marl</a>: I updated this ontology, originally created by Adam Westerski, to make it compatible with the W3C's provenance ontology.</li>
-</ul>
-</div>
-<div class="section" id="past-projects">
-<h2>Past Projects</h2>
-<ul class="simple">
-<li><a class="reference external" href="http://github.com/balkian/hermes">Hermes</a>: one of my first projects, developed together with David Pérez as the special custom assignment in one of our courses. Hermes is an affective bot designed to mimic the behavour of humans. It included a plug-in system for its sensors and actuators. The information from its sensors changed its emotional state, which was shown via its actuators. Among others, it could fetch inforation from Twitter or its host system and change the expressions of an external Face made with servo motors or speak via its Text-To-Speech software. For instance, it could detect it was running out of battery, showing a sad face and sending an alerting tweet. You can see it in action in these two youtube videos: <a class="reference external" href="http://www.youtube.com/watch?v=KnEYahPD9z4">Part 1</a> and <a class="reference external" href="http://www.youtube.com/watch?v=lQZldCTPEJc">Part 2</a>.</li>
-<li><a class="reference external" href="http://github.com/eestec/eestec.portal">EESTEC.net</a>: the Plone based official portal of EESTEC. I fixed some bugs and implemented basic features. It's still an ongoing project.</li>
-<li><a class="reference external" href="http://github.com/gsi-upm/maia">Maia</a>: the Modular Architecture for Intelligent Agents is an evented agent architecture that aims to update the classical frameworks for intelligent agents with the concepts emerged from the Live Web.</li>
-</ul>
-<p>For more information, checl my [complete list of public repositories in <a href="http://github.com/balkian"><i class="icon-github"> Github</i></a>.</p>
+<div class="pagination pag-top">
+  <span class="previouspage" style="visibility:hidden;"><i class="icon-chevron-sign-left"></i> Newer Posts</span>
+  <span class="page_number ">Page 1 of 1</span>
+    <span class="nextpage" style="visibility:hidden;">Older Posts <i class="icon-chevron-sign-right"></i></span>
 </div>
 
+<h1>Entries tagged: rpi</h1>
+<!-- This loops through the paginated posts -->
+  <div class="posthead">
+    <h2><a href="/hdmi-vga-adapter-issues-with-raspberry-pi.html" class="title">HDMI-VGA adapter issues with Raspberry Pi</a></h2>
+  <span class="date">2017-01-07</span>
+      <a class="tag" href="/tag/rpi.html"><span class="label">rpi</span></a>
+  </div>
+  <div class="excerpt">
+    <p>Avoid HDMI flickering/intermittent blanking on RPI with a 1400x1050 VGA monitor.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">hdmi_drive</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">hdmi_group</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">hdmi_mode</span><span class="o">=</span><span class="mi">42</span>
+<span class="n">disable_overscan</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">config_hdmi_boost</span><span class="o">=</span><span class="mi">7</span>
+</pre></div>
+</td></tr></table>
+  </div>
+  <div class="readmore"><a href="/hdmi-vga-adapter-issues-with-raspberry-pi.html"><i class="fa fa-external-link"></i> Read more...</a></div>
+
+<div class="pagination pag-bottom">
+  <span class="previouspage" style="display:none;"><i class="icon-chevron-sign-left"></i> Newer Posts</span>
+  <span class="page_number ">Page 1 of 1</span>
+    <span class="nextpage" style="display:none;">Older Posts <i class="icon-chevron-sign-right"></i></span>
+</div>
         </div>
         <div class="clear"></div>
       </div>

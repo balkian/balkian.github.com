@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>balkian.com</title><link href="http://balkian.com/" rel="alternate"></link><link href="http://balkian.com/feeds/all.atom.xml" rel="self"></link><id>http://balkian.com/</id><updated>2016-09-28T18:47:00+02:00</updated><entry><title>Progress bars in python</title><link href="http://balkian.com/progress-bars-in-python.html" rel="alternate"></link><updated>2016-09-28T18:47:00+02:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2016-09-28:progress-bars-in-python.html</id><summary type="html">&lt;p&gt;&lt;a class="reference external" href="https://github.com/noamraph/tqdm"&gt;tqdm&lt;/a&gt; is a nice way to add progress bars in the command line or in a jupyter notebook.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>balkian.com</title><link href="http://balkian.com/" rel="alternate"></link><link href="http://balkian.com/feeds/all.atom.xml" rel="self"></link><id>http://balkian.com/</id><updated>2017-01-07T18:00:00+01:00</updated><entry><title>HDMI-VGA adapter issues with Raspberry Pi</title><link href="http://balkian.com/hdmi-vga-adapter-issues-with-raspberry-pi.html" rel="alternate"></link><updated>2017-01-07T18:00:00+01:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2017-01-07:hdmi-vga-adapter-issues-with-raspberry-pi.html</id><summary type="html">&lt;p&gt;Avoid HDMI flickering/intermittent blanking on RPI with a 1400x1050 VGA monitor.&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;hdmi_drive&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="n"&gt;hdmi_group&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="n"&gt;hdmi_mode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;
+&lt;span class="n"&gt;disable_overscan&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;config_hdmi_boost&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</summary><category term="rpi"></category></entry><entry><title>Progress bars in python</title><link href="http://balkian.com/progress-bars-in-python.html" rel="alternate"></link><updated>2016-09-28T18:47:00+02:00</updated><author><name>J. Fernando Sánchez</name></author><id>tag:balkian.com,2016-09-28:progress-bars-in-python.html</id><summary type="html">&lt;p&gt;&lt;a class="reference external" href="https://github.com/noamraph/tqdm"&gt;tqdm&lt;/a&gt; is a nice way to add progress bars in the command line or in a jupyter notebook.&lt;/p&gt;
 &lt;img alt="" src="https://camo.githubusercontent.com/48838faaa8d00ea297f18e5bf55d3c6bb4e0ba6b/68747470733a2f2f692e696d6775722e636f6d2f686539417735432e676966" /&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
