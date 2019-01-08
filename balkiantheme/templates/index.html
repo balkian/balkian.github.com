@@ -11,7 +11,7 @@ Welcome
   {% else %}
   <span class="previouspage" style="visibility:hidden;"><i class="icon-chevron-sign-left"></i> Newer Posts</span>
   {% endif %}
-  <span class="page_number ">Page {{ articles_page.number }} of {{ articles_paginator.num_pages }}</span>
+  <!-- <span class="page_number ">Page {{ articles_page.number }} of {{ articles_paginator.num_pages }}</span> -->
   {% if articles_page.has_next() %}
     <span class="nextpage"><a href="/page{{ articles_page.next_page_number() }}"> Older Posts </a> <i class="icon-double-angle-right"></i></span>
   {% else %}
@@ -24,17 +24,19 @@ Welcome
 {% endblock %}
 <!-- This loops through the paginated posts -->
 {% for post in articles_page.object_list %}
-  <div class="posthead">
-    <h2><a href="{{ SITE_URL }}/{{ post.url }}" class="title">{{ post.title }}</a></h2>
-  <span class="date">{{ post.date | date_to_string }}</span>
-  {% for c in post.tags %}
-      <a class="tag" href="{{ SITE_URL }}/tag/{{ c }}.html"><span class="label">{{ c }}</span></a>
+  <div class="article-entry">
+    <div class="posthead">
+        <h2><a href="{{ SITE_URL }}/{{ post.url }}" class="title">{{ post.title }}</a></h2>
+    <span class="date">{{ post.date | date_to_string }}</span>
+    {% for c in post.tags %}
+        <a class="tag" href="{{ SITE_URL }}/tag/{{ c }}.html"><span class="label">{{ c }}</span></a>
   {% endfor %}
   </div>
   <div class="excerpt">
     {{ post.summary }}
   </div>
-  <div class="readmore"><a href="{{ SITE_URL }}/{{ post.url }}"><i class="fa fa-external-link"></i> Read more...</a></div>
+  <div class="readmore"><a href="{{ SITE_URL }}/{{ post.url }}"> Read more...</a></div>
+  </div>
 {% endfor %}
 
 {% if articles_paginator.num_pages > 0 %}

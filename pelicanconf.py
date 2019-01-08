@@ -38,7 +38,10 @@ DEFAULT_PAGINATION = 10
 THEME = "balkiantheme"
 
 PLUGIN_PATHS = ["plugins/",]
-PLUGINS = ["neighbors",]
+PLUGINS = [
+        "neighbors",
+        "pelican_youtube",
+        ]
 
 PYGMENTS_RST_OPTIONS = {'linenos': 'table'}
 

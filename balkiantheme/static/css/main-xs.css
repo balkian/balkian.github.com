@@ -64,8 +64,6 @@ div.navbar {
   background-color: #F30;
   color: white;
   text-shadow: 0.1em 0.1em 0.1em black;
-  border-top: 1px solid #555;
-  border-bottom: 1px solid #555;
 }
 
 .navbar li a {
@@ -74,20 +72,14 @@ div.navbar {
   text-decoration: none;
   font-weight: bold;
   color: #CCC;
-  border-right: 1px solid #555;
   padding: 0.5em 1em;
   display: block;
-}
-.navbar li:first-child a {
-  border-left: 1px double #ccc;
 }
 .navbar li a:hover {
   position: relative;
   color: #000;
   background-color: #fff;
   text-shadow: 2px 2px #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff;
-  border-top: 1px solid #555;
-  border-bottom: 1px solid #555;
   z-index: 100;
 }
 

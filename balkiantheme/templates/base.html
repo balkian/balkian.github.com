@@ -15,103 +15,47 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" media="only screen" href="{{ SITE_URL }}/theme/css/main.css">
-    <link rel="stylesheet" media="only screen and (min-width: 0px) and (max-width: 599px)" href="{{ SITE_URL }}/theme/css/main-xs.css">
-    <link rel="stylesheet" media="only screen and (min-width: 600px) and (max-width: 1199px)" href="{{ SITE_URL }}/theme/css/main-medium.css">
-    <link rel="stylesheet" media="only screen and (min-width: 1200px)" href="{{ SITE_URL }}/theme/css/main-desktop.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300|Comfortaa' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <div id="container" class="container">
-      <header id="header">
-        <div id="navbar" class="navbar navbar-inverse navbar-static-bottom">
-          <div class="container">
-            <div class="navbar-header">
-              <ul class="nav navbar-nav">
-                <li {% if page_name == 'index' %}class="active" {% endif %}>
-                  <a href="/"><i class="fa fa-home fa-large"></i></a>
-                </li>
-                {% for c,carts in categories %}
-                <li {% if ( page_name and page_name == c.page_name) or (category and category == c ) %} class="active"
-                    {% endif %} >
-                  <a href="/{{ c.url }}">{{ c.name | capitalize }}</a>
-                </li>
-                {% endfor %}
-                <li {% if page_name == "tags" or tag %} class="active" {%endif%}>
-                  <a href="/tags.html">Tags</a>
-                </li>
-                {% for p in pages %} {% if "/page" in p.url %}
-                {% else %}
-                {% if p.url != "/index.html" %}
-                <li {% if page and p.url == page.url %} class="active"
-                    {% endif %} >
-                  <a href="/{{ p.url }}">{{ p.title }}</a>
-                </li>
-                {% endif %}
-                {% endif %}
-                {% endfor %}
-                <li>
-                  <a href="//jfernando.es" target="_blank">CV</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </header>
       <div id="contentwrapper">
-        <div id="sidebar" >
-          <div id="badge" class="flip-container" ontouchstart="this.classList.toggle('hover');">
-              <div class="flipper sticky">
-                <div class="front">
-                  <!-- front content -->
-                  <img id="avatar" width=100% src="{{ SITE_URL }}/theme/img/me.png">
-                </div>
-                <div class="back">
-                  <!-- back content -->
-                  <img id="picture" width=100% src="{{ SITE_URL }}/theme/img/me-bat.png">
-                </div>
-              </div>
-          </div>
-
-          <div id="about" style="clear:both;">
-            <!-- <h1 class="title">Interests</h1> -->
-            <div class="icons">
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa-stack-2x" ></i><i class="fa fa-stack-1x fa-linux"></i></span><span class="explanation">Linux lover</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-android"></i></span><span class="explanation">Android dev</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-github-alt"></i> </span><span class="explanation">GitHub user</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-stack-exchange"></i> </span><span class="explanation">StackExchange fan</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-music"></i> </span><span class="explanation">Music lover</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-film"></i> </span><span class="explanation">Movie fan</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-comments"></i> </span><span class="explanation">Always on IM</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-laptop"></i> </span><span class="explanation">Always on a PC</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-pencil"></i> </span><span class="explanation">Occassional writter</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-moon-o"></i> </span><span class="explanation">Night owl</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-terminal"></i></span>      <span class="explanation">CLI user</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-flag"></i></span>      <span class="explanation">Linguist wannabe</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-code"></i> </span>           <span class="explanation">Love to code</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-book"></i></span>      <span class="explanation">Keen reader</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-quote-right"></i></span>      <span class="explanation">Quotes on demand</span></span>
-            </div>
-          </div>
-          
-          <div class="entries">
-            <h2 class="title">Latest entries</h2>
-            <dl>
-                {% for p in articles[:5] %}
-                <dt><a href="{{ SITE_URL }}/{{ p.url }}">{{ p.title }}</a></dt>
-                  {% for c in p.tags %}
-                  <dd class="tag"><a class="label" href="/tag/{{ c }}.html">{{ c }}</a></dd>
-                  {% endfor %}
-                {% endfor %}
-            </dl>
-          </div>
-
-          <!--Sidebar content-->
-        </div>
         <div id="content">
+      <header id="header">
+        <ul class="navbar" id="navbar">
+          <a href="/">
+          <li {% if page_name == 'index' %}class="active" {% endif %}>
+            <i class="fa fa-home fa-large"></i>
+          </li></a>
+          {% for c,carts in categories %}
+          <a href="/{{ c.url }}"><li {% if ( page_name and page_name == c.page_name) or (category and category == c ) %} class="active"
+              {% endif %} >
+            {{ c.name | capitalize }}
+          </li></a>
+          {% endfor %}
+          <a href="/tags.html"><li {% if page_name == "tags" or tag %} class="active" {%endif%}>
+            Tags
+          </li></a>
+          {% for p in pages %} {% if "/page" in p.url %}
+          {% else %}
+          {% if p.url != "/index.html" %}
+          <a href="/{{ p.url }}"><li {% if page and p.url == page.url %} class="active"
+              {% endif %} >
+            {{ p.title }}
+          </li></a>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+          <a href="//jfernando.es" target="_blank"><li>
+            CV
+          </li></a>
+        </ul>
+      </header>
           <!--Body content-->
           {% block content %}
           {% endblock %}
         </div>
+        {% include "sidebar.html" %}
         <div class="clear"></div>
       </div>
       <footer role="contentinfo">
