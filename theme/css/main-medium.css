@@ -1,35 +1,34 @@
 
-#contentwrapper {
-  position: relative;
-  background-color: rgba(255, 255, 255, 0.5);
-  overflow: display;
-  border: 1px solid #CCC;
-  display: inline-block;
-}
+/* #contentwrapper { */
+/*   background-color: rgba(255, 255, 255, 0.5); */
+/*   overflow: display; */
+/*   border: 1px solid #CCC; */
+/*   display: inline-block; */
+/* } */
 
-#sidebar {
-  position: relative;
-  float: left;
-  width: 20%;
-  text-align: right;
-  border-right: dashed 1px #DDD;
-  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-  box-sizing: border-box;         /* Opera/IE 8+ */
-}
+/* #sidebar { */
+/*   width: 20%; */
+/*   text-align: right; */
+/*   border-right: dashed 1px #DDD; */
+/*   -webkit-box-sizing: border-box; /\* Safari/Chrome, other WebKit *\/ */
+/*   -moz-box-sizing: border-box;    /\* Firefox, other Gecko *\/ */
+/*   box-sizing: border-box;         /\* Opera/IE 8+ *\/ */
+/* } */
 
 
-#content {
-  position: relative;
-  padding: 10px 10px;
-  width: 80%;
-  float: right;
-  margin: 0;
-  border-bottom: dashed 1px #DDD;
-  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-  box-sizing: border-box;         /* Opera/IE 8+ */
+/* #content { */
+/*   padding: 10px 10px; */
+/*   margin: 0; */
+/*   border-bottom: dashed 1px #DDD; */
+/*   -webkit-box-sizing: border-box; /\* Safari/Chrome, other WebKit *\/ */
+/*   -moz-box-sizing: border-box;    /\* Firefox, other Gecko *\/ */
+/*   box-sizing: border-box;         /\* Opera/IE 8+ *\/ */
+/* } */
+
+#content .full {
+    width: 100%;
 }
+
 
 #content:after {
     content: ".";
@@ -83,10 +82,6 @@ header {
   padding-left: 20%;;
 }
 
-div.navbar {
-  background-color: black;
-}
-
 .navbar ul {
   list-style-type:none;
   margin:0;
@@ -103,8 +98,6 @@ div.navbar {
   background-color: #F30;
   color: white;
   text-shadow: 0.1em 0.1em 0.1em black;
-  border-top: 1px solid #555;
-  border-bottom: 1px solid #555;
 }
 
 .navbar li a {
@@ -116,16 +109,12 @@ div.navbar {
   border-right: 1px solid #555;
   padding: 0.5em 1em;
 }
-.navbar li:first-child a {
-  border-left: 1px double #ccc;
-}
+
 .navbar li a:hover {
   position: relative;
   color: #000;
   background-color: #fff;
   text-shadow: 2px 2px #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff;
-  border-top: 1px solid #555;
-  border-bottom: 1px solid #555;
   z-index: 10;
 }
 

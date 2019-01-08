@@ -15,107 +15,52 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" media="only screen" href="/theme/css/main.css">
-    <link rel="stylesheet" media="only screen and (min-width: 0px) and (max-width: 599px)" href="/theme/css/main-xs.css">
-    <link rel="stylesheet" media="only screen and (min-width: 600px) and (max-width: 1199px)" href="/theme/css/main-medium.css">
-    <link rel="stylesheet" media="only screen and (min-width: 1200px)" href="/theme/css/main-desktop.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300|Comfortaa' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <div id="container" class="container">
-      <header id="header">
-        <div id="navbar" class="navbar navbar-inverse navbar-static-bottom">
-          <div class="container">
-            <div class="navbar-header">
-              <ul class="nav navbar-nav">
-                <li >
-                  <a href="/"><i class="fa fa-home fa-large"></i></a>
-                </li>
-                <li  >
-                  <a href="/category/cheats.html">Cheats</a>
-                </li>
-                <li  >
-                  <a href="/category/misc.html">Misc</a>
-                </li>
-                <li  class="active" >
-                  <a href="/tags.html">Tags</a>
-                </li>
-                 <li  >
-                  <a href="/pages/projects.html">Projects</a>
-                </li>
-                <li>
-                  <a href="//jfernando.es" target="_blank">CV</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </header>
       <div id="contentwrapper">
-        <div id="sidebar" >
-          <div id="badge" class="flip-container" ontouchstart="this.classList.toggle('hover');">
-              <div class="flipper sticky">
-                <div class="front">
-                  <!-- front content -->
-                  <img id="avatar" width=100% src="/theme/img/me.png">
-                </div>
-                <div class="back">
-                  <!-- back content -->
-                  <img id="picture" width=100% src="/theme/img/me-bat.png">
-                </div>
-              </div>
-          </div>
-
-          <div id="about" style="clear:both;">
-            <!-- <h1 class="title">Interests</h1> -->
-            <div class="icons">
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa-stack-2x" ></i><i class="fa fa-stack-1x fa-linux"></i></span><span class="explanation">Linux lover</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-android"></i></span><span class="explanation">Android dev</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-github-alt"></i> </span><span class="explanation">GitHub user</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-stack-exchange"></i> </span><span class="explanation">StackExchange fan</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-music"></i> </span><span class="explanation">Music lover</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-film"></i> </span><span class="explanation">Movie fan</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-comments"></i> </span><span class="explanation">Always on IM</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-laptop"></i> </span><span class="explanation">Always on a PC</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-pencil"></i> </span><span class="explanation">Occassional writter</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-moon-o"></i> </span><span class="explanation">Night owl</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-terminal"></i></span>      <span class="explanation">CLI user</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-flag"></i></span>      <span class="explanation">Linguist wannabe</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-code"></i> </span>           <span class="explanation">Love to code</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-book"></i></span>      <span class="explanation">Keen reader</span></span>
-              <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-quote-right"></i></span>      <span class="explanation">Quotes on demand</span></span>
-            </div>
-          </div>
-          
-          <div class="entries">
-            <h2 class="title">Latest entries</h2>
-            <dl>
-                <dt><a href="/org-mode-tricks.html">Org-mode tricks</a></dt>
-                  <dd class="tag"><a class="label" href="/tag/emacs.html">emacs</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/productivity.html">productivity</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/editor.html">editor</a></dd>
-                  <dd class="tag"><a class="label" href="/tag/org.html">org</a></dd>
-            </dl>
-          </div>
-
-          <!--Sidebar content-->
-        </div>
         <div id="content">
+      <header id="header">
+        <ul class="navbar" id="navbar">
+          <a href="/">
+          <li >
+            <i class="fa fa-home fa-large"></i>
+          </li></a>
+          <a href="/category/cheats.html"><li  >
+            Cheats
+          </li></a>
+          <a href="/category/misc.html"><li  >
+            Misc
+          </li></a>
+          <a href="/tags.html"><li  class="active" >
+            Tags
+          </li></a>
+           <a href="/pages/projects.html"><li  >
+            Projects
+          </li></a>
+          <a href="//jfernando.es" target="_blank"><li>
+            CV
+          </li></a>
+        </ul>
+      </header>
           <!--Body content-->
 <div class="pagination pag-top">
   <span class="previouspage" style="visibility:hidden;"><i class="icon-chevron-sign-left"></i> Newer Posts</span>
-  <span class="page_number ">Page 1 of 1</span>
+  <!-- <span class="page_number ">Page 1 of 1</span> -->
     <span class="nextpage" style="visibility:hidden;">Older Posts <i class="icon-chevron-sign-right"></i></span>
 </div>
 
 <h1>Entries tagged: org</h1>
 <!-- This loops through the paginated posts -->
-  <div class="posthead">
-    <h2><a href="/org-mode-tricks.html" class="title">Org-mode tricks</a></h2>
-  <span class="date">2015-12-10</span>
-      <a class="tag" href="/tag/emacs.html"><span class="label">emacs</span></a>
-      <a class="tag" href="/tag/productivity.html"><span class="label">productivity</span></a>
-      <a class="tag" href="/tag/editor.html"><span class="label">editor</span></a>
-      <a class="tag" href="/tag/org.html"><span class="label">org</span></a>
+  <div class="article-entry">
+    <div class="posthead">
+        <h2><a href="/org-mode-tricks.html" class="title">Org-mode tricks</a></h2>
+    <span class="date">2015-12-10</span>
+        <a class="tag" href="/tag/emacs.html"><span class="label">emacs</span></a>
+        <a class="tag" href="/tag/productivity.html"><span class="label">productivity</span></a>
+        <a class="tag" href="/tag/editor.html"><span class="label">editor</span></a>
+        <a class="tag" href="/tag/org.html"><span class="label">org</span></a>
   </div>
   <div class="excerpt">
     <div class="section" id="show-plain-text-version">
@@ -125,7 +70,8 @@
 </td></tr></table></div>
 
   </div>
-  <div class="readmore"><a href="/org-mode-tricks.html"><i class="fa fa-external-link"></i> Read more...</a></div>
+  <div class="readmore"><a href="/org-mode-tricks.html"> Read more...</a></div>
+  </div>
 
 <div class="pagination pag-bottom">
   <span class="previouspage" style="display:none;"><i class="icon-chevron-sign-left"></i> Newer Posts</span>
@@ -133,7 +79,54 @@
     <span class="nextpage" style="display:none;">Older Posts <i class="icon-chevron-sign-right"></i></span>
 </div>
         </div>
-        <div class="clear"></div>
+<div id="sidebar" >
+  <div id="badge" class="flip-container" ontouchstart="this.classList.toggle('hover');">
+    <div class="flipper sticky">
+      <div class="front">
+        <!-- front content -->
+        <img id="avatar" src="/theme/img/me.png">
+      </div>
+      <div class="back">
+        <!-- back content -->
+        <img id="picture" src="/theme/img/me-bat.png">
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="entries">
+    <h2 class="title">Latest entries</h2>
+    <dl>
+      <dt><a href="/org-mode-tricks.html">Org-mode tricks</a></dt>
+      <dd class="tag"><a class="label" href="/tag/emacs.html">emacs</a></dd>
+      <dd class="tag"><a class="label" href="/tag/productivity.html">productivity</a></dd>
+      <dd class="tag"><a class="label" href="/tag/editor.html">editor</a></dd>
+      <dd class="tag"><a class="label" href="/tag/org.html">org</a></dd>
+    </dl>
+  </div>
+  <div class="about" style="clear:both;">
+    <!-- <h2 class="title">About me</h2> -->
+    <div class="icons">
+      <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa-stack-2x" ></i><i class="fa fa-stack-1x fa-linux"></i></span><span class="explanation">Linux lover</span></span>
+      <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-android"></i></span><span class="explanation">Android dev</span></span>
+      <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-github-alt"></i> </span><span class="explanation">GitHub user</span></span>
+      <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-stack-exchange"></i> </span><span class="explanation">StackExchange fan</span></span>
+      <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-music"></i> </span><span class="explanation">Music lover</span></span>
+      <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-film"></i> </span><span class="explanation">Movie fan</span></span>
+      <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-comments"></i> </span><span class="explanation">Always on IM</span></span>
+      <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-laptop"></i> </span><span class="explanation">Always on a PC</span></span>
+      <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-pencil"></i> </span><span class="explanation">Occassional writter</span></span>
+      <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-moon-o"></i> </span><span class="explanation">Night owl</span></span>
+      <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-terminal"></i></span>      <span class="explanation">CLI user</span></span>
+      <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-flag"></i></span>      <span class="explanation">Linguist wannabe</span></span>
+      <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-code"></i> </span>           <span class="explanation">Love to code</span></span>
+      <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-book"></i></span>      <span class="explanation">Keen reader</span></span>
+      <span class="coolicon"><span class="fa fa-stack"> <i class="fa fa-square-o fa fa-stack-2x" ></i><i class="fa fa-quote-right"></i></span>      <span class="explanation">Quotes on demand</span></span>
+    </div>
+  </div>
+
+  <!--Sidebar content-->
+</div>        <div class="clear"></div>
       </div>
       <footer role="contentinfo">
         <div class="contact">
