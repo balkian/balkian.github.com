@@ -1,0 +1,17 @@
+            {{ if .Site.Params.orderByPublishDate }}
+                {{ $.Scratch.Set "recentPosts" .Site.Pages.ByPublishDate.Reverse }}
+            {{ else }}
+                {{ $.Scratch.Set "recentPosts" .Site.Pages }}
+            {{ end }}
+
+            {{ with .Site.Params.postAmount.sidebar }}
+                {{ $.Scratch.Set "postLimit" . }}
+            {{ else }}
+                {{ $.Scratch.Set "postLimit" 5 }}
+            {{ end }}
+
+            {{ range first ($.Scratch.Get "postLimit") (where ($.Scratch.Get "recentPosts") "Type" "post") }}
+
+    <dt><a href="{{ .Permalink }}">{{ .Title }}</a></dt>
+    {{ .Render "item-tags" }}
+    {{ end }}

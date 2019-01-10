@@ -1,0 +1,19 @@
+{{ define "content" }}
+<h1>{{ .Data.Plural | humanize}}</h1>
+<div>
+            {{ $data := .Data }}
+            {{ $total := .Site.Pages | len}}
+            {{ $max := (index (.Data.Terms.ByCount) 0).Count  }}
+            {{ range $key, $value := .Data.Terms.ByCount }}
+            {{ $prop := (div (mul $value.Count 200) $max) }}
+                {{ if lt $prop 50 }}
+                {{ $.Scratch.Set "prop" 50 }}
+                {{ else }}
+                {{ $.Scratch.Set "prop" $prop }}
+                {{ end }}
+
+<a class="tag" href="/{{ $data.Plural }}/{{ $value.Name | urlize }}"><span style="font-size: {{ $.Scratch.Get "prop" }}%;" class="label label-default">{{ $value.Name}} ({{ $value.Count }})</span></a>
+            {{ end }}
+    {{ $.Scratch.Set "showCategories" false }}
+</div>
+{{ end }}

@@ -1,0 +1,13 @@
+{{ define "site_title" }}{{ .Title }}{{ end }}
+
+{{ define "content" }}
+{{ range (.Paginate (where .Data.Pages "Type" "post")).Pages }}
+{{ .Render "content-list" }}
+{{ end }}
+<!-- Pagination -->
+{{ partial "pagination.html" . }}
+{{ end }}
+
+{{ define "sidebar" }}
+{{ partial "sidebar-entries.html" . }}
+{{ end }}

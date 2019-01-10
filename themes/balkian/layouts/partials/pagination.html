@@ -1,0 +1,14 @@
+<!-- Pagination -->
+<div class="pagination pag-bottom">
+    {{ if .Paginator.HasPrev }}
+    <span class="previouspage"><i class="icon-chevron-sign-left"></i><a href="{{ .Paginator.Prev.URL }}"> Previous Page</a></span>
+    {{ else }}
+    <span class="previouspage" style="display:none;"><i class="icon-chevron-sign-left"></i> Previous Page</span>
+    {{ end }}
+
+    {{ if .Paginator.HasNext }}
+    <span class="nextpage"><a href="{{ .Paginator.Next.URL }}"> Next Page</a> <i class="icon-chevron-sign-right"></i></span>
+    {{ else }}
+    <span class="nextpage" style="display:none;">Older Posts <i class="icon-chevron-sign-right"></i></span>
+    {{ end }}
+</div>

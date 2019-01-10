@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{{ .Site.Title }} - {{ block "site_title" . }}WELCOME{{ end }}</title>
+    <meta name="viewport" content="width=device-width">
+
+    <!-- syntax highlighting CSS -->
+    <!-- <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/solarized.css"> -->
+    <!--<link href="/css/bootstrap.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="{{ "/font-awesome/css/all.css" | relURL }}">
+
+    <!--<link rel="stylesheet" href="/css/bootstrap-responsive.min.css">-->
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" media="only screen" href="{{ "/css/main.css" | relURL }}">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300|Comfortaa' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div id="container" class="container">
+      <div id="contentwrapper">
+        <div id="content">
+      <header id="header">
+        <ul class="navbar" id="navbar">
+          <a href="/">
+            <li {{ if ( eq .URL "/" ) }}
+                class="active"
+              {{ end }} >
+            <i class="fa fa-home fa-large"></i>
+          </li></a>
+{{ $currentNode := . }}
+{{ range .Site.Menus.main }}
+          <a href="{{ .URL}}"><li class='{{if or ($currentNode.IsMenuCurrent "main" .) ($currentNode.HasMenuCurrent "main" .) }} active{{end}}' >{{ .Name }}
+          </li></a>
+{{ end }}
+          <a href="//jfernando.es" target="_blank"><li>
+            CV
+          </li></a>
+        </ul>
+      </header>
+          <!--Body content-->
+          {{ block "content" . }}
+          {{ end }}
+        </div>
+        {{ block "sidebar" . }}
+        {{ partial "sidebar-entries.html" . }}
+        {{ end }}
+        <div class="clear"></div>
+      </div>
+      <footer class="pagefooter" role="contentinfo">
+        <div class="contact">
+          <p>
+          J. Fernando Sánchez Rada | balkian
+          </p>
+        </div>
+        <ul id="social">
+          <li><a href="http://github.com/balkian"><i class="fab fa-github"></i></a></li>
+          <li><a href="http://lab.gsi.upm.es/balkian"><i class="fab fa-gitlab"></i></a></li>
+          <li><a href="http://twitter.com/balkian"><i class="fab fa-twitter"></i></a></li>
+          <li><a href="http://git.sinpapel.es/balkian"><i class="fab fa-git"></i></a></li>
+          <li><a href="http://linkedin.com/in/jfsanchezrada"><i class="fab fa-linkedin"></i></a></li>
+        </ul>
+          <p>
+          <i class="fab fa-creative-commons"></i> Creative Commons A-SA-NC
+          </p>
+      </footer>
+    </div>
+
+    <script src="{{ "/js/jquery-2.0.2.min.js" | relURL }}"></script>
+  </body>
+</html>

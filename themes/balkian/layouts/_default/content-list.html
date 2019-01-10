@@ -1,0 +1,10 @@
+<div class="entry default-entry">
+  <div class="posthead">
+    {{ if ne (.Date.Format "2006") "0001" }}
+    <span class="date">{{ .Date.Format "2006/01/02" }}</span>
+    {{ end }}
+    <h2><a href="{{ .Permalink }}" class="title">{{ .Title }}</a></h2>
+    <h3>{{ .Description }}</h3>
+    {{ .Render "item-tags" }}
+  </div>
+</div>

@@ -1,0 +1,9 @@
+{{ define "content"}}
+<h2>{{ .Title }}</h2>
+<!-- <hr> -->
+{{ .Content }}
+{{ end }}
+
+{{ define "sidebar" }}
+{{ partial "toc.html" . }}
+{{ end }}

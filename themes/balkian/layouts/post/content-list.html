@@ -1,0 +1,13 @@
+<div class="entry">
+  <div class="posthead">
+    <span class="date">{{ .Date.Format "2006/01/02" }}</span>
+    <h2><a href="{{ .Permalink }}" class="title">{{ .Title }}</a></h2>
+  {{ .Render "item-tags" }}
+  </div>
+  {{ if .Truncated }}
+  {{ .Summary | markdownify }}
+  <div><a href="{{ .Permalink }}"><div class="readmore"> Read more...</div></a></div>
+  {{ else }}
+  {{ .Content }}
+  {{ end }}
+</div>
