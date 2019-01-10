@@ -63,6 +63,52 @@
 logind-check-graphical=true
 </code></pre>
 
+<h1 id="edit-previous-commands">Edit previous commands</h1>
+
+<p><code>fc</code> is a shell builtin to list and edit previous commands in an editor.
+In addition to editing a single line (which you can also do with <code>C-x C-e</code>), it also allows you to edit and run several lines at the same time.
+You use it like this:</p>
+
+<p>List previous commands</p>
+
+<pre><code>$ fc -l
+10259  nvim deploy.sh
+10260* cd ..
+10261* nvim content/cheatsheet/linux.md
+10262  cd
+</code></pre>
+
+<p>List commands with date (in zsh)</p>
+
+<pre><code>$ fc -ld
+10260* 19:38  cd ..
+10261* 19:38  nvim content/cheatsheet/linux.md
+10262  19:40  cd
+10263  19:40  fc -l
+</code></pre>
+
+<p>You can add the date too:</p>
+
+<pre><code>$ fc -fld
+10262  1/10/2019 19:40  cd
+10263  1/10/2019 19:40  fc -l
+10264  1/10/2019 19:40  fc -ld
+</code></pre>
+
+<p>You can edit a range of commands</p>
+
+<pre><code>$ fc 10262 10264
+</code></pre>
+
+<p>The range can be relative to the current position, so the previous command is equivalent to:</p>
+
+<pre><code>$ fc -3 -1
+</code></pre>
+
+<p>If you save and exit, all commands are executed as a script, and it will be added to your history.</p>
+
+<p>Source: <a href="https://shapeshed.com/unix-fc/">https://shapeshed.com/unix-fc/</a></p>
+
 
         </div>
         
@@ -72,6 +118,7 @@ logind-check-graphical=true
 <nav id="TableOfContents">
 <ul>
 <li><a href="#black-screen-and-lightdm-doesn-t-unlock">Black screen and LightDM doesn&rsquo;t unlock</a></li>
+<li><a href="#edit-previous-commands">Edit previous commands</a></li>
 </ul>
 </nav>
 </div>

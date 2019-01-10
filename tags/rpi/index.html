@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Balkian&#39;s site - python</title>
+    <title>Balkian&#39;s site - rpi</title>
     <meta name="viewport" content="width=device-width">
 
     
@@ -52,134 +52,13 @@
           
           
 
-<div class="entry">
-  <div class="posthead">
-    <span class="date">2016/09/28</span>
-    <h2><a href="../../post/2016-09-28-tqdm/" class="title">Progress bars in python</a></h2>
-  
-<a class="tag" href='../../tags/python'><span class="label">python</span></a>
-
-
-  </div>
-  
-  <p><a href="https://github.com/noamraph/tqdm">tqdm</a> is a nice way to add progress
-bars in the command line or in a jupyter notebook.</p>
-
-<p><img src="https://camo.githubusercontent.com/48838faaa8d00ea297f18e5bf55d3c6bb4e0ba6b/68747470733a2f2f692e696d6775722e636f6d2f686539417735432e676966" alt="image" /></p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> tqdm <span style="color:#f92672">import</span> tqdm
-<span style="color:#f92672">import</span> time
-
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> tqdm(range(<span style="color:#ae81ff">100</span>)):
-    time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)</code></pre></td></tr></table>
-</div>
-</div>
-  
-</div>
-
-
-<div class="entry">
-  <div class="posthead">
-    <span class="date">2014/10/09</span>
-    <h2><a href="../../post/2014-10-09-proxies/" class="title">Proxies with Apache and python</a></h2>
-  
-<a class="tag" href='../../tags/python'><span class="label">python</span></a>
-
-<a class="tag" href='../../tags/apache'><span class="label">apache</span></a>
-
-<a class="tag" href='../../tags/proxy'><span class="label">proxy</span></a>
-
-<a class="tag" href='../../tags/gunicorn'><span class="label">gunicorn</span></a>
-
-<a class="tag" href='../../tags/uwsgi'><span class="label">uwsgi</span></a>
-
-
-  </div>
-  
-  <p>This is a quick note on proxying a local python application (e.g. flask)
-to a subdirectory in Apache. This assumes that the file wsgi.py contains
-a WSGI application with the name <em>application</em>. Hence, wsgi:application.</p>
-
-<p><h2 id="gunicorn">Gunicorn</h2>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache"><span style="color:#f92672">&lt;Location</span> <span style="color:#e6db74">/myapp/</span><span style="color:#f92672">&gt;</span>
-    ProxyPass <a href="http://127.0.0.1:8888/myapp/">http://127.0.0.1:8888/myapp/</a>
-    ProxyPassReverse <a href="http://127.0.0.1:8888/myapp/">http://127.0.0.1:8888/myapp/</a>
-    RequestHeader set SCRIPT_NAME <span style="color:#e6db74">&#34;/myapp/&#34;</span>
-<span style="color:#f92672">&lt;/Location&gt;</span></code></pre></td></tr></table>
-</div>
-</div></p>
-
-  <div><a href="../../post/2014-10-09-proxies/"><div class="readmore"> Read more...</div></a></div>
-  
-</div>
-
-
-<div class="entry">
-  <div class="posthead">
-    <span class="date">2014/09/27</span>
-    <h2><a href="../../post/2014-09-23-publishing-to-pypi/" class="title">Publishing on PyPi</a></h2>
-  
-<a class="tag" href='../../tags/github'><span class="label">github</span></a>
-
-<a class="tag" href='../../tags/python'><span class="label">python</span></a>
-
-<a class="tag" href='../../tags/pypi'><span class="label">pypi</span></a>
-
-
-  </div>
-  
-  Developing a python module and publishing it on Github is cool, but most of the times you want others to download and use it easily. That is the role of PyPi, the python package repository. In this post I show you how to publish your package in less than 10 minutes.
-  <div><a href="../../post/2014-09-23-publishing-to-pypi/"><div class="readmore"> Read more...</div></a></div>
-  
-</div>
-
-
-<div class="entry">
-  <div class="posthead">
-    <span class="date">2014/03/27</span>
-    <h2><a href="../../post/2014-03-27-updating-eurolovemap/" class="title">Updating EuroLoveMap</a></h2>
-  
-<a class="tag" href='../../tags/javascript'><span class="label">javascript</span></a>
-
-<a class="tag" href='../../tags/python'><span class="label">python</span></a>
-
-<a class="tag" href='../../tags/heroku'><span class="label">heroku</span></a>
-
-
-  </div>
-  
-  As part of the OpeNER hackathon we decided to build a prototype that would allow us to compare how different countries feel about several topics. We used the OpeNER pipeline to get the sentiment from a set of newspaper articles we gathered from media in several languages. Then we aggregated those articles by category and country (using the source of the article or the language it was written in), obtaining the &ldquo;overall feeling&rdquo; of each country about each topic.
-  <div><a href="../../post/2014-03-27-updating-eurolovemap/"><div class="readmore"> Read more...</div></a></div>
-  
-</div>
-
-
 <div class="entry default-entry">
   <div class="posthead">
     
-    <h2><a href="../../cheatsheet/python/" class="title">Python</a></h2>
-    <h3>Tips and useful libraries for python developers</h3>
+    <h2><a href="../../cheatsheet/rpi/" class="title">Raspberry Pi</a></h2>
+    <h3>Tools, links and configuration for your Raspberry Pi</h3>
     
-<a class="tag" href='../../tags/python'><span class="label">python</span></a>
-
-<a class="tag" href='../../tags/programming'><span class="label">programming</span></a>
+<a class="tag" href='../../tags/rpi'><span class="label">rpi</span></a>
 
 
   </div>

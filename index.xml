@@ -162,8 +162,8 @@ a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:a
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/cheatsheet/linux/</guid>
-      <description> Black screen and LightDM doesn&amp;rsquo;t unlock Add this to your /etc/lightdm/lightdm.conf file:
-[LightDM] logind-check-graphical=true  </description>
+      <description>Black screen and LightDM doesn&amp;rsquo;t unlock Add this to your /etc/lightdm/lightdm.conf file:
+[LightDM] logind-check-graphical=true  Edit previous commands fc is a shell builtin to list and edit previous commands in an editor. In addition to editing a single line (which you can also do with C-x C-e), it also allows you to edit and run several lines at the same time.</description>
     </item>
     
     <item>

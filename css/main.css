@@ -74,7 +74,14 @@ body {
 
 @media (max-width: 700px) {
     #sidebar {
-        display: none;
+        display: inline-block;
+	float: left;
+    }
+    #sidebar > * {
+	    display: none;
+    }
+    #sidebar > .toc  {
+        display: block;
     }
 }
 @media (min-width: 700px) {
@@ -236,8 +243,13 @@ body {
     }
 
     .toc {
-        position: fixed;
-        height: 100%;
+	    padding: 1em;
+	    position: fixed;
+	    border-color: black;
+	    border: 1px solid;
+	    background-color: white;
+	    height: max-content;
+	    z-index: 1;
     }
 
 }
