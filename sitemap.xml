@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>/post/2019-01-06-zigbee2mqtt/</loc>
+    <lastmod>2019-01-06T10:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/about/</loc>
+    <lastmod>2017-02-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/2016-09-28-tqdm/</loc>
+    <lastmod>2016-09-28T18:47:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/2015-04-10-github-dotfiles/</loc>
+    <lastmod>2015-04-10T17:47:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/2014-12-09-zotero/</loc>
+    <lastmod>2014-12-09T12:12:12+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/2014-10-09-proxies/</loc>
+    <lastmod>2014-10-09T10:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/2014-09-23-publishing-to-pypi/</loc>
+    <lastmod>2014-09-27T10:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/2014-03-27-updating-eurolovemap/</loc>
+    <lastmod>2014-03-27T14:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/2013-08-22-remove-git-files-with-globbing/</loc>
+    <lastmod>2013-08-22T23:14:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/2013-08-17-creating-my-web/</loc>
+    <lastmod>2013-08-22T14:14:22+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2019-01-06T10:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/cheatsheet/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/cheatsheet/emacs/</loc>
+  </url>
+  
+  <url>
+    <loc>/project/</loc>
+  </url>
+  
+  <url>
+    <loc>/projects/</loc>
+  </url>
+  
+  <url>
+    <loc>/cheatsheet/linux/</loc>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2019-01-06T10:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/posts/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/cheatsheet/python/</loc>
+  </url>
+  
+  <url>
+    <loc>/cheatsheet/rpi/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/todo/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/apache/</loc>
+    <lastmod>2014-12-09T12:12:12+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/arch/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/dotfiles/</loc>
+    <lastmod>2015-04-10T17:47:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/emacs/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/git/</loc>
+    <lastmod>2015-04-10T17:47:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/github/</loc>
+    <lastmod>2015-04-10T17:47:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/gunicorn/</loc>
+    <lastmod>2014-10-09T10:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/heroku/</loc>
+    <lastmod>2014-03-27T14:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/iot/</loc>
+    <lastmod>2019-01-06T10:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/javascript/</loc>
+    <lastmod>2014-03-27T14:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/linux/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/lisp/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/mqtt/</loc>
+    <lastmod>2019-01-06T10:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/nginx/</loc>
+    <lastmod>2014-12-09T12:12:12+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/org/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/productivity/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/proxy/</loc>
+    <lastmod>2014-10-09T10:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/pypi/</loc>
+    <lastmod>2014-09-27T10:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/python/</loc>
+    <lastmod>2016-09-28T18:47:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/ruby/</loc>
+    <lastmod>2013-08-22T14:14:22+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/starters/</loc>
+    <lastmod>2013-08-22T14:14:22+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/uwsgi/</loc>
+    <lastmod>2014-10-09T10:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/webdav/</loc>
+    <lastmod>2014-12-09T12:12:12+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/zigbee/</loc>
+    <lastmod>2019-01-06T10:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/zotero/</loc>
+    <lastmod>2014-12-09T12:12:12+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

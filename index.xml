@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Balkian&#39;s site</title>
+    <link>/</link>
+    <description>Recent content on Balkian&#39;s site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright>
+    <lastBuildDate>Sun, 06 Jan 2019 10:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Controlling Zigbee devices with MQTT</title>
+      <link>/post/2019-01-06-zigbee2mqtt/</link>
+      <pubDate>Sun, 06 Jan 2019 10:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-01-06-zigbee2mqtt/</guid>
+      <description>This is a short tutorial on connecting a zigbee device (an Aqara cube) to an MQTT server, so you can control your zigbee devices from the network.
+If you&amp;rsquo;re anything like me, you&amp;rsquo;re probably a sucker for IoT devices. For a long time, I&amp;rsquo;ve been using WiFi-enabled lights, and Amazon dash buttons to control them.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Fri, 24 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>Hi!
+My name is Fernando. I&amp;rsquo;m a researcher and developer from Madrid, Spain.
+ about ul { position: relative; width: 900px; margin: 0 auto; } #about li { line-height:1.5em; border-bottom:1px solid #DDD; float:left; display:inline; width: 33.333%; } #about i { /*background-color: #ffd700;*/ /*padding: 5px;*/ /*border-radius: 10px;*/ } .icons { text-align: center; color: #333; /* text-shadow: 2px 2px #FFD700; */ } .</description>
+    </item>
+    
+    <item>
+      <title>Progress bars in python</title>
+      <link>/post/2016-09-28-tqdm/</link>
+      <pubDate>Wed, 28 Sep 2016 18:47:00 +0000</pubDate>
+      
+      <guid>/post/2016-09-28-tqdm/</guid>
+      <description>tqdm is a nice way to add progress bars in the command line or in a jupyter notebook.
+1 2 3 4 5  from tqdm import tqdm import time for i in tqdm(range(100)): time.sleep(1)  </description>
+    </item>
+    
+    <item>
+      <title>Sharing dotfiles</title>
+      <link>/post/2015-04-10-github-dotfiles/</link>
+      <pubDate>Fri, 10 Apr 2015 17:47:00 +0000</pubDate>
+      
+      <guid>/post/2015-04-10-github-dotfiles/</guid>
+      <description>Today&amp;rsquo;s post is half a quick note, half public shaming. In other words, it is a reminder to be very careful with OAuth tokens and passwords.
+As part of moving to emacs, I starting using the incredibly useful gh.el. When you first use it, the extension saves either your password or an OAuth token in your .</description>
+    </item>
+    
+    <item>
+      <title>Zotero</title>
+      <link>/post/2014-12-09-zotero/</link>
+      <pubDate>Tue, 09 Dec 2014 12:12:12 +0000</pubDate>
+      
+      <guid>/post/2014-12-09-zotero/</guid>
+      <description>Zotero is an Open Source tool that lets you organise your bibliography, syncing it with the cloud. Unlike other alternatives such as Mendeley, Zotero can upload the attachments and data to a private cloud via WebDav.
+If you use nginx as your web server, know that even though it provides partial support for webdav, Zotero needs more than that.</description>
+    </item>
+    
+    <item>
+      <title>Proxies with Apache and python</title>
+      <link>/post/2014-10-09-proxies/</link>
+      <pubDate>Thu, 09 Oct 2014 10:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-10-09-proxies/</guid>
+      <description>&lt;p&gt;This is a quick note on proxying a local python application (e.g. flask)
+to a subdirectory in Apache. This assumes that the file wsgi.py contains
+a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:application.&lt;/p&gt;
+
+&lt;h2 id=&#34;gunicorn&#34;&gt;Gunicorn&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-apache&#34; data-lang=&#34;apache&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-apache&#34; data-lang=&#34;apache&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;Location&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;/myapp/&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+    ProxyPass http://127.0.0.1:8888/myapp/
+    ProxyPassReverse http://127.0.0.1:8888/myapp/
+    RequestHeader set SCRIPT_NAME &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/myapp/&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/Location&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Publishing on PyPi</title>
+      <link>/post/2014-09-23-publishing-to-pypi/</link>
+      <pubDate>Sat, 27 Sep 2014 10:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-09-23-publishing-to-pypi/</guid>
+      <description>Developing a python module and publishing it on Github is cool, but most of the times you want others to download and use it easily. That is the role of PyPi, the python package repository. In this post I show you how to publish your package in less than 10 minutes.</description>
+    </item>
+    
+    <item>
+      <title>Updating EuroLoveMap</title>
+      <link>/post/2014-03-27-updating-eurolovemap/</link>
+      <pubDate>Thu, 27 Mar 2014 14:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-03-27-updating-eurolovemap/</guid>
+      <description>As part of the OpeNER hackathon we decided to build a prototype that would allow us to compare how different countries feel about several topics. We used the OpeNER pipeline to get the sentiment from a set of newspaper articles we gathered from media in several languages. Then we aggregated those articles by category and country (using the source of the article or the language it was written in), obtaining the &amp;ldquo;overall feeling&amp;rdquo; of each country about each topic.</description>
+    </item>
+    
+    <item>
+      <title>Remove git files with globbing</title>
+      <link>/post/2013-08-22-remove-git-files-with-globbing/</link>
+      <pubDate>Thu, 22 Aug 2013 23:14:00 +0000</pubDate>
+      
+      <guid>/post/2013-08-22-remove-git-files-with-globbing/</guid>
+      <description>A simple trick. If you want to remove all the &amp;lsquo;.swp&amp;rsquo; files from a git repository, just use:
+1  git rm --cached &amp;#39;**.swp&amp;#39;  </description>
+    </item>
+    
+    <item>
+      <title>Creating my web</title>
+      <link>/post/2013-08-17-creating-my-web/</link>
+      <pubDate>Thu, 22 Aug 2013 14:14:22 +0000</pubDate>
+      
+      <guid>/post/2013-08-17-creating-my-web/</guid>
+      <description>I&amp;rsquo;ve finally decided to set up a decent personal page. I have settled for github-pages because I like the idea of keeping my site in a repository and having someone else host and deploy it for me. The site will be really simple, mostly static files. Thanks to Github, Jekyll will automatically generate static pages for my posts every time I commit anything new to this repository.</description>
+    </item>
+    
+    <item>
+      <title>Emacs</title>
+      <link>/cheatsheet/emacs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/cheatsheet/emacs/</guid>
+      <description>&lt;h1 id=&#34;show-plain-text-version&#34;&gt;Show plain text version&lt;/h1&gt;</description>
+    </item>
+    
+    <item>
+      <title>Index of projects</title>
+      <link>/project/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/project/</guid>
+      <description>Ongoing Projects Onyx: an ontology for emotion analysis that includes concepts from W3C&#39;s provenance. Marl: I updated this ontology, originally created by Adam Westerski, to make it compatible with the W3C&#39;s provenance ontology.   Past Projects Hermes: one of my first projects, developed together with David Pérez as the special custom assignment in one of our courses.</description>
+    </item>
+    
+    <item>
+      <title>Index of projects</title>
+      <link>/projects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/</guid>
+      <description>Ongoing Projects  Onyx: an ontology for emotion analysis that includes concepts from W3C&amp;rsquo;s provenance. Marl: I updated this ontology, originally created by Adam Westerski, to make it compatible with the W3C&amp;rsquo;s provenance ontology.  Past Projects  Hermes: one of my first projects, developed together with David Pérez as the special custom assignment in one of our courses.</description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>/cheatsheet/linux/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/cheatsheet/linux/</guid>
+      <description> Black screen and LightDM doesn&amp;rsquo;t unlock Add this to your /etc/lightdm/lightdm.conf file:
+[LightDM] logind-check-graphical=true  </description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>/cheatsheet/python/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/cheatsheet/python/</guid>
+      <description> Interesting libraries TQDM From tqdm&amp;rsquo;s github repository:
+ tqdm means &amp;ldquo;progress&amp;rdquo; in Arabic (taqadum, تقدّم) and an abbreviation for &amp;ldquo;I love you so much&amp;rdquo; in Spanish (te quiero demasiado).
+ </description>
+    </item>
+    
+    <item>
+      <title>Raspberry Pi</title>
+      <link>/cheatsheet/rpi/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/cheatsheet/rpi/</guid>
+      <description> HDMI flickering Avoid HDMI flickering/intermittent blanking on RPI with a 1400x1050 VGA monitor.
+1 2 3 4 5  hdmi_drive=2 hdmi_group=2 hdmi_mode=42 disable_overscan=1 config_hdmi_boost=7  </description>
+    </item>
+    
+    <item>
+      <title>To-Do</title>
+      <link>/todo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/todo/</guid>
+      <description>Things To Do This is intended as my public &amp;ldquo;todo.txt&amp;rdquo;. Both to keep it accessible and to feel ashamed of the many things I leave undone:  PhD  Write my first workshop paper as main author Write my first journal paper Become a doctor!    Technical  Write a NodeJS App.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>webdav on Balkian&#39;s site</title>
+    <link>/tags/webdav/</link>
+    <description>Recent content in webdav on Balkian&#39;s site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 09 Dec 2014 12:12:12 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/webdav/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Zotero</title>
+      <link>/post/2014-12-09-zotero/</link>
+      <pubDate>Tue, 09 Dec 2014 12:12:12 +0000</pubDate>
+      
+      <guid>/post/2014-12-09-zotero/</guid>
+      <description>Zotero is an Open Source tool that lets you organise your bibliography, syncing it with the cloud. Unlike other alternatives such as Mendeley, Zotero can upload the attachments and data to a private cloud via WebDav.
+If you use nginx as your web server, know that even though it provides partial support for webdav, Zotero needs more than that.</description>
+    </item>
+    
+  </channel>
+</rss>
