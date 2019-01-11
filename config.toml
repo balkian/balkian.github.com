@@ -5,7 +5,6 @@ theme = "balkian"
 preserveTaxonomyNames = true
 disqusShortname = "balkian"
 googleAnalytics = ""
-SectionPagesMenu = "main"
 Paginate = 5
 pygmentsCodeFences = true
 pygmentsOptions = "linenos=table"
@@ -13,6 +12,8 @@ summaryLength = 50
 relativeURLs = true
 copyright = "This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License."
 
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
 
 [taxonomies]
   category = "categories"

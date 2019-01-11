@@ -37,6 +37,9 @@
           <a href="//jfernando.es" target="_blank"><li>
             CV
           </li></a>
+          <a href="{{ "/search" | relURL }}"><li>
+              <i class="fa fa-search"></i>
+          </li></a>
         </ul>
       </header>
           <!--Body content-->
@@ -68,5 +71,7 @@
     </div>
 
     <script src="{{ "/js/jquery-2.0.2.min.js" | relURL }}"></script>
+        {{ block "footerfiles" . }}
+	{{ end }}
   </body>
 </html>
