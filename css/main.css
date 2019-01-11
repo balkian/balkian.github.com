@@ -765,10 +765,6 @@ a {
   padding: 0.5em;
 }  
 
-.navbar li:hover {
-  border-bottom: solid 2px black;
-}
-
 
 .navbar li {
   margin: 0;
@@ -778,13 +774,16 @@ a {
 
 .navbar li:hover {
   position: relative;
+  margin-bottom: -2px;
   color: #000;
   background-color: #fff;
   text-shadow: 2px 2px #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff;
+  border-bottom: solid 2px black;
 }
 
 .navbar li.active {
     border-bottom: solid 2px #C00;
+    margin-bottom: -2px;
 }
 
 .navbar a:hover {

@@ -7,20 +7,9 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright>
-    <lastBuildDate>Fri, 24 Feb 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/page/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>About</title>
-      <link>/page/about/</link>
-      <pubDate>Fri, 24 Feb 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/page/about/</guid>
-      <description>Hi!
-My name is Fernando. I&amp;rsquo;m a researcher and developer from Madrid, Spain.</description>
-    </item>
     
     <item>
       <title>To-do</title>
