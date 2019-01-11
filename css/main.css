@@ -804,3 +804,18 @@ pre {
   margin: 0;
   padding: 1em;
 }
+
+.search {
+    width: 100%;
+    padding: 0;
+}
+
+.searchTerm {
+    padding: 0.5em 1em;
+}
+
+.search > * {
+    vertical-align: middle;
+    margin:0;
+    height: 100%;
+}
