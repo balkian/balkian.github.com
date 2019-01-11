@@ -8,7 +8,7 @@
   </url>
   
   <url>
-    <loc>/about/</loc>
+    <loc>/page/about/</loc>
     <lastmod>2017-02-24T00:00:00+00:00</lastmod>
   </url>
   
@@ -77,11 +77,13 @@
   </url>
   
   <url>
-    <loc>/projects/</loc>
+    <loc>/cheatsheet/linux/</loc>
   </url>
   
   <url>
-    <loc>/cheatsheet/linux/</loc>
+    <loc>/page/</loc>
+    <lastmod>2017-02-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -104,12 +106,17 @@
   </url>
   
   <url>
+    <loc>/search/</loc>
+    <priority>0.1</priority>
+  </url>
+  
+  <url>
     <loc>/tags/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/todo/</loc>
+    <loc>/page/todo/</loc>
   </url>
   
   <url>
