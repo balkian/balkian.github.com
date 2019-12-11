@@ -17,5 +17,3 @@ From tqdm's github repository:
 
 
  ![TQDM in action](https://raw.githubusercontent.com/tqdm/tqdm/master/images/tqdm.gif)
-
-# 

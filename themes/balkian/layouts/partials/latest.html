@@ -1,7 +1,7 @@
             {{ if .Site.Params.orderByPublishDate }}
-                {{ $.Scratch.Set "recentPosts" .Site.Pages.ByPublishDate.Reverse }}
+                {{ $.Scratch.Set "recentPosts" .Site.RegularPages.ByPublishDate.Reverse }}
             {{ else }}
-                {{ $.Scratch.Set "recentPosts" .Site.Pages }}
+                {{ $.Scratch.Set "recentPosts" .Site.RegularPages }}
             {{ end }}
 
             {{ with .Site.Params.postAmount.sidebar }}

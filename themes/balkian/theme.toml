@@ -13,3 +13,8 @@ min_version = 0.18
 [author]
   name = "J. Fernando Sánchez"
   homepage = "http://balkian.com"
+
+[markup]
+  [markup.tableOfContents]
+    endLevel = 3
+    startLevel = 1

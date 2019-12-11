@@ -24,7 +24,7 @@
       <header id="header">
         <ul class="navbar" id="navbar">
           <a href="/">
-            <li {{ if ( eq .URL "/" ) }}
+            <li {{ if ( eq .Params.url "/" ) }}
                 class="active"
               {{ end }} >
             <i class="fa fa-home fa-large"></i>

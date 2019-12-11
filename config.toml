@@ -154,3 +154,11 @@ copyright = "This work is licensed under a Creative Commons Attribution-ShareAli
     twitter_domain  = ""
     twitter         = "balkian"
     email           = ""
+
+[markup]
+  [markup.tableOfContents]
+    endLevel = 3
+    startLevel = 1
+
+[markup.goldmark.renderer]
+unsafe= true

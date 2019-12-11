@@ -9,7 +9,7 @@ menu: main
 - [x] Write my first journal paper
 - [x] Write my first book chapter
 - [x] Chair a W3C Community Group
-- [ ] Collaborate in a W3C recommendation
+- [x] Collaborate on a W3C recommendation
 - [ ] Become a doctor!
 
 ### Technical
@@ -17,6 +17,7 @@ menu: main
 - [x] Write my first Django Application
 - [ ] Develop a distributed LibP2P golang application
 - [ ] Github repo with +100 stars
+- [ ] Build a custom LineageOS image
 
 ### Languages
 - [x] English
