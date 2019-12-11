@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Balkian&#39;s site</title>
@@ -7,10 +7,29 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 06 Jan 2019 10:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Jun 2019 00:00:01 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Linux on the Microsoft Surface Go</title>
+      <link>/post/2019-05-01-surface-go/</link>
+      <pubDate>Sat, 01 Jun 2019 00:00:01 +0000</pubDate>
+      
+      <guid>/post/2019-05-01-surface-go/</guid>
+      <description>&lt;p&gt;These are some useful notes to get Ubuntu installed in your surface go, as of Summer 2019.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Linux on the Microsoft Surface Go</title>
+      <link>/post/surface-go/</link>
+      <pubDate>Sat, 01 Jun 2019 00:00:01 +0000</pubDate>
+      
+      <guid>/post/surface-go/</guid>
+      <description>&lt;p&gt;Believe it or not, Surface tablets have pretty good linux support, except for the webcams in newer models.
+These are some useful notes to get Ubuntu installed on your surface go, as of Summer 2019.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Controlling Zigbee devices with MQTT</title>
@@ -19,7 +38,7 @@
       
       <guid>/post/2019-01-06-zigbee2mqtt/</guid>
       <description>This is a short tutorial on connecting a zigbee device (an Aqara cube) to an MQTT server, so you can control your zigbee devices from the network.
-If you&amp;rsquo;re anything like me, you&amp;rsquo;re probably a sucker for IoT devices. For a long time, I&amp;rsquo;ve been using WiFi-enabled lights, and Amazon dash buttons to control them.</description>
+If you&#39;re anything like me, you&#39;re probably a sucker for IoT devices. For a long time, I&#39;ve been using WiFi-enabled lights, and Amazon dash buttons to control them.</description>
     </item>
     
     <item>
@@ -29,7 +48,7 @@ If you&amp;rsquo;re anything like me, you&amp;rsquo;re probably a sucker for IoT
       
       <guid>/post/2016-09-28-tqdm/</guid>
       <description>tqdm is a nice way to add progress bars in the command line or in a jupyter notebook.
-1 2 3 4 5  from tqdm import tqdm import time for i in tqdm(range(100)): time.sleep(1)  </description>
+1 2 3 4 5  from tqdm import tqdm import time for i in tqdm(range(100)): time.sleep(1)   </description>
     </item>
     
     <item>
@@ -38,7 +57,7 @@ If you&amp;rsquo;re anything like me, you&amp;rsquo;re probably a sucker for IoT
       <pubDate>Fri, 10 Apr 2015 17:47:00 +0000</pubDate>
       
       <guid>/post/2015-04-10-github-dotfiles/</guid>
-      <description>Today&amp;rsquo;s post is half a quick note, half public shaming. In other words, it is a reminder to be very careful with OAuth tokens and passwords.
+      <description>Today&#39;s post is half a quick note, half public shaming. In other words, it is a reminder to be very careful with OAuth tokens and passwords.
 As part of moving to emacs, I starting using the incredibly useful gh.el. When you first use it, the extension saves either your password or an OAuth token in your .</description>
     </item>
     
@@ -61,22 +80,22 @@ If you use nginx as your web server, know that even though it provides partial s
       <description>&lt;p&gt;This is a quick note on proxying a local python application (e.g. flask)
 to a subdirectory in Apache. This assumes that the file wsgi.py contains
 a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:application.&lt;/p&gt;
-
 &lt;h2 id=&#34;gunicorn&#34;&gt;Gunicorn&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
 &lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-apache&#34; data-lang=&#34;apache&#34;&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79&#34;&gt;5
+&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
 &lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-apache&#34; data-lang=&#34;apache&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;Location&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;/myapp/&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
     ProxyPass http://127.0.0.1:8888/myapp/
     ProxyPassReverse http://127.0.0.1:8888/myapp/
     RequestHeader set SCRIPT_NAME &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/myapp/&amp;#34;&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/Location&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/Location&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;</description>
     </item>
@@ -106,7 +125,7 @@ a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:a
       
       <guid>/post/2013-08-22-remove-git-files-with-globbing/</guid>
       <description>A simple trick. If you want to remove all the &amp;lsquo;.swp&amp;rsquo; files from a git repository, just use:
-1  git rm --cached &amp;#39;**.swp&amp;#39;  </description>
+1  git rm --cached &amp;#39;**.swp&amp;#39;   </description>
     </item>
     
     <item>
@@ -115,7 +134,7 @@ a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:a
       <pubDate>Thu, 22 Aug 2013 14:14:22 +0000</pubDate>
       
       <guid>/post/2013-08-17-creating-my-web/</guid>
-      <description>I&amp;rsquo;ve finally decided to set up a decent personal page. I have settled for github-pages because I like the idea of keeping my site in a repository and having someone else host and deploy it for me. The site will be really simple, mostly static files. Thanks to Github, Jekyll will automatically generate static pages for my posts every time I commit anything new to this repository.</description>
+      <description>I&#39;ve finally decided to set up a decent personal page. I have settled for github-pages because I like the idea of keeping my site in a repository and having someone else host and deploy it for me. The site will be really simple, mostly static files. Thanks to Github, Jekyll will automatically generate static pages for my posts every time I commit anything new to this repository.</description>
     </item>
     
     <item>
@@ -133,7 +152,7 @@ a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:a
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/project/</guid>
-      <description>Ongoing Projects  Senpy: a framework for semantic sentiment and emotion analysis services. Soil: an agent-based simulator for social networks based on nx-sim and networkx. Onyx: an ontology for emotion analysis that includes concepts from W3C&amp;rsquo;s provenance.  Past Projects  Marl: I updated this ontology, originally created by Adam Westerski, to make it compatible with the W3C&amp;rsquo;s provenance ontology.</description>
+      <description>Ongoing Projects  Senpy: a framework for semantic sentiment and emotion analysis services. Soil: an agent-based simulator for social networks based on nx-sim and networkx. Onyx: an ontology for emotion analysis that includes concepts from W3C&#39;s provenance.  Past Projects  Marl: I updated this ontology, originally created by Adam Westerski, to make it compatible with the W3C&#39;s provenance ontology.</description>
     </item>
     
     <item>
@@ -142,8 +161,8 @@ a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:a
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/cheatsheet/linux/</guid>
-      <description>Black screen and LightDM doesn&amp;rsquo;t unlock Add this to your /etc/lightdm/lightdm.conf file:
-[LightDM] logind-check-graphical=true  Edit previous commands fc is a shell builtin to list and edit previous commands in an editor. In addition to editing a single line (which you can also do with C-x C-e), it also allows you to edit and run several lines at the same time.</description>
+      <description>Black screen and LightDM doesn&#39;t unlock Add this to your /etc/lightdm/lightdm.conf file:
+1 2  [LightDM] logind-check-graphical=true   Edit previous commands fc is a shell builtin to list and edit previous commands in an editor. In addition to editing a single line (which you can also do with C-x C-e), it also allows you to edit and run several lines at the same time.</description>
     </item>
     
     <item>
@@ -152,7 +171,7 @@ a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:a
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/cheatsheet/python/</guid>
-      <description> Interesting libraries TQDM From tqdm&amp;rsquo;s github repository:
+      <description>Interesting libraries TQDM From tqdm&#39;s github repository:
  tqdm means &amp;ldquo;progress&amp;rdquo; in Arabic (taqadum, تقدّم) and an abbreviation for &amp;ldquo;I love you so much&amp;rdquo; in Spanish (te quiero demasiado).
  </description>
     </item>
@@ -163,8 +182,8 @@ a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:a
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/cheatsheet/rpi/</guid>
-      <description> HDMI flickering Avoid HDMI flickering/intermittent blanking on RPI with a 1400x1050 VGA monitor.
-1 2 3 4 5  hdmi_drive=2 hdmi_group=2 hdmi_mode=42 disable_overscan=1 config_hdmi_boost=7  </description>
+      <description>HDMI flickering Avoid HDMI flickering/intermittent blanking on RPI with a 1400x1050 VGA monitor.
+1 2 3 4 5 6  hdmi_drive=2 hdmi_group=2 hdmi_mode=42 disable_overscan=1 config_hdmi_boost=7   </description>
     </item>
     
     <item>
@@ -185,7 +204,7 @@ This implementation uses Fusejs, jquery and mark.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/page/todo/</guid>
-      <description> PhD Write my first workshop paper as main author Write my first journal paper Write my first book chapter Chair a W3C Community Group Collaborate in a W3C recommendation Become a doctor!  Technical Write a NodeJS App. Maia [See ISSUES] Write my first Django Application Develop a distributed LibP2P golang application Github repo with +100 stars  Languages English Chinese Greek German Esperanto  Personal Run a 10k Blog regularly for a year  </description>
+      <description>PhD  Write my first workshop paper as main author Write my first journal paper Write my first book chapter Chair a W3C Community Group Collaborate on a W3C recommendation Become a doctor!  Technical  Write a NodeJS App. Maia [See ISSUES] Write my first Django Application Develop a distributed LibP2P golang application Github repo with +100 stars Build a custom LineageOS image  Languages  English Chinese Greek German Esperanto  Personal  Run a 10k Blog regularly for a year  </description>
     </item>
     
   </channel>

@@ -56,61 +56,114 @@
           
 <h2>Linux</h2>
 
-
-
-<h1 id="black-screen-and-lightdm-doesn-t-unlock">Black screen and LightDM doesn&rsquo;t unlock</h1>
-
+<h1 id="black-screen-and-lightdm-doesnt-unlock">Black screen and LightDM doesn't unlock</h1>
 <p>Add this to your /etc/lightdm/lightdm.conf file:</p>
-
-<pre><code>[LightDM]
-logind-check-graphical=true
-</code></pre>
-
-<h1 id="edit-previous-commands">Edit previous commands</h1>
-
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cfg" data-lang="cfg"><span style="color:#66d9ef">[LightDM]</span>
+<span style="color:#a6e22e">logind-check-graphical</span><span style="color:#f92672">=</span><span style="color:#e6db74">true</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="edit-previous-commands">Edit previous commands</h1>
 <p><code>fc</code> is a shell builtin to list and edit previous commands in an editor.
 In addition to editing a single line (which you can also do with <code>C-x C-e</code>), it also allows you to edit and run several lines at the same time.
 You use it like this:</p>
-
 <p>List previous commands</p>
-
-<pre><code>$ fc -l
-10259  nvim deploy.sh
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ fc -l
+<span style="color:#ae81ff">10259</span>  nvim deploy.sh
 10260* cd ..
 10261* nvim content/cheatsheet/linux.md
-10262  cd
-</code></pre>
-
-<p>List commands with date (in zsh)</p>
-
-<pre><code>$ fc -ld
+<span style="color:#ae81ff">10262</span>  cd
+</code></pre></td></tr></table>
+</div>
+</div><p>List commands with date (in zsh)</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ fc -ld
 10260* 19:38  cd ..
 10261* 19:38  nvim content/cheatsheet/linux.md
-10262  19:40  cd
-10263  19:40  fc -l
-</code></pre>
-
-<p>You can add the date too:</p>
-
-<pre><code>$ fc -fld
-10262  1/10/2019 19:40  cd
-10263  1/10/2019 19:40  fc -l
-10264  1/10/2019 19:40  fc -ld
-</code></pre>
-
-<p>You can edit a range of commands</p>
-
-<pre><code>$ fc 10262 10264
-</code></pre>
-
-<p>The range can be relative to the current position, so the previous command is equivalent to:</p>
-
-<pre><code>$ fc -3 -1
-</code></pre>
-
-<p>If you save and exit, all commands are executed as a script, and it will be added to your history.</p>
-
+<span style="color:#ae81ff">10262</span>  19:40  cd
+<span style="color:#ae81ff">10263</span>  19:40  fc -l
+</code></pre></td></tr></table>
+</div>
+</div><p>You can add the date too:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ fc -fld
+<span style="color:#ae81ff">10262</span>  1/10/2019 19:40  cd
+<span style="color:#ae81ff">10263</span>  1/10/2019 19:40  fc -l
+<span style="color:#ae81ff">10264</span>  1/10/2019 19:40  fc -ld
+</code></pre></td></tr></table>
+</div>
+</div><p>You can edit a range of commands</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ fc <span style="color:#ae81ff">10262</span> <span style="color:#ae81ff">10264</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The range can be relative to the current position, so the previous command is equivalent to:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ fc -3 -1
+</code></pre></td></tr></table>
+</div>
+</div><p>If you save and exit, all commands are executed as a script, and it will be added to your history.</p>
 <p>Source: <a href="https://shapeshed.com/unix-fc/">https://shapeshed.com/unix-fc/</a></p>
+<h1 id="prevent-logoff-from-killing-tmux-sessions">Prevent logoff from killing tmux sessions</h1>
+<p>Lately I've noticed that logging out of i3, intentionally or when i3 fails, would also kill any tmux or emacs sessions.
+This is extremely annoying.</p>
+<p>This is caused by a new default in logind (systemd's login) to kill user process on logoff.
+You can revert this setting in your logind.conf (<code>/etc/systemd/logind.conf</code>):</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cfg" data-lang="cfg"><span style="color:#a6e22e">KillUserProcesses</span><span style="color:#f92672">=</span><span style="color:#e6db74">no</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Or only for a specific process (e.g., tmux):</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">systemd-run --scope --user tmux
+</code></pre></td></tr></table>
+</div>
+</div><p>Source: <a href="https://unix.stackexchange.com/questions/490267/prevent-logoff-from-killing-tmux-session">https://unix.stackexchange.com/questions/490267/prevent-logoff-from-killing-tmux-session</a></p>
 
 
         </div>
@@ -119,10 +172,11 @@ You use it like this:</p>
 <div class="toc">
 <h3>Contents:</h3>
 <nav id="TableOfContents">
-<ul>
-<li><a href="#black-screen-and-lightdm-doesn-t-unlock">Black screen and LightDM doesn&rsquo;t unlock</a></li>
-<li><a href="#edit-previous-commands">Edit previous commands</a></li>
-</ul>
+  <ul>
+    <li><a href="#black-screen-and-lightdm-doesnt-unlock">Black screen and LightDM doesn't unlock</a></li>
+    <li><a href="#edit-previous-commands">Edit previous commands</a></li>
+    <li><a href="#prevent-logoff-from-killing-tmux-sessions">Prevent logoff from killing tmux sessions</a></li>
+  </ul>
 </nav>
 </div>
 </div>

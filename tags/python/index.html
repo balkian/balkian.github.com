@@ -67,22 +67,22 @@
   
   <p><a href="https://github.com/noamraph/tqdm">tqdm</a> is a nice way to add progress
 bars in the command line or in a jupyter notebook.</p>
-
-<p><img src="https://camo.githubusercontent.com/48838faaa8d00ea297f18e5bf55d3c6bb4e0ba6b/68747470733a2f2f692e696d6775722e636f6d2f686539417735432e676966" alt="image" /></p>
+<p><img src="https://camo.githubusercontent.com/48838faaa8d00ea297f18e5bf55d3c6bb4e0ba6b/68747470733a2f2f692e696d6775722e636f6d2f686539417735432e676966" alt="image"></p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> tqdm <span style="color:#f92672">import</span> tqdm
 <span style="color:#f92672">import</span> time
 
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> tqdm(range(<span style="color:#ae81ff">100</span>)):
-    time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)</code></pre></td></tr></table>
+    time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)
+</code></pre></td></tr></table>
 </div>
 </div>
   
@@ -110,25 +110,24 @@ bars in the command line or in a jupyter notebook.</p>
   <p>This is a quick note on proxying a local python application (e.g. flask)
 to a subdirectory in Apache. This assumes that the file wsgi.py contains
 a WSGI application with the name <em>application</em>. Hence, wsgi:application.</p>
-
-<p><h2 id="gunicorn">Gunicorn</h2>
+<h2 id="gunicorn">Gunicorn</h2>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache"><span style="color:#f92672">&lt;Location</span> <span style="color:#e6db74">/myapp/</span><span style="color:#f92672">&gt;</span>
-    ProxyPass <a href="http://127.0.0.1:8888/myapp/">http://127.0.0.1:8888/myapp/</a>
-    ProxyPassReverse <a href="http://127.0.0.1:8888/myapp/">http://127.0.0.1:8888/myapp/</a>
+    ProxyPass http://127.0.0.1:8888/myapp/
+    ProxyPassReverse http://127.0.0.1:8888/myapp/
     RequestHeader set SCRIPT_NAME <span style="color:#e6db74">&#34;/myapp/&#34;</span>
-<span style="color:#f92672">&lt;/Location&gt;</span></code></pre></td></tr></table>
+<span style="color:#f92672">&lt;/Location</span><span style="color:#e6db74"></span><span style="color:#f92672">&gt;</span>
+</code></pre></td></tr></table>
 </div>
-</div></p>
-
+</div>
   <div><a href="../../post/2014-10-09-proxies/"><div class="readmore"> Read more...</div></a></div>
   
 </div>
@@ -168,7 +167,7 @@ a WSGI application with the name <em>application</em>. Hence, wsgi:application.<
 
   </div>
   
-  As part of the OpeNER hackathon we decided to build a prototype that would allow us to compare how different countries feel about several topics. We used the OpeNER pipeline to get the sentiment from a set of newspaper articles we gathered from media in several languages. Then we aggregated those articles by category and country (using the source of the article or the language it was written in), obtaining the &ldquo;overall feeling&rdquo; of each country about each topic.
+  As part of the OpeNER hackathon we decided to build a prototype that would allow us to compare how different countries feel about several topics. We used the OpeNER pipeline to get the sentiment from a set of newspaper articles we gathered from media in several languages. Then we aggregated those articles by category and country (using the source of the article or the language it was written in), obtaining the “overall feeling” of each country about each topic.
   <div><a href="../../post/2014-03-27-updating-eurolovemap/"><div class="readmore"> Read more...</div></a></div>
   
 </div>
@@ -206,35 +205,35 @@ a WSGI application with the name <em>application</em>. Hence, wsgi:application.<
         
 <div id="sidebar" class="fixed">
   <div id="badge" class="flip-container" ontouchstart="this.classList.toggle('hover');">
-    <div class="flipper sticky">
+    <div class="flipper sticky expand">
       <div class="front">
         
-	<img id="avatar" src="../../img/me.png">
+          <img id="avatar" class="expandx" src="../../img/me.png">
       </div>
       <div class="back">
         
-	<img id="picture" src="../../img/me-bat.png">
+	        
+          <div id="about">
+              
+              <div class="icons vertical-center">
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-linux"></i></span><span class="explanation">Linux user</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-android"></i></span><span class="explanation">Android dev and user</span></span>
+                  <a href="http://github.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-github"></i> </span><span class="explanation">Github user</span></span></a>
+                  <a href="http://gitlab.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-gitlab"></i> </span><span class="explanation">GitLab user</span></span></a>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-stack-exchange"></i> </span><span class="explanation">StackExchange fan</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-music"></i> </span><span class="explanation">Music lover</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-film"></i> </span><span class="explanation">Movie fan</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-laptop"></i> </span><span class="explanation">Always on a PC</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-moon"></i> </span><span class="explanation">Night owl</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-terminal"></i></span>      <span class="explanation">CLI user</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-flag"></i></span>      <span class="explanation">I love languages</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-code"></i> </span>           <span class="explanation">I love programming</span></span>
+              </div>
+          </div>
       </div>
     </div>
   </div>
 
-  <div id="about">
-    
-    <div class="icons">
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-linux"></i></span><span class="explanation">Linux user</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-android"></i></span><span class="explanation">Android dev and user</span></span>
-      <a href="http://github.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-github"></i> </span><span class="explanation">Github user</span></span></a>
-      <a href="http://gitlab.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-gitlab"></i> </span><span class="explanation">GitLab user</span></span></a>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-stack-exchange"></i> </span><span class="explanation">StackExchange fan</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-music"></i> </span><span class="explanation">Music lover</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-film"></i> </span><span class="explanation">Movie fan</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-laptop"></i> </span><span class="explanation">Always on a PC</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-moon"></i> </span><span class="explanation">Night owl</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-terminal"></i></span>      <span class="explanation">CLI user</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-flag"></i></span>      <span class="explanation">I love languages</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-code"></i> </span>           <span class="explanation">I love programming</span></span>
-    </div>
-  </div>
   
   <div class="entries">
     <h2 class="title">Latest entries</h2>
@@ -247,6 +246,28 @@ a WSGI application with the name <em>application</em>. Hence, wsgi:application.<
             
 
             
+
+    <dt><a href="../../post/2019-05-01-surface-go/">Linux on the Microsoft Surface Go</a></dt>
+    
+<a class="tag" href='../../tags/linux'><span class="label">linux</span></a>
+
+<a class="tag" href='../../tags/surface-go'><span class="label">surface go</span></a>
+
+<a class="tag" href='../../tags/config'><span class="label">config</span></a>
+
+
+    
+
+    <dt><a href="../../post/surface-go/">Linux on the Microsoft Surface Go</a></dt>
+    
+<a class="tag" href='../../tags/linux'><span class="label">linux</span></a>
+
+<a class="tag" href='../../tags/surface-go'><span class="label">surface go</span></a>
+
+<a class="tag" href='../../tags/config'><span class="label">config</span></a>
+
+
+    
 
     <dt><a href="../../post/2019-01-06-zigbee2mqtt/">Controlling Zigbee devices with MQTT</a></dt>
     
@@ -262,30 +283,6 @@ a WSGI application with the name <em>application</em>. Hence, wsgi:application.<
     <dt><a href="../../post/2016-09-28-tqdm/">Progress bars in python</a></dt>
     
 <a class="tag" href='../../tags/python'><span class="label">python</span></a>
-
-
-    
-
-    <dt><a href="../../post/2015-04-10-github-dotfiles/">Sharing dotfiles</a></dt>
-    
-<a class="tag" href='../../tags/github'><span class="label">github</span></a>
-
-<a class="tag" href='../../tags/git'><span class="label">git</span></a>
-
-<a class="tag" href='../../tags/dotfiles'><span class="label">dotfiles</span></a>
-
-
-    
-
-    <dt><a href="../../post/2014-12-09-zotero/">Zotero</a></dt>
-    
-<a class="tag" href='../../tags/zotero'><span class="label">zotero</span></a>
-
-<a class="tag" href='../../tags/webdav'><span class="label">webdav</span></a>
-
-<a class="tag" href='../../tags/nginx'><span class="label">nginx</span></a>
-
-<a class="tag" href='../../tags/apache'><span class="label">apache</span></a>
 
 
     

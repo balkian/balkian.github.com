@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Cheatsheets on Balkian&#39;s site</title>
@@ -26,8 +26,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/cheatsheet/linux/</guid>
-      <description>Black screen and LightDM doesn&amp;rsquo;t unlock Add this to your /etc/lightdm/lightdm.conf file:
-[LightDM] logind-check-graphical=true  Edit previous commands fc is a shell builtin to list and edit previous commands in an editor. In addition to editing a single line (which you can also do with C-x C-e), it also allows you to edit and run several lines at the same time.</description>
+      <description>Black screen and LightDM doesn&#39;t unlock Add this to your /etc/lightdm/lightdm.conf file:
+1 2  [LightDM] logind-check-graphical=true   Edit previous commands fc is a shell builtin to list and edit previous commands in an editor. In addition to editing a single line (which you can also do with C-x C-e), it also allows you to edit and run several lines at the same time.</description>
     </item>
     
     <item>
@@ -36,7 +36,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/cheatsheet/python/</guid>
-      <description> Interesting libraries TQDM From tqdm&amp;rsquo;s github repository:
+      <description>Interesting libraries TQDM From tqdm&#39;s github repository:
  tqdm means &amp;ldquo;progress&amp;rdquo; in Arabic (taqadum, تقدّم) and an abbreviation for &amp;ldquo;I love you so much&amp;rdquo; in Spanish (te quiero demasiado).
  </description>
     </item>
@@ -47,8 +47,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/cheatsheet/rpi/</guid>
-      <description> HDMI flickering Avoid HDMI flickering/intermittent blanking on RPI with a 1400x1050 VGA monitor.
-1 2 3 4 5  hdmi_drive=2 hdmi_group=2 hdmi_mode=42 disable_overscan=1 config_hdmi_boost=7  </description>
+      <description>HDMI flickering Avoid HDMI flickering/intermittent blanking on RPI with a 1400x1050 VGA monitor.
+1 2 3 4 5 6  hdmi_drive=2 hdmi_group=2 hdmi_mode=42 disable_overscan=1 config_hdmi_boost=7   </description>
     </item>
     
   </channel>

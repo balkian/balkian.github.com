@@ -69,13 +69,12 @@
 
 </span>
 <h3></h3>
-<p>I&rsquo;ve finally decided to set up a decent personal page. I have settled
+<p>I've finally decided to set up a decent personal page. I have settled
 for github-pages because I like the idea of keeping my site in a
 repository and having someone else host and deploy it for me. The site
 will be really simple, mostly static files. Thanks to Github,
 <a href="http://jekyllrb.com">Jekyll</a> will automatically generate static pages
 for my posts every time I commit anything new to this repository.</p>
-
 <p>But Jekyll can be used independently, so if I ever choose to host the
 site myself, I can do it quite easily. Another thing that I liked about
 this approach is that the generated html files can be used in the
@@ -85,32 +84,29 @@ everything could be easily reused if I ever choose to change to another
 blogging framework (e.g. pelical). But, for the time being, I like the
 fact that Github takes care of the compilation as well, so I can simply
 modify or add files through the web interface should I need to.</p>
-
-<p>I hadn&rsquo;t played with HTML and CSS for a while now, so I also wanted to
+<p>I hadn't played with HTML and CSS for a while now, so I also wanted to
 use this site as a playground. At some point, I realised I was doing
 mostly everything in plain HTML and CSS, and decided to keep it like
-that for as long as possible. As of this writing, I haven&rsquo;t included
+that for as long as possible. As of this writing, I haven't included
 any Javascript code in the page. Probably I will use some to add my
 <a href="http://gist.github.com/balkian">gists</a> and
 <a href="http://github.com/balkian">repositories</a>, but we will see about that.</p>
-
 <p>I think the code speaks for itself, so you can check out <a href="http://github.com/balkian/balkian.github.com">my repository
 on Github</a>. You can clone
 and deploy it easily like this:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone
 https://github.com/balkian/balkian.github.com cd balkian.github.com
-jekyll serve -w</code></pre></td></tr></table>
+jekyll serve -w
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>I will keep updating this post with information about:</p>
-
+</div><p>I will keep updating this post with information about:</p>
 <ul>
 <li>Some Jekyll plugins that might be useful</li>
 <li>What CSS tricks I learnt</li>
@@ -123,35 +119,35 @@ jekyll serve -w</code></pre></td></tr></table>
         
         <div id="sidebar" class="fixed">
   <div id="badge" class="flip-container" ontouchstart="this.classList.toggle('hover');">
-    <div class="flipper sticky">
+    <div class="flipper sticky expand">
       <div class="front">
         
-	<img id="avatar" src="../../img/me.png">
+          <img id="avatar" class="expandx" src="../../img/me.png">
       </div>
       <div class="back">
         
-	<img id="picture" src="../../img/me-bat.png">
+	        
+          <div id="about">
+              
+              <div class="icons vertical-center">
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-linux"></i></span><span class="explanation">Linux user</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-android"></i></span><span class="explanation">Android dev and user</span></span>
+                  <a href="http://github.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-github"></i> </span><span class="explanation">Github user</span></span></a>
+                  <a href="http://gitlab.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-gitlab"></i> </span><span class="explanation">GitLab user</span></span></a>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-stack-exchange"></i> </span><span class="explanation">StackExchange fan</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-music"></i> </span><span class="explanation">Music lover</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-film"></i> </span><span class="explanation">Movie fan</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-laptop"></i> </span><span class="explanation">Always on a PC</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-moon"></i> </span><span class="explanation">Night owl</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-terminal"></i></span>      <span class="explanation">CLI user</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-flag"></i></span>      <span class="explanation">I love languages</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-code"></i> </span>           <span class="explanation">I love programming</span></span>
+              </div>
+          </div>
       </div>
     </div>
   </div>
 
-  <div id="about">
-    
-    <div class="icons">
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-linux"></i></span><span class="explanation">Linux user</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-android"></i></span><span class="explanation">Android dev and user</span></span>
-      <a href="http://github.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-github"></i> </span><span class="explanation">Github user</span></span></a>
-      <a href="http://gitlab.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-gitlab"></i> </span><span class="explanation">GitLab user</span></span></a>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-stack-exchange"></i> </span><span class="explanation">StackExchange fan</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-music"></i> </span><span class="explanation">Music lover</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-film"></i> </span><span class="explanation">Movie fan</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-laptop"></i> </span><span class="explanation">Always on a PC</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-moon"></i> </span><span class="explanation">Night owl</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-terminal"></i></span>      <span class="explanation">CLI user</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-flag"></i></span>      <span class="explanation">I love languages</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-code"></i> </span>           <span class="explanation">I love programming</span></span>
-    </div>
-  </div>
   
   <div class="entries">
     <h2 class="title">Latest entries</h2>
@@ -164,6 +160,28 @@ jekyll serve -w</code></pre></td></tr></table>
             
 
             
+
+    <dt><a href="../../post/2019-05-01-surface-go/">Linux on the Microsoft Surface Go</a></dt>
+    
+<a class="tag" href='../../tags/linux'><span class="label">linux</span></a>
+
+<a class="tag" href='../../tags/surface-go'><span class="label">surface go</span></a>
+
+<a class="tag" href='../../tags/config'><span class="label">config</span></a>
+
+
+    
+
+    <dt><a href="../../post/surface-go/">Linux on the Microsoft Surface Go</a></dt>
+    
+<a class="tag" href='../../tags/linux'><span class="label">linux</span></a>
+
+<a class="tag" href='../../tags/surface-go'><span class="label">surface go</span></a>
+
+<a class="tag" href='../../tags/config'><span class="label">config</span></a>
+
+
+    
 
     <dt><a href="../../post/2019-01-06-zigbee2mqtt/">Controlling Zigbee devices with MQTT</a></dt>
     
@@ -179,30 +197,6 @@ jekyll serve -w</code></pre></td></tr></table>
     <dt><a href="../../post/2016-09-28-tqdm/">Progress bars in python</a></dt>
     
 <a class="tag" href='../../tags/python'><span class="label">python</span></a>
-
-
-    
-
-    <dt><a href="../../post/2015-04-10-github-dotfiles/">Sharing dotfiles</a></dt>
-    
-<a class="tag" href='../../tags/github'><span class="label">github</span></a>
-
-<a class="tag" href='../../tags/git'><span class="label">git</span></a>
-
-<a class="tag" href='../../tags/dotfiles'><span class="label">dotfiles</span></a>
-
-
-    
-
-    <dt><a href="../../post/2014-12-09-zotero/">Zotero</a></dt>
-    
-<a class="tag" href='../../tags/zotero'><span class="label">zotero</span></a>
-
-<a class="tag" href='../../tags/webdav'><span class="label">webdav</span></a>
-
-<a class="tag" href='../../tags/nginx'><span class="label">nginx</span></a>
-
-<a class="tag" href='../../tags/apache'><span class="label">apache</span></a>
 
 
     

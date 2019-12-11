@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>dotfiles on Balkian&#39;s site</title>
@@ -18,7 +18,7 @@
       <pubDate>Fri, 10 Apr 2015 17:47:00 +0000</pubDate>
       
       <guid>/post/2015-04-10-github-dotfiles/</guid>
-      <description>Today&amp;rsquo;s post is half a quick note, half public shaming. In other words, it is a reminder to be very careful with OAuth tokens and passwords.
+      <description>Today&#39;s post is half a quick note, half public shaming. In other words, it is a reminder to be very careful with OAuth tokens and passwords.
 As part of moving to emacs, I starting using the incredibly useful gh.el. When you first use it, the extension saves either your password or an OAuth token in your .</description>
     </item>
     

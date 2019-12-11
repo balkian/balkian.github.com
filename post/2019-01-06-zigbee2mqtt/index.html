@@ -68,42 +68,34 @@
 <p>This is a short tutorial on connecting a zigbee device (an Aqara cube)
 to an MQTT server, so you can control your zigbee devices from the
 network.</p>
-
-<p>If you&rsquo;re anything like me, you&rsquo;re probably a sucker for IoT devices.
-For a long time, I&rsquo;ve been using WiFi-enabled lights, and Amazon dash
+<p>If you're anything like me, you're probably a sucker for IoT devices.
+For a long time, I've been using WiFi-enabled lights, and Amazon dash
 buttons to control them. To keep these (cheap Chinese) internet enabled
 devices away from your network and their respective cloud services,
-you&rsquo;ll probably want to set up a dedicated network in your router (more
+you'll probably want to set up a dedicated network in your router (more
 on this on a future post, maybe). Another disadvantage of WiFi devices
-is that they&rsquo;re relatively power hungry.</p>
-
+is that they're relatively power hungry.</p>
 <p>A popular alternative is using ZigBee for communication. It is a
 dedicated protocol similar to bluetooth (BLE), with lower power
 requirements and bitrate.</p>
-
 <p>Take the (super cute) aqara cube as an example. It is a small cube that
-detects rotation on all of its axes, and tapping events. Here&rsquo;s a
+detects rotation on all of its axes, and tapping events. Here's a
 video:</p>
 
-
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/5YtqG1wEnng" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="https://www.youtube.com/embed/5YtqG1wEnng" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
-
 
 <p>To connect to zigbee devices you will need a zigbee enabled gateway
 (a.k.a. hub), which connects to your WiFi network and your zigbee
 devices. Once again, this means adding an internet-enabled device to
 your home, and probably a couple of cloud services.</p>
-
 <p>As an alternative, you can set up your own zigbee gateway, and control
 it to your home automation platform of choice (e.g. home assistant). We
 will cover how to set up a zigbee2mqtt gateway that is also connected to
 an MQTT server, so you can use MQTT to control your devices and get
 notifications.</p>
-
 <p>What you need:</p>
-
 <ul>
 <li><a href="https://www.aliexpress.com/item/Original-Xiaomi-Mi-Aqara-Cube-Smart-Home-Controller-6-Action-Operation-Fr-Home-Device-Zigbee-Version/32892947622.html?spm=a2g0s.9042311.0.0.3da24c4dXV8sBI">Aqara
 cube</a>.</li>
@@ -111,42 +103,40 @@ cube</a>.</li>
 sniffer</a>.</li>
 <li><a href="https://www.aliexpress.com/item/CFSUNBIRD-CC-DEBUGGER-Debugger-and-Programmer-for-RF-System-on-Chips-TI-ORIGINAL-Fast-hipping/32813122315.html?spm=a2g0s.9042311.0.0.3da24c4dXV8sBI">CC-debugger</a>.</li>
 </ul>
-
 <p>You will need to flash your sniffer. For that, you only need to follow
 the instructions from the <a href="https://koenkk.github.io/zigbee2mqtt/">zigbee2mqtt
 documentation</a>.</p>
-
-<p>Once you&rsquo;re done flashing, you&rsquo;re ready to set up the zigbee2mqtt
+<p>Once you're done flashing, you're ready to set up the zigbee2mqtt
 server. For convenience, I wrote a simple docker-compose to deploy a
 zigbee2mqtt server and a test mosquitto server:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">24
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">version: <span style="color:#e6db74">&#39;2.1&#39;</span>
 services:
   zigbee2mqtt:
@@ -170,23 +160,32 @@ services:
       - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
 networks:
   hass:
-    driver: overlay</code></pre></td></tr></table>
+    driver: overlay
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>You can test your installation with:</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">❯ mosquitto_sub -h localhost -p <span style="color:#ae81ff">1883</span> -t <span style="color:#e6db74">&#39;zigbee2mqtt/#&#39;</span>
+</div><p>You can test your installation with:</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">❯ mosquitto_sub -h localhost -p <span style="color:#ae81ff">1883</span> -t <span style="color:#e6db74">&#39;zigbee2mqtt/#&#39;</span>
 online
 <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;battery&#34;</span>:17,<span style="color:#e6db74">&#34;voltage&#34;</span>:2925,<span style="color:#e6db74">&#34;linkquality&#34;</span>:149,<span style="color:#e6db74">&#34;action&#34;</span>:<span style="color:#e6db74">&#34;rotate_right&#34;</span>,<span style="color:#e6db74">&#34;angle&#34;</span>:12.8<span style="color:#f92672">}</span>
 <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;battery&#34;</span>:17,<span style="color:#e6db74">&#34;voltage&#34;</span>:2925,<span style="color:#e6db74">&#34;linkquality&#34;</span>:141,<span style="color:#e6db74">&#34;action&#34;</span>:<span style="color:#e6db74">&#34;slide&#34;</span>,<span style="color:#e6db74">&#34;side&#34;</span>:2<span style="color:#f92672">}</span>
 <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;battery&#34;</span>:17,<span style="color:#e6db74">&#34;voltage&#34;</span>:2925,<span style="color:#e6db74">&#34;linkquality&#34;</span>:120<span style="color:#f92672">}</span>
-<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;battery&#34;</span>:17,<span style="color:#e6db74">&#34;voltage&#34;</span>:2925,<span style="color:#e6db74">&#34;linkquality&#34;</span>:141,<span style="color:#e6db74">&#34;action&#34;</span>:<span style="color:#e6db74">&#34;wakeup&#34;</span><span style="color:#f92672">}</span></code></pre></div>
-
+<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;battery&#34;</span>:17,<span style="color:#e6db74">&#34;voltage&#34;</span>:2925,<span style="color:#e6db74">&#34;linkquality&#34;</span>:141,<span style="color:#e6db74">&#34;action&#34;</span>:<span style="color:#e6db74">&#34;wakeup&#34;</span><span style="color:#f92672">}</span></code></pre></td></tr></table>
+</div>
+</div>
 <p>zigbee2mqtt supports the following events for the aqara cube: shake,
 wakeup, fall, tap, slide, flip180, flip90, rotate_left and
 rotate_right. Every event has additional information, such as the sides
 involved, or the degrees turned.</p>
-
 <p>Now you are ready to set up home assistant support in zigbee2mqtt
 following <a href="https://koenkk.github.io/zigbee2mqtt/integration/home_assistant.html">this
 guide</a>.</p>
@@ -196,35 +195,35 @@ guide</a>.</p>
         
         <div id="sidebar" class="fixed">
   <div id="badge" class="flip-container" ontouchstart="this.classList.toggle('hover');">
-    <div class="flipper sticky">
+    <div class="flipper sticky expand">
       <div class="front">
         
-	<img id="avatar" src="../../img/me.png">
+          <img id="avatar" class="expandx" src="../../img/me.png">
       </div>
       <div class="back">
         
-	<img id="picture" src="../../img/me-bat.png">
+	        
+          <div id="about">
+              
+              <div class="icons vertical-center">
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-linux"></i></span><span class="explanation">Linux user</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-android"></i></span><span class="explanation">Android dev and user</span></span>
+                  <a href="http://github.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-github"></i> </span><span class="explanation">Github user</span></span></a>
+                  <a href="http://gitlab.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-gitlab"></i> </span><span class="explanation">GitLab user</span></span></a>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-stack-exchange"></i> </span><span class="explanation">StackExchange fan</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-music"></i> </span><span class="explanation">Music lover</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-film"></i> </span><span class="explanation">Movie fan</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-laptop"></i> </span><span class="explanation">Always on a PC</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-moon"></i> </span><span class="explanation">Night owl</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-terminal"></i></span>      <span class="explanation">CLI user</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-flag"></i></span>      <span class="explanation">I love languages</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-code"></i> </span>           <span class="explanation">I love programming</span></span>
+              </div>
+          </div>
       </div>
     </div>
   </div>
 
-  <div id="about">
-    
-    <div class="icons">
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-linux"></i></span><span class="explanation">Linux user</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-android"></i></span><span class="explanation">Android dev and user</span></span>
-      <a href="http://github.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-github"></i> </span><span class="explanation">Github user</span></span></a>
-      <a href="http://gitlab.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-gitlab"></i> </span><span class="explanation">GitLab user</span></span></a>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-stack-exchange"></i> </span><span class="explanation">StackExchange fan</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-music"></i> </span><span class="explanation">Music lover</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-film"></i> </span><span class="explanation">Movie fan</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-laptop"></i> </span><span class="explanation">Always on a PC</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-moon"></i> </span><span class="explanation">Night owl</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-terminal"></i></span>      <span class="explanation">CLI user</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-flag"></i></span>      <span class="explanation">I love languages</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-code"></i> </span>           <span class="explanation">I love programming</span></span>
-    </div>
-  </div>
   
   <div class="entries">
     <h2 class="title">Latest entries</h2>
@@ -237,6 +236,28 @@ guide</a>.</p>
             
 
             
+
+    <dt><a href="../../post/2019-05-01-surface-go/">Linux on the Microsoft Surface Go</a></dt>
+    
+<a class="tag" href='../../tags/linux'><span class="label">linux</span></a>
+
+<a class="tag" href='../../tags/surface-go'><span class="label">surface go</span></a>
+
+<a class="tag" href='../../tags/config'><span class="label">config</span></a>
+
+
+    
+
+    <dt><a href="../../post/surface-go/">Linux on the Microsoft Surface Go</a></dt>
+    
+<a class="tag" href='../../tags/linux'><span class="label">linux</span></a>
+
+<a class="tag" href='../../tags/surface-go'><span class="label">surface go</span></a>
+
+<a class="tag" href='../../tags/config'><span class="label">config</span></a>
+
+
+    
 
     <dt><a href="../../post/2019-01-06-zigbee2mqtt/">Controlling Zigbee devices with MQTT</a></dt>
     
@@ -252,30 +273,6 @@ guide</a>.</p>
     <dt><a href="../../post/2016-09-28-tqdm/">Progress bars in python</a></dt>
     
 <a class="tag" href='../../tags/python'><span class="label">python</span></a>
-
-
-    
-
-    <dt><a href="../../post/2015-04-10-github-dotfiles/">Sharing dotfiles</a></dt>
-    
-<a class="tag" href='../../tags/github'><span class="label">github</span></a>
-
-<a class="tag" href='../../tags/git'><span class="label">git</span></a>
-
-<a class="tag" href='../../tags/dotfiles'><span class="label">dotfiles</span></a>
-
-
-    
-
-    <dt><a href="../../post/2014-12-09-zotero/">Zotero</a></dt>
-    
-<a class="tag" href='../../tags/zotero'><span class="label">zotero</span></a>
-
-<a class="tag" href='../../tags/webdav'><span class="label">webdav</span></a>
-
-<a class="tag" href='../../tags/nginx'><span class="label">nginx</span></a>
-
-<a class="tag" href='../../tags/apache'><span class="label">apache</span></a>
 
 
     

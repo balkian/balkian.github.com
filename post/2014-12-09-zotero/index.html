@@ -67,57 +67,52 @@
 
 </span>
 <h3></h3>
-
-
 <p><a href="https://www.zotero.org/">Zotero</a> is an Open Source tool that lets you
 organise your bibliography, syncing it with the cloud. Unlike other
 alternatives such as <a href="http://www.mendeley.com">Mendeley</a>, Zotero can
 upload the attachments and data to a private cloud via WebDav.</p>
-
 <p>If you use nginx as your web server, know that even though it provides
 partial support for webdav, Zotero needs more than that. Hence, you will
 need another webdav server, and optionally let nginx proxy to it. This
 short post provides the basics to get that set-up working under
 Debian/Ubuntu.</p>
-
 <h2 id="setting-up-apache">Setting up Apache</h2>
-
 <p>First we need to install Apache:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install apache2</code></pre></td></tr></table>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install apache2
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>Change the head of &ldquo;/etc/apache2/sites-enabled/000-default&rdquo; to:</p>
+</div><p>Change the head of &ldquo;/etc/apache2/sites-enabled/000-default&rdquo; to:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache"><span style="color:#f92672">&lt;VirtualHost</span> <span style="color:#e6db74">*:880</span><span style="color:#f92672">&gt;</span></code></pre></td></tr></table>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache"><span style="color:#f92672">&lt;VirtualHost</span> <span style="color:#e6db74">*:880</span><span style="color:#f92672">&gt;</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>Then, create a file /etc/apache2/sites-available/webdav:</p>
+</div><p>Then, create a file /etc/apache2/sites-available/webdav:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache">Alias <span style="color:#e6db74">/dav</span> <span style="color:#e6db74">/home/webdav/dav</span>
 <span style="color:#f92672">&lt;Location</span> <span style="color:#e6db74">/dav</span><span style="color:#f92672">&gt;</span>
     Dav <span style="color:#66d9ef">on</span>
@@ -130,10 +125,10 @@ Debian/Ubuntu.</p>
     AuthBasicProvider file
     AuthUserFile <span style="color:#e6db74">/home/webdav/.htpasswd</span>
     Require valid-user
-<span style="color:#f92672">&lt;/Location&gt;</span></code></pre></td></tr></table>
+<span style="color:#f92672">&lt;/Location</span><span style="color:#e6db74"></span><span style="color:#f92672">&gt;</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>Ideally, you want your webdav folders to be private, adding
+</div><p>Ideally, you want your webdav folders to be private, adding
 authentication to them. So you need to create the webdav and zotero
 users and add the passwords to an htpasswd file. Even though you could
 use a single user, since you will be configuring several clients with
@@ -142,71 +137,68 @@ way you can always change the password for zotero without affecting any
 other application using webdav.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo adduser webdav
 sudo htpasswd -c /home/webdav/.htpasswd webdav
 sudo htpasswd /home/webdav/.htpasswd zotero
-sudo mkdir -p /home/webdav/dav/zotero</code></pre></td></tr></table>
+sudo mkdir -p /home/webdav/dav/zotero
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>Enable the site and restart apache:</p>
+</div><p>Enable the site and restart apache:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo a2enmod webdav
 sudo a2enmod dav_fs
 sudo a2ensite webdav
-sudo service apache2 restart</code></pre></td></tr></table>
+sudo service apache2 restart
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>At this point everything should be working at
-<a href="http://">http://</a><your_host>:880/dav/zotero</p>
-
+</div><p>At this point everything should be working at
+<a href="http://">http://</a>&lt;your_host&gt;:880/dav/zotero</p>
 <h2 id="setting-up-nginx">Setting up NGINX</h2>
-
 <p>After the Apache side is working, we can use nginx as a proxy to get
 cleaner URIs. In your desired site/location, add this:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">7
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-nginx" data-lang="nginx"><span style="color:#66d9ef">location</span> <span style="color:#e6db74">/dav</span> {
     <span style="color:#f92672">client_max_body_size</span> <span style="color:#e6db74">20M</span>;
     <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Real-IP</span>  $remote_addr;
     <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-For</span> $remote_addr;
     <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">Host</span> $host;
     <span style="color:#f92672">proxy_pass</span> <span style="color:#e6db74">http://127.0.0.1:880</span>;
-}</code></pre></td></tr></table>
+}
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>Now just reload nginx:</p>
+</div><p>Now just reload nginx:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo service nginx force-reload</code></pre></td></tr></table>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo service nginx force-reload
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="extras">Extras</h2>
-
+</div><h2 id="extras">Extras</h2>
 <ul>
 <li><a href="http://zoteroreader.com/">Zotero Reader</a> - HTML5 client</li>
 <li><a href="https://github.com/ajlyon/zandy">Zandy</a> - Android Open Source
@@ -218,35 +210,35 @@ client</li>
         
         <div id="sidebar" class="fixed">
   <div id="badge" class="flip-container" ontouchstart="this.classList.toggle('hover');">
-    <div class="flipper sticky">
+    <div class="flipper sticky expand">
       <div class="front">
         
-	<img id="avatar" src="../../img/me.png">
+          <img id="avatar" class="expandx" src="../../img/me.png">
       </div>
       <div class="back">
         
-	<img id="picture" src="../../img/me-bat.png">
+	        
+          <div id="about">
+              
+              <div class="icons vertical-center">
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-linux"></i></span><span class="explanation">Linux user</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-android"></i></span><span class="explanation">Android dev and user</span></span>
+                  <a href="http://github.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-github"></i> </span><span class="explanation">Github user</span></span></a>
+                  <a href="http://gitlab.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-gitlab"></i> </span><span class="explanation">GitLab user</span></span></a>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-stack-exchange"></i> </span><span class="explanation">StackExchange fan</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-music"></i> </span><span class="explanation">Music lover</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-film"></i> </span><span class="explanation">Movie fan</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-laptop"></i> </span><span class="explanation">Always on a PC</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-moon"></i> </span><span class="explanation">Night owl</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-terminal"></i></span>      <span class="explanation">CLI user</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-flag"></i></span>      <span class="explanation">I love languages</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-code"></i> </span>           <span class="explanation">I love programming</span></span>
+              </div>
+          </div>
       </div>
     </div>
   </div>
 
-  <div id="about">
-    
-    <div class="icons">
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-linux"></i></span><span class="explanation">Linux user</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-android"></i></span><span class="explanation">Android dev and user</span></span>
-      <a href="http://github.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-github"></i> </span><span class="explanation">Github user</span></span></a>
-      <a href="http://gitlab.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-gitlab"></i> </span><span class="explanation">GitLab user</span></span></a>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-stack-exchange"></i> </span><span class="explanation">StackExchange fan</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-music"></i> </span><span class="explanation">Music lover</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-film"></i> </span><span class="explanation">Movie fan</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-laptop"></i> </span><span class="explanation">Always on a PC</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-moon"></i> </span><span class="explanation">Night owl</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-terminal"></i></span>      <span class="explanation">CLI user</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-flag"></i></span>      <span class="explanation">I love languages</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-code"></i> </span>           <span class="explanation">I love programming</span></span>
-    </div>
-  </div>
   
   <div class="entries">
     <h2 class="title">Latest entries</h2>
@@ -259,6 +251,28 @@ client</li>
             
 
             
+
+    <dt><a href="../../post/2019-05-01-surface-go/">Linux on the Microsoft Surface Go</a></dt>
+    
+<a class="tag" href='../../tags/linux'><span class="label">linux</span></a>
+
+<a class="tag" href='../../tags/surface-go'><span class="label">surface go</span></a>
+
+<a class="tag" href='../../tags/config'><span class="label">config</span></a>
+
+
+    
+
+    <dt><a href="../../post/surface-go/">Linux on the Microsoft Surface Go</a></dt>
+    
+<a class="tag" href='../../tags/linux'><span class="label">linux</span></a>
+
+<a class="tag" href='../../tags/surface-go'><span class="label">surface go</span></a>
+
+<a class="tag" href='../../tags/config'><span class="label">config</span></a>
+
+
+    
 
     <dt><a href="../../post/2019-01-06-zigbee2mqtt/">Controlling Zigbee devices with MQTT</a></dt>
     
@@ -274,30 +288,6 @@ client</li>
     <dt><a href="../../post/2016-09-28-tqdm/">Progress bars in python</a></dt>
     
 <a class="tag" href='../../tags/python'><span class="label">python</span></a>
-
-
-    
-
-    <dt><a href="../../post/2015-04-10-github-dotfiles/">Sharing dotfiles</a></dt>
-    
-<a class="tag" href='../../tags/github'><span class="label">github</span></a>
-
-<a class="tag" href='../../tags/git'><span class="label">git</span></a>
-
-<a class="tag" href='../../tags/dotfiles'><span class="label">dotfiles</span></a>
-
-
-    
-
-    <dt><a href="../../post/2014-12-09-zotero/">Zotero</a></dt>
-    
-<a class="tag" href='../../tags/zotero'><span class="label">zotero</span></a>
-
-<a class="tag" href='../../tags/webdav'><span class="label">webdav</span></a>
-
-<a class="tag" href='../../tags/nginx'><span class="label">nginx</span></a>
-
-<a class="tag" href='../../tags/apache'><span class="label">apache</span></a>
 
 
     

@@ -58,6 +58,7 @@ body {
 
 .toc ul {
     list-style: none;
+    text-align: left;
 }
 .toc li:before { 
     content: "";
@@ -102,18 +103,53 @@ body {
     }
 
     #sidebar {
-        width: 28%;
+        width: 25%;
         text-align: right;
-        padding-left: 50px;
+        padding-left: 2%;
         position: relative;
         
     }
 
+    #badge {
+        display: none;
+    }
+
+
+}
+
+@media (min-width: 1200px) {
+    #contentwrapper {
+    width: 1200px;
+    position:relative;
+    }
+
+    #container {
+        width: 1200px;
+        margin: 0 auto;
+    }
     #badge{
+        height: 270px;
+    }
+
+    #content {
+        width: 850px;
+    }
+
+    #sidebar {
+        width: 290px;
+    }
+
+    .front, .back {
+        height: 250px;
+        width: 230px;
+    }
+
+    #badge{
+        display: block;
         position: relative;
         margin: 0px auto 10px;
-        width: 80%;
-        height: 180px;
+        width: 250px;
+        height: 300px;
         padding: 0;
         /* margin-top: -2em; */
         -webkit-transform: rotate(-4deg);
@@ -124,10 +160,17 @@ body {
         z-index: 1000;
     }
 
-    #badge * {
+    .expandx {
         width: 100%;
     }
+    .expandy {
+        height: 100%;
+    }
 
+    .expand {
+        width: 100%;
+        height: 100%;
+    }
     /* entire container, keeps perspective */
 
     .flip-container {
@@ -159,23 +202,29 @@ body {
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
-
     position: relative;
     }
 
     /* hide back of pane during swap */
     .front, .back {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 1%;
-    padding-bottom: 10%;
-    background-color: black;
-    box-shadow: -5px 5px 5px #555;
-    -webkit-box-shadow: -5px 5px 15px #555;
-    -moz-box-shadow: -5px 5px 15px #555;
+
+        /* backface-visibility: hidden; */
+        /* -webkit-backface-visibility: hidden; */
+        /* transform: rotateX(0deg); */
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 1%;
+        padding-bottom: 10%;
+        background-color: black;
+        box-shadow: -5px 5px 5px #555;
+        -webkit-box-shadow: -5px 5px 15px #555;
+        -moz-box-shadow: -5px 5px 15px #555;
+    }
+
+    .back {
+        backface-visibility: hidden;
+        
     }
 
     /* front pane, placed above back */
@@ -185,9 +234,11 @@ body {
 
     /* back, initially hidden pane */
     .back {
-    transform: rotateY(180deg);
-    -webkit-transform: rotateY(180deg);
-    z-index: 4;
+        transform: rotateY(180deg);
+        -webkit-transform: rotateY(180deg);
+        z-index: 4;
+        /* height: 100%; */
+        background-color: #ffd700bb;
     }
 
     .sticky:after {
@@ -245,28 +296,12 @@ body {
     .toc {
 	    padding: 1em;
 	    position: fixed;
-	    border-color: black;
-	    border: 1px solid;
+	    border: 1px solid lightgray;
 	    background-color: white;
 	    height: max-content;
 	    z-index: 1;
     }
 
-}
-
-@media (min-width: 1200px) {
-    #contentwrapper {
-    width: 1200px;
-    position:relative;
-    }
-
-    #container {
-        width: 1200px;
-        margin: 0 auto;
-    }
-    #badge{
-        height: 270px;
-    }
 
 
 }
@@ -817,4 +852,12 @@ pre {
     vertical-align: middle;
     margin:0;
     height: 100%;
+}
+
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }

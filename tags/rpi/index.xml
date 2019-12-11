@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>rpi on Balkian&#39;s site</title>
@@ -17,8 +17,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/cheatsheet/rpi/</guid>
-      <description> HDMI flickering Avoid HDMI flickering/intermittent blanking on RPI with a 1400x1050 VGA monitor.
-1 2 3 4 5  hdmi_drive=2 hdmi_group=2 hdmi_mode=42 disable_overscan=1 config_hdmi_boost=7  </description>
+      <description>HDMI flickering Avoid HDMI flickering/intermittent blanking on RPI with a 1400x1050 VGA monitor.
+1 2 3 4 5 6  hdmi_drive=2 hdmi_group=2 hdmi_mode=42 disable_overscan=1 config_hdmi_boost=7   </description>
     </item>
     
   </channel>

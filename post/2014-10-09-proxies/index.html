@@ -72,90 +72,86 @@
 <p>This is a quick note on proxying a local python application (e.g. flask)
 to a subdirectory in Apache. This assumes that the file wsgi.py contains
 a WSGI application with the name <em>application</em>. Hence, wsgi:application.</p>
-
 <h2 id="gunicorn">Gunicorn</h2>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">5
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache"><span style="color:#f92672">&lt;Location</span> <span style="color:#e6db74">/myapp/</span><span style="color:#f92672">&gt;</span>
     ProxyPass http://127.0.0.1:8888/myapp/
     ProxyPassReverse http://127.0.0.1:8888/myapp/
     RequestHeader set SCRIPT_NAME <span style="color:#e6db74">&#34;/myapp/&#34;</span>
-<span style="color:#f92672">&lt;/Location&gt;</span></code></pre></td></tr></table>
+<span style="color:#f92672">&lt;/Location</span><span style="color:#e6db74"></span><span style="color:#f92672">&gt;</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p><strong>Important</strong>: <em>SCRIPT_NAME</em> and the end of <em>ProxyPass</em> URL <strong>MUST BE
+</div><p><strong>Important</strong>: <em>SCRIPT_NAME</em> and the end of <em>ProxyPass</em> URL <strong>MUST BE
 THE SAME</strong>. Otherwise, Gunicorn will fail miserably.</p>
-
 <p>Try it with:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">venv/bin/gunicorn -w <span style="color:#ae81ff">4</span> -b <span style="color:#ae81ff">127</span>.0.0.1:8888 --log-file - --access-logfile - wsgi:application</code></pre></td></tr></table>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">venv/bin/gunicorn -w <span style="color:#ae81ff">4</span> -b 127.0.0.1:8888 --log-file - --access-logfile - wsgi:application
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="uwsgi">UWSGI</h2>
-
+</div><h2 id="uwsgi">UWSGI</h2>
 <p>This is a very simple configuration. I will try to upload one with more
 options for uwsgi (in a .ini file).</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">4
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache"><span style="color:#f92672">&lt;Location</span> <span style="color:#e6db74">/myapp/</span><span style="color:#f92672">&gt;</span>
     SetHandler uwsgi_handler
     uWSGISocker <span style="color:#ae81ff">127.0.0.1</span>:8888
-<span style="color:#f92672">&lt;/Location&gt;</span></code></pre></td></tr></table>
+<span style="color:#f92672">&lt;/Location</span><span style="color:#e6db74"></span><span style="color:#f92672">&gt;</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>Try it with:</p>
+</div><p>Try it with:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">1
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">uwsgi --socket <span style="color:#ae81ff">127</span>.0.0.1:8888 -w wsgi:application</code></pre></td></tr></table>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">uwsgi --socket 127.0.0.1:8888 -w wsgi:application
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="extra-supervisor">Extra: Supervisor</h3>
-
+</div><h3 id="extra-supervisor">Extra: Supervisor</h3>
 <p>If everything went as expected, you can wrap your command in a
 supervisor config file and let it handle the server for you.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7c7c79">19
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;">
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[unix_http_server]</span>
 <span style="color:#a6e22e">file</span><span style="color:#f92672">=</span><span style="color:#e6db74">/tmp/myapp.sock ; path to your socket file</span>
 
@@ -174,7 +170,8 @@ supervisor config file and let it handle the server for you.</p>
 <span style="color:#a6e22e">command</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">venv/bin/gunicorn -w 4 -b 0.0.0.0:5000 --log-file %(here)s/logs/gunicorn.log --access-logfile - wsgi:application</span>
 <span style="color:#a6e22e">directory</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">%(here)s</span>
 <span style="color:#a6e22e">environment</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">PATH=%(here)s/venv/bin/</span>
-<span style="color:#a6e22e">logfile</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">%(here)s/logs/myapp.log</span></code></pre></td></tr></table>
+<span style="color:#a6e22e">logfile</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">%(here)s/logs/myapp.log</span>
+</code></pre></td></tr></table>
 </div>
 </div>
 
@@ -182,35 +179,35 @@ supervisor config file and let it handle the server for you.</p>
         
         <div id="sidebar" class="fixed">
   <div id="badge" class="flip-container" ontouchstart="this.classList.toggle('hover');">
-    <div class="flipper sticky">
+    <div class="flipper sticky expand">
       <div class="front">
         
-	<img id="avatar" src="../../img/me.png">
+          <img id="avatar" class="expandx" src="../../img/me.png">
       </div>
       <div class="back">
         
-	<img id="picture" src="../../img/me-bat.png">
+	        
+          <div id="about">
+              
+              <div class="icons vertical-center">
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-linux"></i></span><span class="explanation">Linux user</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-android"></i></span><span class="explanation">Android dev and user</span></span>
+                  <a href="http://github.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-github"></i> </span><span class="explanation">Github user</span></span></a>
+                  <a href="http://gitlab.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-gitlab"></i> </span><span class="explanation">GitLab user</span></span></a>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-stack-exchange"></i> </span><span class="explanation">StackExchange fan</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-music"></i> </span><span class="explanation">Music lover</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-film"></i> </span><span class="explanation">Movie fan</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-laptop"></i> </span><span class="explanation">Always on a PC</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-moon"></i> </span><span class="explanation">Night owl</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-terminal"></i></span>      <span class="explanation">CLI user</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-flag"></i></span>      <span class="explanation">I love languages</span></span>
+                  <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-code"></i> </span>           <span class="explanation">I love programming</span></span>
+              </div>
+          </div>
       </div>
     </div>
   </div>
 
-  <div id="about">
-    
-    <div class="icons">
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-linux"></i></span><span class="explanation">Linux user</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-android"></i></span><span class="explanation">Android dev and user</span></span>
-      <a href="http://github.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-github"></i> </span><span class="explanation">Github user</span></span></a>
-      <a href="http://gitlab.com/balkian" target="_blank"><span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-gitlab"></i> </span><span class="explanation">GitLab user</span></span></a>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fab fa-inverse fa-stack-1x fa-stack-exchange"></i> </span><span class="explanation">StackExchange fan</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-music"></i> </span><span class="explanation">Music lover</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-film"></i> </span><span class="explanation">Movie fan</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-laptop"></i> </span><span class="explanation">Always on a PC</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-moon"></i> </span><span class="explanation">Night owl</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-terminal"></i></span>      <span class="explanation">CLI user</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-flag"></i></span>      <span class="explanation">I love languages</span></span>
-      <span class="coolicon"><span class="fa-stack"> <i class="fas fa-square fa-stack-2x" ></i><i class="fas fa-inverse fa-stack-1x fa-code"></i> </span>           <span class="explanation">I love programming</span></span>
-    </div>
-  </div>
   
   <div class="entries">
     <h2 class="title">Latest entries</h2>
@@ -223,6 +220,28 @@ supervisor config file and let it handle the server for you.</p>
             
 
             
+
+    <dt><a href="../../post/2019-05-01-surface-go/">Linux on the Microsoft Surface Go</a></dt>
+    
+<a class="tag" href='../../tags/linux'><span class="label">linux</span></a>
+
+<a class="tag" href='../../tags/surface-go'><span class="label">surface go</span></a>
+
+<a class="tag" href='../../tags/config'><span class="label">config</span></a>
+
+
+    
+
+    <dt><a href="../../post/surface-go/">Linux on the Microsoft Surface Go</a></dt>
+    
+<a class="tag" href='../../tags/linux'><span class="label">linux</span></a>
+
+<a class="tag" href='../../tags/surface-go'><span class="label">surface go</span></a>
+
+<a class="tag" href='../../tags/config'><span class="label">config</span></a>
+
+
+    
 
     <dt><a href="../../post/2019-01-06-zigbee2mqtt/">Controlling Zigbee devices with MQTT</a></dt>
     
@@ -238,30 +257,6 @@ supervisor config file and let it handle the server for you.</p>
     <dt><a href="../../post/2016-09-28-tqdm/">Progress bars in python</a></dt>
     
 <a class="tag" href='../../tags/python'><span class="label">python</span></a>
-
-
-    
-
-    <dt><a href="../../post/2015-04-10-github-dotfiles/">Sharing dotfiles</a></dt>
-    
-<a class="tag" href='../../tags/github'><span class="label">github</span></a>
-
-<a class="tag" href='../../tags/git'><span class="label">git</span></a>
-
-<a class="tag" href='../../tags/dotfiles'><span class="label">dotfiles</span></a>
-
-
-    
-
-    <dt><a href="../../post/2014-12-09-zotero/">Zotero</a></dt>
-    
-<a class="tag" href='../../tags/zotero'><span class="label">zotero</span></a>
-
-<a class="tag" href='../../tags/webdav'><span class="label">webdav</span></a>
-
-<a class="tag" href='../../tags/nginx'><span class="label">nginx</span></a>
-
-<a class="tag" href='../../tags/apache'><span class="label">apache</span></a>
 
 
     
