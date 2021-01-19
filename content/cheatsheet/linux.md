@@ -89,3 +89,35 @@ systemd-run --scope --user tmux
 ```
 
 Source: https://unix.stackexchange.com/questions/490267/prevent-logoff-from-killing-tmux-session
+
+
+# Upload a temporary file 
+
+Sometimes you just need to copy/paste a file from a server, and copying from the terminal can be a hassle.
+These two services are command-line "pastebins" just one curl away:
+
+```shell
+<command> | curl -F 'sprunge=<-' http://sprunge.us
+# OR
+
+<command> 2>&1 | curl -F 'f:1=<-' ix.io
+
+# OR
+
+<command> | curl -F"file=@-" https://ttm.sh
+```
+
+
+# Install Fortinet SSLVPN support for NetworkManager
+
+UPM (Universidad Politécnica de Madrid) uses a propriatary VPN solution.
+The instructions for GNU/Linux on their website involve downloading a specific client (`.tar.gz`) and manually running it.
+That works, but it is kind of a hassle.
+A much more convenient alternative is installing this NetworkManager plugin:
+
+```shell
+pacman -Sy networkmanager-fortisslvpn 
+# Or apt get install networkmanager-fortisslvpn 
+```
+
+Now you can simply add a new VPN connection in NetworkManager and manage it as you would any other connection.
