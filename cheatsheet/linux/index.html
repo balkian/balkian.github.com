@@ -167,17 +167,34 @@ You can revert this setting in your logind.conf (<code>/etc/systemd/logind.conf<
 <h1 id="upload-a-temporary-file">Upload a temporary file</h1>
 <p>Sometimes you just need to copy/paste a file from a server, and copying from the terminal can be a hassle.
 These two services are command-line &ldquo;pastebins&rdquo; just one curl away:</p>
-<pre><code>&lt;command&gt; | curl -F 'sprunge=&lt;-' http://sprunge.us
-# OR
-&lt;command&gt; 2&gt;&amp;1 | curl -F 'f:1=&lt;-' ix.io
-</code></pre><h1 id="install-fortinet-sslvpn-support-for-networkmanager">Install Fortinet SSLVPN support for NetworkManager</h1>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">&lt;command&gt; | curl -F <span style="color:#e6db74">&#39;sprunge=&lt;-&#39;</span> http://sprunge.us
+<span style="color:#75715e"># OR</span>
+&lt;command&gt; 2&gt;&amp;<span style="color:#ae81ff">1</span> | curl -F <span style="color:#e6db74">&#39;f:1=&lt;-&#39;</span> ix.io
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="install-fortinet-sslvpn-support-for-networkmanager">Install Fortinet SSLVPN support for NetworkManager</h1>
 <p>UPM (Universidad Politécnica de Madrid) uses a propriatary VPN solution.
 The instructions for GNU/Linux on their website involve downloading a specific client (<code>.tar.gz</code>) and manually running it.
 That works, but it is kind of a hassle.
 A much more convenient alternative is installing this NetworkManager plugin:</p>
-<pre><code>pacman -Sy networkmanager-fortisslvpn 
-# Or apt get install networkmanager-fortisslvpn 
-</code></pre><p>Now you can simply add a new VPN connection in NetworkManager and manage it as you would any other connection.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">pacman -Sy networkmanager-fortisslvpn 
+<span style="color:#75715e"># Or apt get install networkmanager-fortisslvpn </span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Now you can simply add a new VPN connection in NetworkManager and manage it as you would any other connection.</p>
 
 
         </div>
