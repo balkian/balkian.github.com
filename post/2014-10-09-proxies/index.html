@@ -86,7 +86,7 @@ a WSGI application with the name <em>application</em>. Hence, wsgi:application.<
     ProxyPass http://127.0.0.1:8888/myapp/
     ProxyPassReverse http://127.0.0.1:8888/myapp/
     RequestHeader set SCRIPT_NAME <span style="color:#e6db74">&#34;/myapp/&#34;</span>
-<span style="color:#f92672">&lt;/Location</span><span style="color:#e6db74"></span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;/Location&gt;</span>
 </code></pre></td></tr></table>
 </div>
 </div><p><strong>Important</strong>: <em>SCRIPT_NAME</em> and the end of <em>ProxyPass</em> URL <strong>MUST BE
@@ -114,7 +114,7 @@ options for uwsgi (in a .ini file).</p>
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-apache" data-lang="apache"><span style="color:#f92672">&lt;Location</span> <span style="color:#e6db74">/myapp/</span><span style="color:#f92672">&gt;</span>
     SetHandler uwsgi_handler
     uWSGISocker <span style="color:#ae81ff">127.0.0.1</span>:8888
-<span style="color:#f92672">&lt;/Location</span><span style="color:#e6db74"></span><span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">&lt;/Location&gt;</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Try it with:</p>

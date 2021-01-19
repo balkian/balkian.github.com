@@ -68,18 +68,18 @@
 <p>This is a short tutorial on connecting a zigbee device (an Aqara cube)
 to an MQTT server, so you can control your zigbee devices from the
 network.</p>
-<p>If you're anything like me, you're probably a sucker for IoT devices.
-For a long time, I've been using WiFi-enabled lights, and Amazon dash
+<p>If you&rsquo;re anything like me, you&rsquo;re probably a sucker for IoT devices.
+For a long time, I&rsquo;ve been using WiFi-enabled lights, and Amazon dash
 buttons to control them. To keep these (cheap Chinese) internet enabled
 devices away from your network and their respective cloud services,
-you'll probably want to set up a dedicated network in your router (more
+you&rsquo;ll probably want to set up a dedicated network in your router (more
 on this on a future post, maybe). Another disadvantage of WiFi devices
-is that they're relatively power hungry.</p>
+is that they&rsquo;re relatively power hungry.</p>
 <p>A popular alternative is using ZigBee for communication. It is a
 dedicated protocol similar to bluetooth (BLE), with lower power
 requirements and bitrate.</p>
 <p>Take the (super cute) aqara cube as an example. It is a small cube that
-detects rotation on all of its axes, and tapping events. Here's a
+detects rotation on all of its axes, and tapping events. Here&rsquo;s a
 video:</p>
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
@@ -106,7 +106,7 @@ sniffer</a>.</li>
 <p>You will need to flash your sniffer. For that, you only need to follow
 the instructions from the <a href="https://koenkk.github.io/zigbee2mqtt/">zigbee2mqtt
 documentation</a>.</p>
-<p>Once you're done flashing, you're ready to set up the zigbee2mqtt
+<p>Once you&rsquo;re done flashing, you&rsquo;re ready to set up the zigbee2mqtt
 server. For convenience, I wrote a simple docker-compose to deploy a
 zigbee2mqtt server and a test mosquitto server:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
@@ -137,30 +137,30 @@ zigbee2mqtt server and a test mosquitto server:</p>
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">version: <span style="color:#e6db74">&#39;2.1&#39;</span>
-services:
-  zigbee2mqtt:
-    image: koenkk/zigbee2mqtt
-    container_name: zigbee2mqtt 
-    restart: always
-    volumes:
-      - ./z2m-data/:/app/data/
-    devices:
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;2.1&#39;</span>
+<span style="color:#f92672">services</span>:
+  <span style="color:#f92672">zigbee2mqtt</span>:
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">koenkk/zigbee2mqtt</span>
+    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">zigbee2mqtt </span>
+    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">always</span>
+    <span style="color:#f92672">volumes</span>:
+      - <span style="color:#ae81ff">./z2m-data/:/app/data/</span>
+    <span style="color:#f92672">devices</span>:
       - <span style="color:#e6db74">&#34;/dev/ttyACM0&#34;</span>
-    networks:
-        - hass
-  mqtt:
-    image: eclipse-mosquitto
-    ports:
+    <span style="color:#f92672">networks</span>:
+        - <span style="color:#ae81ff">hass</span>
+  <span style="color:#f92672">mqtt</span>:
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">eclipse-mosquitto</span>
+    <span style="color:#f92672">ports</span>:
        - <span style="color:#ae81ff">1883</span>:<span style="color:#ae81ff">1883</span>
        - <span style="color:#ae81ff">9001</span>:<span style="color:#ae81ff">9001</span> 
-    networks:
-        - hass
-    volumes:
-      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
-networks:
-  hass:
-    driver: overlay
+    <span style="color:#f92672">networks</span>:
+        - <span style="color:#ae81ff">hass</span>
+    <span style="color:#f92672">volumes</span>:
+      - <span style="color:#ae81ff">./mosquitto.conf:/mosquitto/config/mosquitto.conf</span>
+<span style="color:#f92672">networks</span>:
+  <span style="color:#f92672">hass</span>:
+    <span style="color:#f92672">driver</span>: <span style="color:#ae81ff">overlay</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>You can test your installation with:</p>

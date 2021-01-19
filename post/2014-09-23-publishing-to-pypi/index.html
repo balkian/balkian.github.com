@@ -70,12 +70,12 @@ of the times you want others to download and use it easily. That is the
 role of PyPi, the python package repository. In this post I show you how
 to publish your package in less than 10 minutes.</p>
 <h2 id="choose-a-fancy-name">Choose a fancy name</h2>
-<p>If you haven't done so yet, take a minute or two to think about this.
-To publish on PyPi you need a name for your package that isn't taken.
-What's more, a catchy and unique name will help people remember your
+<p>If you haven&rsquo;t done so yet, take a minute or two to think about this.
+To publish on PyPi you need a name for your package that isn&rsquo;t taken.
+What&rsquo;s more, a catchy and unique name will help people remember your
 module and feel more inclined to at least try it.</p>
-<p>The package name should hint what your module does, but that's not
-always the case. That's your call. I personally put uniqueness and
+<p>The package name should hint what your module does, but that&rsquo;s not
+always the case. That&rsquo;s your call. I personally put uniqueness and
 memorability over describing the functionality.</p>
 <h2 id="create-a-pypirc-configuration-file">Create a .pypirc configuration file</h2>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
@@ -159,15 +159,15 @@ also use rST (reStructuredText), the standard in the python community.</p>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> distutils.core <span style="color:#f92672">import</span> setup
 
-setup(name <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mypackage</span><span style="color:#e6db74">&#39;</span>,
-      packages <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">mypackage</span><span style="color:#e6db74">&#39;</span>], <span style="color:#75715e"># this must be the same as the name above</span>
-      version <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{ version }</span><span style="color:#e6db74">&#39;</span>,
-      description <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{ description }</span><span style="color:#e6db74">&#39;</span>,
-      author <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{ name }</span><span style="color:#e6db74">&#39;</span>,
-      email <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{ email }</span><span style="color:#e6db74">&#39;</span>,
-      url <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://github.com/{user}/{package}</span><span style="color:#e6db74">&#39;</span>, <span style="color:#75715e"># URL to the github repo</span>
-      download_url <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://github.com/{user}/{repo}/tarball/{version}</span><span style="color:#e6db74">&#39;</span>,
-      keywords <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">websockets</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">display</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">d3</span><span style="color:#e6db74">&#39;</span>], <span style="color:#75715e"># list of keywords that represent your package</span>
+setup(name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;mypackage&#39;</span>,
+      packages <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;mypackage&#39;</span>], <span style="color:#75715e"># this must be the same as the name above</span>
+      version <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;{ version }&#39;</span>,
+      description <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;{ description }&#39;</span>,
+      author <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;{ name }&#39;</span>,
+      email <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;{ email }&#39;</span>,
+      url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://github.com/{user}/{package}&#39;</span>, <span style="color:#75715e"># URL to the github repo</span>
+      download_url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://github.com/{user}/{repo}/tarball/{version}&#39;</span>,
+      keywords <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;websockets&#39;</span>, <span style="color:#e6db74">&#39;display&#39;</span>, <span style="color:#e6db74">&#39;d3&#39;</span>], <span style="color:#75715e"># list of keywords that represent your package</span>
       classifiers <span style="color:#f92672">=</span> [], )
 </code></pre></td></tr></table>
 </div>
@@ -197,7 +197,7 @@ any problems first. The process is simple:</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>If everything went as expected, you can now install your package through
-pip and browse your package's page. For instance, check my senpy
+pip and browse your package&rsquo;s page. For instance, check my senpy
 package: <a href="https://pypi.python.org/pypi/senpy">https://pypi.python.org/pypi/senpy</a></p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">

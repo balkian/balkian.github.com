@@ -56,7 +56,7 @@
           
 <h2>Linux</h2>
 
-<h1 id="black-screen-and-lightdm-doesnt-unlock">Black screen and LightDM doesn't unlock</h1>
+<h1 id="black-screen-and-lightdm-doesnt-unlock">Black screen and LightDM doesn&rsquo;t unlock</h1>
 <p>Add this to your /etc/lightdm/lightdm.conf file:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -142,9 +142,9 @@ You use it like this:</p>
 </div><p>If you save and exit, all commands are executed as a script, and it will be added to your history.</p>
 <p>Source: <a href="https://shapeshed.com/unix-fc/">https://shapeshed.com/unix-fc/</a></p>
 <h1 id="prevent-logoff-from-killing-tmux-sessions">Prevent logoff from killing tmux sessions</h1>
-<p>Lately I've noticed that logging out of i3, intentionally or when i3 fails, would also kill any tmux or emacs sessions.
+<p>Lately I&rsquo;ve noticed that logging out of i3, intentionally or when i3 fails, would also kill any tmux or emacs sessions.
 This is extremely annoying.</p>
-<p>This is caused by a new default in logind (systemd's login) to kill user process on logoff.
+<p>This is caused by a new default in logind (systemd&rsquo;s login) to kill user process on logoff.
 You can revert this setting in your logind.conf (<code>/etc/systemd/logind.conf</code>):</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -164,6 +164,20 @@ You can revert this setting in your logind.conf (<code>/etc/systemd/logind.conf<
 </code></pre></td></tr></table>
 </div>
 </div><p>Source: <a href="https://unix.stackexchange.com/questions/490267/prevent-logoff-from-killing-tmux-session">https://unix.stackexchange.com/questions/490267/prevent-logoff-from-killing-tmux-session</a></p>
+<h1 id="upload-a-temporary-file">Upload a temporary file</h1>
+<p>Sometimes you just need to copy/paste a file from a server, and copying from the terminal can be a hassle.
+These two services are command-line &ldquo;pastebins&rdquo; just one curl away:</p>
+<pre><code>&lt;command&gt; | curl -F 'sprunge=&lt;-' http://sprunge.us
+# OR
+&lt;command&gt; 2&gt;&amp;1 | curl -F 'f:1=&lt;-' ix.io
+</code></pre><h1 id="install-fortinet-sslvpn-support-for-networkmanager">Install Fortinet SSLVPN support for NetworkManager</h1>
+<p>UPM (Universidad Politécnica de Madrid) uses a propriatary VPN solution.
+The instructions for GNU/Linux on their website involve downloading a specific client (<code>.tar.gz</code>) and manually running it.
+That works, but it is kind of a hassle.
+A much more convenient alternative is installing this NetworkManager plugin:</p>
+<pre><code>pacman -Sy networkmanager-fortisslvpn 
+# Or apt get install networkmanager-fortisslvpn 
+</code></pre><p>Now you can simply add a new VPN connection in NetworkManager and manage it as you would any other connection.</p>
 
 
         </div>
@@ -173,9 +187,11 @@ You can revert this setting in your logind.conf (<code>/etc/systemd/logind.conf<
 <h3>Contents:</h3>
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#black-screen-and-lightdm-doesnt-unlock">Black screen and LightDM doesn't unlock</a></li>
+    <li><a href="#black-screen-and-lightdm-doesnt-unlock">Black screen and LightDM doesn&rsquo;t unlock</a></li>
     <li><a href="#edit-previous-commands">Edit previous commands</a></li>
     <li><a href="#prevent-logoff-from-killing-tmux-sessions">Prevent logoff from killing tmux sessions</a></li>
+    <li><a href="#upload-a-temporary-file">Upload a temporary file</a></li>
+    <li><a href="#install-fortinet-sslvpn-support-for-networkmanager">Install Fortinet SSLVPN support for NetworkManager</a></li>
   </ul>
 </nav>
 </div>

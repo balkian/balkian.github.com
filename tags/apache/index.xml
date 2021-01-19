@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 09 Dec 2014 12:12:12 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/apache/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 09 Dec 2014 12:12:12 +0000</lastBuildDate><atom:link href="/tags/apache/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Zotero</title>
       <link>/post/2014-12-09-zotero/</link>
@@ -45,7 +41,7 @@ a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:a
     ProxyPass http://127.0.0.1:8888/myapp/
     ProxyPassReverse http://127.0.0.1:8888/myapp/
     RequestHeader set SCRIPT_NAME &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/myapp/&amp;#34;&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/Location&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/Location&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;</description>

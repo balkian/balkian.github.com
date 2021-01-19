@@ -75,7 +75,7 @@ articles by category and country (using the source of the article or the
 language it was written in), obtaining the &ldquo;overall feeling&rdquo; of each
 country about each topic. Then, we used some fancy JavaScript to make
 sense out of the raw information.</p>
-<p>It didn't go too bad, it turns out <a href="http://eurosentiment.eu/wp-content/uploads/2013/07/BOLv9qnCIAAJEek.jpg">we
+<p>It didn&rsquo;t go too bad, it turns out <a href="http://eurosentiment.eu/wp-content/uploads/2013/07/BOLv9qnCIAAJEek.jpg">we
 won</a>.</p>
 <p>Now, it was time for a face-lift. I used this opportunity to play with
 new technologies and improve it:</p>
@@ -97,7 +97,7 @@ new technologies and improve it:</p>
 </code></pre></td></tr></table>
 </div>
 </div><p>Since Heroku uses python 2.7 by default, we have to tell it which
-version we want, although it supports python 3.4 as well. I couldn't
+version we want, although it supports python 3.4 as well. I couldn&rsquo;t
 get python 3.4 working using the
 <a href="https://launchpad.net/~fkrull/+archive/deadsnakes">deadsnakes</a> ppa, so
 I used python 3.3 instead, which works fine but is not officially
@@ -111,7 +111,7 @@ with the python version you want to use:</p>
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python-3.3.1
 </code></pre></td></tr></table>
 </div>
-</div><p>Don't forget to freeze your dependencies so Heroku can install them:
+</div><p>Don&rsquo;t forget to freeze your dependencies so Heroku can install them:
 <code>bash pip freze &gt; requirements.txt</code></p>
 <h2 id="publishing-personal-emails">Publishing personal emails</h2>
 <p>There are really sophisticated and effective ways to obfuscate personal
@@ -120,7 +120,7 @@ needed something really simple to hide our emails from the simplest form
 of crawlers. Most of the team are in academia somehow, so in the end all
 our emails are available in sites like Google Scholar. Anyway, nobody
 likes getting spammed so I settled for a custom <a href="http://en.wikipedia.org/wiki/Caesar_cipher">Caesar
-cipher</a>. Please, don't use
+cipher</a>. Please, don&rsquo;t use
 it for any serious application if you are concerned about being spammed.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -129,7 +129,7 @@ it for any serious application if you are concerned about being spammed.</p>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">blur_email</span>(email):
-    <span style="color:#66d9ef">return</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join([chr(ord(i)<span style="color:#f92672">+</span><span style="color:#ae81ff">5</span>) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> email])
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join([chr(ord(i)<span style="color:#f92672">+</span><span style="color:#ae81ff">5</span>) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> email])
 </code></pre></td></tr></table>
 </div>
 </div><p>And this is the client side:</p>
@@ -184,7 +184,7 @@ an index, so it will always show the same picture.</p>
 <p>For instance, the picture below is served through Lorem Pixel.</p>
 <p><img src="http://lorempixel.com/400/200/nightlife/" alt=""></p>
 <p>By the way, if you only want cat pictures, take a look at
-<a href="http://placekitten.com/">Placekitten</a>. And for NSFW text, there's the
+<a href="http://placekitten.com/">Placekitten</a>. And for NSFW text, there&rsquo;s the
 <a href="http://slipsum.com/">Samuel L. Jackson Ipsum</a></p>
 
 

@@ -7,18 +7,14 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright>
-    <lastBuildDate>Fri, 10 Apr 2015 17:47:00 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/git/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Fri, 10 Apr 2015 17:47:00 +0000</lastBuildDate><atom:link href="/tags/git/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Sharing dotfiles</title>
       <link>/post/2015-04-10-github-dotfiles/</link>
       <pubDate>Fri, 10 Apr 2015 17:47:00 +0000</pubDate>
       
       <guid>/post/2015-04-10-github-dotfiles/</guid>
-      <description>Today&#39;s post is half a quick note, half public shaming. In other words, it is a reminder to be very careful with OAuth tokens and passwords.
+      <description>Today&amp;rsquo;s post is half a quick note, half public shaming. In other words, it is a reminder to be very careful with OAuth tokens and passwords.
 As part of moving to emacs, I starting using the incredibly useful gh.el. When you first use it, the extension saves either your password or an OAuth token in your .</description>
     </item>
     
@@ -38,7 +34,7 @@ As part of moving to emacs, I starting using the incredibly useful gh.el. When y
       <pubDate>Thu, 22 Aug 2013 14:14:22 +0000</pubDate>
       
       <guid>/post/2013-08-17-creating-my-web/</guid>
-      <description>I&#39;ve finally decided to set up a decent personal page. I have settled for github-pages because I like the idea of keeping my site in a repository and having someone else host and deploy it for me. The site will be really simple, mostly static files. Thanks to Github, Jekyll will automatically generate static pages for my posts every time I commit anything new to this repository.</description>
+      <description>I&amp;rsquo;ve finally decided to set up a decent personal page. I have settled for github-pages because I like the idea of keeping my site in a repository and having someone else host and deploy it for me. The site will be really simple, mostly static files. Thanks to Github, Jekyll will automatically generate static pages for my posts every time I commit anything new to this repository.</description>
     </item>
     
   </channel>

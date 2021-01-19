@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright>
-    <lastBuildDate>Thu, 27 Mar 2014 14:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 27 Mar 2014 14:00:00 +0000</lastBuildDate><atom:link href="/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Updating EuroLoveMap</title>
       <link>/post/2014-03-27-updating-eurolovemap/</link>
@@ -27,7 +23,7 @@
       <pubDate>Thu, 22 Aug 2013 14:14:22 +0000</pubDate>
       
       <guid>/post/2013-08-17-creating-my-web/</guid>
-      <description>I&#39;ve finally decided to set up a decent personal page. I have settled for github-pages because I like the idea of keeping my site in a repository and having someone else host and deploy it for me. The site will be really simple, mostly static files. Thanks to Github, Jekyll will automatically generate static pages for my posts every time I commit anything new to this repository.</description>
+      <description>I&amp;rsquo;ve finally decided to set up a decent personal page. I have settled for github-pages because I like the idea of keeping my site in a repository and having someone else host and deploy it for me. The site will be really simple, mostly static files. Thanks to Github, Jekyll will automatically generate static pages for my posts every time I commit anything new to this repository.</description>
     </item>
     
   </channel>

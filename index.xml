@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright>
-    <lastBuildDate>Sat, 01 Jun 2019 00:00:01 +0000</lastBuildDate>
-    
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 01 Jun 2019 00:00:01 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux on the Microsoft Surface Go</title>
       <link>/post/2019-05-01-surface-go/</link>
@@ -29,7 +25,7 @@ These are some useful notes to get Ubuntu installed in your surface go, as of Su
       
       <guid>/post/2019-01-06-zigbee2mqtt/</guid>
       <description>This is a short tutorial on connecting a zigbee device (an Aqara cube) to an MQTT server, so you can control your zigbee devices from the network.
-If you&#39;re anything like me, you&#39;re probably a sucker for IoT devices. For a long time, I&#39;ve been using WiFi-enabled lights, and Amazon dash buttons to control them.</description>
+If you&amp;rsquo;re anything like me, you&amp;rsquo;re probably a sucker for IoT devices. For a long time, I&amp;rsquo;ve been using WiFi-enabled lights, and Amazon dash buttons to control them.</description>
     </item>
     
     <item>
@@ -48,7 +44,7 @@ If you&#39;re anything like me, you&#39;re probably a sucker for IoT devices. Fo
       <pubDate>Fri, 10 Apr 2015 17:47:00 +0000</pubDate>
       
       <guid>/post/2015-04-10-github-dotfiles/</guid>
-      <description>Today&#39;s post is half a quick note, half public shaming. In other words, it is a reminder to be very careful with OAuth tokens and passwords.
+      <description>Today&amp;rsquo;s post is half a quick note, half public shaming. In other words, it is a reminder to be very careful with OAuth tokens and passwords.
 As part of moving to emacs, I starting using the incredibly useful gh.el. When you first use it, the extension saves either your password or an OAuth token in your .</description>
     </item>
     
@@ -85,7 +81,7 @@ a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:a
     ProxyPass http://127.0.0.1:8888/myapp/
     ProxyPassReverse http://127.0.0.1:8888/myapp/
     RequestHeader set SCRIPT_NAME &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/myapp/&amp;#34;&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/Location&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/Location&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;</description>
@@ -125,7 +121,7 @@ a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:a
       <pubDate>Thu, 22 Aug 2013 14:14:22 +0000</pubDate>
       
       <guid>/post/2013-08-17-creating-my-web/</guid>
-      <description>I&#39;ve finally decided to set up a decent personal page. I have settled for github-pages because I like the idea of keeping my site in a repository and having someone else host and deploy it for me. The site will be really simple, mostly static files. Thanks to Github, Jekyll will automatically generate static pages for my posts every time I commit anything new to this repository.</description>
+      <description>I&amp;rsquo;ve finally decided to set up a decent personal page. I have settled for github-pages because I like the idea of keeping my site in a repository and having someone else host and deploy it for me. The site will be really simple, mostly static files. Thanks to Github, Jekyll will automatically generate static pages for my posts every time I commit anything new to this repository.</description>
     </item>
     
     <item>
@@ -143,7 +139,7 @@ a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:a
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/project/</guid>
-      <description>Ongoing Projects  Senpy: a framework for semantic sentiment and emotion analysis services. Soil: an agent-based simulator for social networks based on nx-sim and networkx. Onyx: an ontology for emotion analysis that includes concepts from W3C&#39;s provenance.  Past Projects  Marl: I updated this ontology, originally created by Adam Westerski, to make it compatible with the W3C&#39;s provenance ontology.</description>
+      <description>Ongoing Projects  Senpy: a framework for semantic sentiment and emotion analysis services. Soil: an agent-based simulator for social networks based on nx-sim and networkx. Onyx: an ontology for emotion analysis that includes concepts from W3C&amp;rsquo;s provenance.  Past Projects  Marl: I updated this ontology, originally created by Adam Westerski, to make it compatible with the W3C&amp;rsquo;s provenance ontology.</description>
     </item>
     
     <item>
@@ -152,7 +148,7 @@ a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:a
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/cheatsheet/linux/</guid>
-      <description>Black screen and LightDM doesn&#39;t unlock Add this to your /etc/lightdm/lightdm.conf file:
+      <description>Black screen and LightDM doesn&amp;rsquo;t unlock Add this to your /etc/lightdm/lightdm.conf file:
 1 2  [LightDM] logind-check-graphical=true   Edit previous commands fc is a shell builtin to list and edit previous commands in an editor. In addition to editing a single line (which you can also do with C-x C-e), it also allows you to edit and run several lines at the same time.</description>
     </item>
     
@@ -162,7 +158,7 @@ a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:a
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/cheatsheet/python/</guid>
-      <description>Interesting libraries TQDM From tqdm&#39;s github repository:
+      <description>Interesting libraries TQDM From tqdm&amp;rsquo;s github repository:
  tqdm means &amp;ldquo;progress&amp;rdquo; in Arabic (taqadum, تقدّم) and an abbreviation for &amp;ldquo;I love you so much&amp;rdquo; in Spanish (te quiero demasiado).
  </description>
     </item>
