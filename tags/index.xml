@@ -7,22 +7,44 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright>
-    <lastBuildDate>Sat, 01 Jun 2019 00:00:01 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 29 Oct 2021 00:00:01 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
-      <title>config</title>
-      <link>/tags/config/</link>
-      <pubDate>Sat, 01 Jun 2019 00:00:01 +0000</pubDate>
+      <title>keyboard</title>
+      <link>/tags/keyboard/</link>
+      <pubDate>Fri, 29 Oct 2021 00:00:01 +0000</pubDate>
       
-      <guid>/tags/config/</guid>
+      <guid>/tags/keyboard/</guid>
       <description></description>
     </item>
     
     <item>
       <title>linux</title>
       <link>/tags/linux/</link>
-      <pubDate>Sat, 01 Jun 2019 00:00:01 +0000</pubDate>
+      <pubDate>Fri, 29 Oct 2021 00:00:01 +0000</pubDate>
       
       <guid>/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>logitech</title>
+      <link>/tags/logitech/</link>
+      <pubDate>Fri, 29 Oct 2021 00:00:01 +0000</pubDate>
+      
+      <guid>/tags/logitech/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>config</title>
+      <link>/tags/config/</link>
+      <pubDate>Sat, 01 Jun 2019 00:00:01 +0000</pubDate>
+      
+      <guid>/tags/config/</guid>
       <description></description>
     </item>
     

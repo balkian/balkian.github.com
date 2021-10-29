@@ -137,30 +137,30 @@ zigbee2mqtt server and a test mosquitto server:</p>
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;2.1&#39;</span>
-<span style="color:#f92672">services</span>:
-  <span style="color:#f92672">zigbee2mqtt</span>:
-    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">koenkk/zigbee2mqtt</span>
-    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">zigbee2mqtt </span>
-    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">always</span>
-    <span style="color:#f92672">volumes</span>:
-      - <span style="color:#ae81ff">./z2m-data/:/app/data/</span>
-    <span style="color:#f92672">devices</span>:
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">version</span>: <span style="color:#e6db74">&#39;2.1&#39;</span>
+<span style="color:#66d9ef">services</span>:
+  <span style="color:#66d9ef">zigbee2mqtt</span>:
+    <span style="color:#66d9ef">image</span>: koenkk/zigbee2mqtt
+    <span style="color:#66d9ef">container_name</span>: zigbee2mqtt 
+    <span style="color:#66d9ef">restart</span>: always
+    <span style="color:#66d9ef">volumes</span>:
+      - ./z2m-data/:/app/data/
+    <span style="color:#66d9ef">devices</span>:
       - <span style="color:#e6db74">&#34;/dev/ttyACM0&#34;</span>
-    <span style="color:#f92672">networks</span>:
-        - <span style="color:#ae81ff">hass</span>
-  <span style="color:#f92672">mqtt</span>:
-    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">eclipse-mosquitto</span>
-    <span style="color:#f92672">ports</span>:
+    <span style="color:#66d9ef">networks</span>:
+        - hass
+  <span style="color:#66d9ef">mqtt</span>:
+    <span style="color:#66d9ef">image</span>: eclipse-mosquitto
+    <span style="color:#66d9ef">ports</span>:
        - <span style="color:#ae81ff">1883</span>:<span style="color:#ae81ff">1883</span>
        - <span style="color:#ae81ff">9001</span>:<span style="color:#ae81ff">9001</span> 
-    <span style="color:#f92672">networks</span>:
-        - <span style="color:#ae81ff">hass</span>
-    <span style="color:#f92672">volumes</span>:
-      - <span style="color:#ae81ff">./mosquitto.conf:/mosquitto/config/mosquitto.conf</span>
-<span style="color:#f92672">networks</span>:
-  <span style="color:#f92672">hass</span>:
-    <span style="color:#f92672">driver</span>: <span style="color:#ae81ff">overlay</span>
+    <span style="color:#66d9ef">networks</span>:
+        - hass
+    <span style="color:#66d9ef">volumes</span>:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+<span style="color:#66d9ef">networks</span>:
+  <span style="color:#66d9ef">hass</span>:
+    <span style="color:#66d9ef">driver</span>: overlay
 </code></pre></td></tr></table>
 </div>
 </div><p>You can test your installation with:</p>
@@ -237,6 +237,17 @@ guide</a>.</p>
 
             
 
+    <dt><a href="../../post/2021-10-29-logitech-mx-keys-mac/">Logitech MX Keys for Mac on Linux</a></dt>
+    
+<a class="tag" href='../../tags/linux'><span class="label">linux</span></a>
+
+<a class="tag" href='../../tags/logitech'><span class="label">logitech</span></a>
+
+<a class="tag" href='../../tags/keyboard'><span class="label">keyboard</span></a>
+
+
+    
+
     <dt><a href="../../post/2019-05-01-surface-go/">Linux on the Microsoft Surface Go</a></dt>
     
 <a class="tag" href='../../tags/linux'><span class="label">linux</span></a>
@@ -262,17 +273,6 @@ guide</a>.</p>
     <dt><a href="../../post/2016-09-28-tqdm/">Progress bars in python</a></dt>
     
 <a class="tag" href='../../tags/python'><span class="label">python</span></a>
-
-
-    
-
-    <dt><a href="../../post/2015-04-10-github-dotfiles/">Sharing dotfiles</a></dt>
-    
-<a class="tag" href='../../tags/github'><span class="label">github</span></a>
-
-<a class="tag" href='../../tags/git'><span class="label">git</span></a>
-
-<a class="tag" href='../../tags/dotfiles'><span class="label">dotfiles</span></a>
 
 
     

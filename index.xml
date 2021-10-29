@@ -7,7 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright>
-    <lastBuildDate>Sat, 01 Jun 2019 00:00:01 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 29 Oct 2021 00:00:01 +0000</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Logitech MX Keys for Mac on Linux</title>
+      <link>/post/2021-10-29-logitech-mx-keys-mac/</link>
+      <pubDate>Fri, 29 Oct 2021 00:00:01 +0000</pubDate>
+      
+      <guid>/post/2021-10-29-logitech-mx-keys-mac/</guid>
+      <description>I recently got Logitech MX Keys for Mac keyboard at work. The German version, to be more precise. This version was three times cheaper than the Windows equivalent with either US or ES layout. Since I touch type anyway, I thought it was a bargain.
+As soon as I plugged it in, I realized there were some glaring issues with the keyboard.</description>
+    </item>
+    
     <item>
       <title>Linux on the Microsoft Surface Go</title>
       <link>/post/2019-05-01-surface-go/</link>
