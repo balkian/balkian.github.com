@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pages on Balkian&#39;s site</title>
+    <link>/page/</link>
+    <description>Recent content in Pages on Balkian&#39;s site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright>
+    
+	<atom:link href="/page/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>To-do</title>
+      <link>/page/todo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/page/todo/</guid>
+      <description>PhD  Write my first workshop paper as main author Write my first journal paper Write my first book chapter Chair a W3C Community Group Collaborate on a W3C recommendation Become a doctor!  Technical  Write a NodeJS App. Maia [See ISSUES] Write my first Django Application Develop a distributed LibP2P golang application Github repo with +100 stars Build a custom LineageOS image  Languages  English Chinese Greek German Esperanto  Personal  Run a 10k Blog regularly for a year  </description>
+    </item>
+    
+  </channel>
+</rss>

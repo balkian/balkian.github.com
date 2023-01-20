@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mouse on Balkian&#39;s site</title>
+    <link>/tags/mouse/</link>
+    <description>Recent content in mouse on Balkian&#39;s site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright>
+    <lastBuildDate>Sat, 30 Oct 2021 00:00:01 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/mouse/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Logitech MB850 combi in linux</title>
+      <link>/post/2021-10-30-logitech-mk850/</link>
+      <pubDate>Sat, 30 Oct 2021 00:00:01 +0000</pubDate>
+      
+      <guid>/post/2021-10-30-logitech-mk850/</guid>
+      <description>As a follow-up to my last post, I&amp;rsquo;ve decided to also configure my mk850 combo (k850 + m720 triathlon).
+Some notes:
+ The keyboard is usually connected to this PC through bluetooth. Since this is a change I usually do in the system for every keyboard, I added a rule for any bus (usb, bluetooth, etc) The mouse has an additional button that registers as a keyboard.</description>
+    </item>
+    
+  </channel>
+</rss>

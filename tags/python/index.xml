@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on Balkian&#39;s site</title>
+    <link>/tags/python/</link>
+    <description>Recent content in python on Balkian&#39;s site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright>
+    <lastBuildDate>Wed, 28 Sep 2016 18:47:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Progress bars in python</title>
+      <link>/post/2016-09-28-tqdm/</link>
+      <pubDate>Wed, 28 Sep 2016 18:47:00 +0000</pubDate>
+      
+      <guid>/post/2016-09-28-tqdm/</guid>
+      <description>tqdm is a nice way to add progress bars in the command line or in a jupyter notebook.
+1 2 3 4 5  from tqdm import tqdm import time for i in tqdm(range(100)): time.sleep(1)   </description>
+    </item>
+    
+    <item>
+      <title>Proxies with Apache and python</title>
+      <link>/post/2014-10-09-proxies/</link>
+      <pubDate>Thu, 09 Oct 2014 10:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-10-09-proxies/</guid>
+      <description>&lt;p&gt;This is a quick note on proxying a local python application (e.g. flask)
+to a subdirectory in Apache. This assumes that the file wsgi.py contains
+a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:application.&lt;/p&gt;
+&lt;h2 id=&#34;gunicorn&#34;&gt;Gunicorn&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-apache&#34; data-lang=&#34;apache&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;Location&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;/myapp/&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+    ProxyPass http://127.0.0.1:8888/myapp/
+    ProxyPassReverse http://127.0.0.1:8888/myapp/
+    RequestHeader set SCRIPT_NAME &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/myapp/&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/Location&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Publishing on PyPi</title>
+      <link>/post/2014-09-23-publishing-to-pypi/</link>
+      <pubDate>Sat, 27 Sep 2014 10:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-09-23-publishing-to-pypi/</guid>
+      <description>Developing a python module and publishing it on Github is cool, but most of the times you want others to download and use it easily. That is the role of PyPi, the python package repository. In this post I show you how to publish your package in less than 10 minutes.</description>
+    </item>
+    
+    <item>
+      <title>Updating EuroLoveMap</title>
+      <link>/post/2014-03-27-updating-eurolovemap/</link>
+      <pubDate>Thu, 27 Mar 2014 14:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-03-27-updating-eurolovemap/</guid>
+      <description>As part of the OpeNER hackathon we decided to build a prototype that would allow us to compare how different countries feel about several topics. We used the OpeNER pipeline to get the sentiment from a set of newspaper articles we gathered from media in several languages. Then we aggregated those articles by category and country (using the source of the article or the language it was written in), obtaining the &amp;ldquo;overall feeling&amp;rdquo; of each country about each topic.</description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>/cheatsheet/python/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/cheatsheet/python/</guid>
+      <description>Interesting libraries TQDM From tqdm&amp;rsquo;s github repository:
+ tqdm means &amp;ldquo;progress&amp;rdquo; in Arabic (taqadum, تقدّم) and an abbreviation for &amp;ldquo;I love you so much&amp;rdquo; in Spanish (te quiero demasiado).
+ </description>
+    </item>
+    
+  </channel>
+</rss>

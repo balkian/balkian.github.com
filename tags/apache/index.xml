@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>apache on Balkian&#39;s site</title>
+    <link>/tags/apache/</link>
+    <description>Recent content in apache on Balkian&#39;s site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 09 Dec 2014 12:12:12 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/apache/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Zotero</title>
+      <link>/post/2014-12-09-zotero/</link>
+      <pubDate>Tue, 09 Dec 2014 12:12:12 +0000</pubDate>
+      
+      <guid>/post/2014-12-09-zotero/</guid>
+      <description>Zotero is an Open Source tool that lets you organise your bibliography, syncing it with the cloud. Unlike other alternatives such as Mendeley, Zotero can upload the attachments and data to a private cloud via WebDav.
+If you use nginx as your web server, know that even though it provides partial support for webdav, Zotero needs more than that.</description>
+    </item>
+    
+    <item>
+      <title>Proxies with Apache and python</title>
+      <link>/post/2014-10-09-proxies/</link>
+      <pubDate>Thu, 09 Oct 2014 10:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-10-09-proxies/</guid>
+      <description>&lt;p&gt;This is a quick note on proxying a local python application (e.g. flask)
+to a subdirectory in Apache. This assumes that the file wsgi.py contains
+a WSGI application with the name &lt;em&gt;application&lt;/em&gt;. Hence, wsgi:application.&lt;/p&gt;
+&lt;h2 id=&#34;gunicorn&#34;&gt;Gunicorn&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-apache&#34; data-lang=&#34;apache&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;Location&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;/myapp/&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;
+    ProxyPass http://127.0.0.1:8888/myapp/
+    ProxyPassReverse http://127.0.0.1:8888/myapp/
+    RequestHeader set SCRIPT_NAME &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/myapp/&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;/Location&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
