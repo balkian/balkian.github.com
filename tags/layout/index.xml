@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>layout on Balkian&#39;s site</title>
+    <link>/tags/layout/</link>
+    <description>Recent content in layout on Balkian&#39;s site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.</copyright>
+    <lastBuildDate>Fri, 20 Jan 2023 18:11:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/layout/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kanata: advanced keyboard configuration</title>
+      <link>/post/2023-01-20-kanata/</link>
+      <pubDate>Fri, 20 Jan 2023 18:11:00 +0000</pubDate>
+      
+      <guid>/post/2023-01-20-kanata/</guid>
+      <description>Kanata is a software keyboard remapper that aims to improve keyboard comfort and usability with advanced customization. Keyboard remappers are a good alternative to running a custom keyboard with QMK/ZMK, and have two main advantages: they work on any keyboard, and you can configure them to launch any command or program you want, not just key presses.</description>
+    </item>
+    
+  </channel>
+</rss>
