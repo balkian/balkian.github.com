@@ -34,9 +34,6 @@
           <a href="{{ .URL}}"><li class='{{if or ($currentNode.IsMenuCurrent "main" .) ($currentNode.HasMenuCurrent "main" .) }} active{{end}}' >{{ .Name }}
           </li></a>
 {{ end }}
-          <a href="//jfernando.es" target="_blank"><li>
-            CV
-          </li></a>
           <a href="{{ "/search" | relURL }}"><li>
               <i class="fa fa-search"></i>
           </li></a>
