@@ -1,11 +1,15 @@
 ---
 date: '2023-11-13T18:21:46+01:00'
 title: 'Nix Recipe for Python Projects'
+tags:
+ - nix
+ - python
 ---
 
 
 This is a quick and easy recipe to add a `default.nix` to any Python project with a `requirements.txt` file:
 
+<!--more-->
 
 ```nix
 with import <nixpkgs> { };
