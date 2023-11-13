@@ -20,7 +20,7 @@ copyright = "This work is licensed under a Creative Commons Attribution-ShareAli
   tag = "tags"
   post = "posts"
 
-[Author]
+[params.author]
     name = "J. Fernando Sánchez"
     profile = "http://balkian.com"
 
