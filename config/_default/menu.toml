@@ -1,0 +1,60 @@
+# Configure main menu and social menu
+#[[main]]
+#identifier = "home"
+#name = "Home"
+#url = "/"
+#[main.params]
+#icon = "home"
+#newtab = true
+
+#[[main]]
+#name = "Cheatsheets"
+#identifier = "cheatsheets"
+#url = "/cheatsheet/"
+#
+#[main.params]
+#icon = "hash"
+#weight = 3
+#
+#[[main]]
+#name = "Projects"
+#identifier = "projects"
+#url = "/projects/"
+#
+#[main.params]
+#icon = "clock"
+
+[[social]]
+identifier = "github"
+name = "GitHub"
+url = "https://github.com/CaiJimmy/hugo-theme-stack"
+weight = 1
+
+[social.params]
+icon = "brand-github"
+
+#[[social]]
+#identifier = "twitter"
+#name = "Twitter"
+#url = "https://twitter.com"
+#
+#[social.params]
+#icon = "brand-twitter"
+
+[[social]]
+identifier = "gitea"
+name = "gitea"
+url = "https://git.sinpapel.es/balkian"
+weight = 2
+
+[social.params]
+icon = "gitea"
+
+[[social]]
+identifier = "scholar"
+name = "Google scholar"
+url = "https://scholar.google.com/citations?user=JLNusZ8AAAAJ&hl=en"
+weight = 3
+
+[social.params]
+icon = "scholar"

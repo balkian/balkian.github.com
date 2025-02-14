@@ -1,6 +1,8 @@
 ---
 title: Linux on the Microsoft Surface Go
 date: 2019-06-01 00:00:01
+categories:
+  - Linux
 tags:
   - linux
   - surface go
