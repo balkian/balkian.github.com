@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on J. Fernando Sánchez</title><link>https://balkian.com/tags/linux/</link><description>Recent content in Linux on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 20 Jan 2023 18:11:00 +0000</lastBuildDate><atom:link href="https://balkian.com/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Kanata: advanced keyboard configuration</title><link>https://balkian.com/p/kanata-advanced-keyboard-configuration/</link><pubDate>Fri, 20 Jan 2023 18:11:00 +0000</pubDate><guid>https://balkian.com/p/kanata-advanced-keyboard-configuration/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/jtroo/kanata/" target="_blank" rel="noopener"
+>Kanata&lt;/a> is a software keyboard remapper that aims to improve keyboard comfort and usability with advanced customization.
+Keyboard remappers are a good alternative to running a custom keyboard with QMK/ZMK, and have two main advantages: they work on any keyboard, and you can configure them to launch any command or program you want, not just key presses.
+On the other hand, you need to configure them on every PC/OS you&amp;rsquo;re using your keyboard with, and all the processing is done on software on top of the OS, so there may be glitches and performance issues.&lt;/p>
+&lt;p>The project was inspired by the more popular &lt;a class="link" href="https://github.com/kmonad/kmonad" target="_blank" rel="noopener"
+>KMonad&lt;/a>, and the author cites some of the &lt;a class="link" href="https://github.com/jtroo/kanata/blob/main/docs/kmonad_comparison.md" target="_blank" rel="noopener"
+>differences&lt;/a>.
+Both projects use a very similar configuration format based on lisp.
+The configuration consists of a set of general options, a base key configuration, a series of layers, and macros that can be used within those layers.
+&lt;a class="link" href="https://github.com/jtroo/kanata/blob/main/cfg_samples/kanata.kbd" target="_blank" rel="noopener"
+>Here&amp;rsquo;s a very complete config that serves as documentation&lt;/a>.&lt;/p>
+&lt;p>One big disadvantage of the lispy configuration is that you need to specify your hardware layout/all your keys, and repeat that every time you define a new layer.
+The result visually maps to your keyboard, but can be very verbose/big if you need really few changes.&lt;/p>
+&lt;p>&lt;a class="link" href="https://github.com/rvaiya/keyd/" target="_blank" rel="noopener"
+>Keyd&lt;/a> is another alternative with a more declarative configuration format, which might lend itself to smaller.&lt;/p>
+&lt;p>For now I&amp;rsquo;m just trying it out, and getting a feel for using fewer keys before I build my own ZMK keyboard.
+I particularly like the option of using mod-keys on the home row (e.g., having A work as a CTRL when held).
+Mod-tap, tap-dancing and the like are very common techniques in sub-40% layouts, where there simply aren&amp;rsquo;t enough keys for all the letters and symbols.
+In a regular-sized keyboard, these techniques can also help you stay on the home row and type more comfortably.
+At least, that&amp;rsquo;s the idea.
+We&amp;rsquo;ll see if I like it enough to stick with it.&lt;/p>
+&lt;p>For now, here&amp;rsquo;s my very simple config:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;span class="lnt">66
+&lt;/span>&lt;span class="lnt">67
+&lt;/span>&lt;span class="lnt">68
+&lt;/span>&lt;span class="lnt">69
+&lt;/span>&lt;span class="lnt">70
+&lt;/span>&lt;span class="lnt">71
+&lt;/span>&lt;span class="lnt">72
+&lt;/span>&lt;span class="lnt">73
+&lt;/span>&lt;span class="lnt">74
+&lt;/span>&lt;span class="lnt">75
+&lt;/span>&lt;span class="lnt">76
+&lt;/span>&lt;span class="lnt">77
+&lt;/span>&lt;span class="lnt">78
+&lt;/span>&lt;span class="lnt">79
+&lt;/span>&lt;span class="lnt">80
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-lisp" data-lang="lisp">&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">defcfg&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">;; Your keyboard device will likely differ from this.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">linux-dev&lt;/span> &lt;span class="nv">/dev/input/by-id/usb-Logitech_USB_Receiver-if02-event-mouse&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">;; Windows doesn&amp;#39;t need any input/output configuration entries; however, there&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">;; must still be a defcfg entry. You can keep the linux-dev entry or delete&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">;; it and leave it empty.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">defsrc&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">grv&lt;/span> &lt;span class="mi">1&lt;/span> &lt;span class="mi">2&lt;/span> &lt;span class="mi">3&lt;/span> &lt;span class="mi">4&lt;/span> &lt;span class="mi">5&lt;/span> &lt;span class="mi">6&lt;/span> &lt;span class="mi">7&lt;/span> &lt;span class="mi">8&lt;/span> &lt;span class="mi">9&lt;/span> &lt;span class="mi">0&lt;/span> &lt;span class="nf">-&lt;/span> &lt;span class="nf">=&lt;/span> &lt;span class="nv">bspc&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">tab&lt;/span> &lt;span class="nv">q&lt;/span> &lt;span class="nv">w&lt;/span> &lt;span class="nv">e&lt;/span> &lt;span class="nv">r&lt;/span> &lt;span class="no">t&lt;/span> &lt;span class="nv">y&lt;/span> &lt;span class="nv">u&lt;/span> &lt;span class="nv">i&lt;/span> &lt;span class="nv">o&lt;/span> &lt;span class="nv">p&lt;/span> &lt;span class="nv">[&lt;/span> &lt;span class="nv">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">caps&lt;/span> &lt;span class="nv">a&lt;/span> &lt;span class="nv">s&lt;/span> &lt;span class="nv">d&lt;/span> &lt;span class="nv">f&lt;/span> &lt;span class="nv">g&lt;/span> &lt;span class="nv">h&lt;/span> &lt;span class="nv">j&lt;/span> &lt;span class="nv">k&lt;/span> &lt;span class="nv">l&lt;/span> &lt;span class="c1">; &amp;#39; ret&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">lsft&lt;/span> &lt;span class="nv">\ z&lt;/span> &lt;span class="nv">x&lt;/span> &lt;span class="nv">c&lt;/span> &lt;span class="nv">v&lt;/span> &lt;span class="nv">b&lt;/span> &lt;span class="nv">n&lt;/span> &lt;span class="nv">m&lt;/span> &lt;span class="o">,&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="nf">/&lt;/span> &lt;span class="nv">rsft&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">lctl&lt;/span> &lt;span class="nv">lmet&lt;/span> &lt;span class="nv">lalt&lt;/span> &lt;span class="nv">spc&lt;/span> &lt;span class="nv">ralt&lt;/span> &lt;span class="nv">rmet&lt;/span> &lt;span class="nv">rctl&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">deflayer&lt;/span> &lt;span class="nv">qwerty&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">grv&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">@warrows&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">lctrl&lt;/span> &lt;span class="nv">@alctrl&lt;/span> &lt;span class="nv">@slsft&lt;/span> &lt;span class="nv">@dlalt&lt;/span> &lt;span class="nv">@flmet&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">@jrmet&lt;/span> &lt;span class="nv">@kralt&lt;/span> &lt;span class="nv">@lrsft&lt;/span> &lt;span class="nv">@&lt;/span>&lt;span class="c1">;rctrl _ _&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">@smartspace&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">deflayer&lt;/span> &lt;span class="nv">arrows&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">@flmet&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">left&lt;/span> &lt;span class="nv">down&lt;/span> &lt;span class="nv">up&lt;/span> &lt;span class="nv">rght&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">@smartspace&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">deflayer&lt;/span> &lt;span class="nv">colemak&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">grv&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">tab&lt;/span> &lt;span class="nv">q&lt;/span> &lt;span class="nv">w&lt;/span> &lt;span class="nv">f&lt;/span> &lt;span class="nv">p&lt;/span> &lt;span class="nv">b&lt;/span> &lt;span class="nv">j&lt;/span> &lt;span class="nv">l&lt;/span> &lt;span class="nv">u&lt;/span> &lt;span class="nv">y&lt;/span> &lt;span class="c1">; [ ] &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">lctrl&lt;/span> &lt;span class="nv">@alctrl&lt;/span> &lt;span class="nv">@rlsft&lt;/span> &lt;span class="nv">@slalt&lt;/span> &lt;span class="nv">@tlmet&lt;/span> &lt;span class="nv">g&lt;/span> &lt;span class="nv">m&lt;/span> &lt;span class="nv">@nrmet&lt;/span> &lt;span class="nv">@eralt&lt;/span> &lt;span class="nv">@irsft&lt;/span> &lt;span class="nv">@orctrl&lt;/span> &lt;span class="o">&amp;#39;&lt;/span> &lt;span class="nv">ret&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">lsft&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">z&lt;/span> &lt;span class="nv">x&lt;/span> &lt;span class="nv">c&lt;/span> &lt;span class="nv">d&lt;/span> &lt;span class="nv">v&lt;/span> &lt;span class="nv">k&lt;/span> &lt;span class="nv">h&lt;/span> &lt;span class="o">,&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="nf">/&lt;/span> &lt;span class="nv">rsft&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">@smartspace&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">deflayer&lt;/span> &lt;span class="nv">magic&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">@clmk&lt;/span> &lt;span class="nv">@qwerty&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">tab&lt;/span> &lt;span class="nv">A-tab&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">bspc&lt;/span> &lt;span class="nv">esc&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">ret&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">defalias&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">warrows&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">w&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">layer-toggle&lt;/span> &lt;span class="nv">arrows&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">alctrl&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">a&lt;/span> &lt;span class="nv">lctrl&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">slsft&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">s&lt;/span> &lt;span class="nv">lsft&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">dlalt&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">d&lt;/span> &lt;span class="nv">lalt&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">flmet&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">f&lt;/span> &lt;span class="nv">lmet&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">jrmet&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">j&lt;/span> &lt;span class="nv">rmet&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">kralt&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">k&lt;/span> &lt;span class="nv">ralt&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">lrsft&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">l&lt;/span> &lt;span class="nv">rsft&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">;rctrl (tap-hold 200 200 ; rctrl)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">rlsft&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">r&lt;/span> &lt;span class="nv">lsft&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">slalt&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">s&lt;/span> &lt;span class="nv">lalt&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">tlmet&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="no">t&lt;/span> &lt;span class="nv">lmet&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">nrmet&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">n&lt;/span> &lt;span class="nv">rmet&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">eralt&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">e&lt;/span> &lt;span class="nv">ralt&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">irsft&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">i&lt;/span> &lt;span class="nv">rsft&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">orctrl&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">o&lt;/span> &lt;span class="nv">rctrl&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">clmk&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">layer-switch&lt;/span> &lt;span class="nv">colemak&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">qwerty&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">layer-switch&lt;/span> &lt;span class="nv">qwerty&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">smartspace&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-dance&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">300&lt;/span> &lt;span class="mi">300&lt;/span> &lt;span class="nv">spc&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">layer-toggle&lt;/span> &lt;span class="nv">magic&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">300&lt;/span> &lt;span class="mi">300&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">one-shot&lt;/span> &lt;span class="mi">300&lt;/span> &lt;span class="nv">lalt&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nv">spc&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">a&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Logitech MB850 combi in linux</title><link>https://balkian.com/p/logitech-mb850-combi-in-linux/</link><pubDate>Sat, 30 Oct 2021 00:00:01 +0000</pubDate><guid>https://balkian.com/p/logitech-mb850-combi-in-linux/</guid><description>&lt;p>As a follow-up to my last post, I&amp;rsquo;ve decided to also configure my mk850 combo (k850 + m720 triathlon).&lt;/p>
+&lt;p>Some notes:&lt;/p>
+&lt;ul>
+&lt;li>The keyboard is usually connected to this PC through bluetooth. Since this is a change I usually do in the system for every keyboard, I added a rule for any bus (usb, bluetooth, etc)&lt;/li>
+&lt;li>The mouse has an additional button that registers as a keyboard. Every press maps to three key events. I&amp;rsquo;ve disabled two of them and mapped the action to F19, in case I want to use it in my DE/WM.&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">evdev:input:* &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">KEYBOARD_KEY_70039&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">leftctrl # bind capslock to w &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">evdev:input:b0005v046DpB015*&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">KEYBOARD_KEY_700e0&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">f19
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_700e2=unknown
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_7002b=unknown&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>After that, simply run:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"> sudo udevadm hwdb --update &amp;amp;&amp;amp; sudo udevadm trigger
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Make sure the settings have been applied by running &lt;code>evemu-describe&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl"> sudo /sbin/evemu-describe /dev/input/event&amp;lt;id of your device&amp;gt; &lt;span class="p">|&lt;/span> grep KEY_
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Logitech MX Keys for Mac on Linux</title><link>https://balkian.com/p/logitech-mx-keys-for-mac-on-linux/</link><pubDate>Fri, 29 Oct 2021 00:00:01 +0000</pubDate><guid>https://balkian.com/p/logitech-mx-keys-for-mac-on-linux/</guid><description>&lt;p>I recently got Logitech MX Keys for Mac keyboard at work.
+The German version, to be more precise.
+This version was three times cheaper than the Windows equivalent with either US or ES layout.
+Since I touch type anyway, I thought it was a bargain.&lt;/p>
+&lt;p>As soon as I plugged it in, I realized there were some glaring issues with the keyboard.
+First of all, the Meta/Super and Alt keys are reversed in this keyboard.
+In the normal/full version of this keyboard, Logitech gives an option to choose between Mac, Windows and iOS host, and that changes the behavior of the keys.
+In this version, tho, only iOS and Mac are available.&lt;/p>
+&lt;p>Besides that, there&amp;rsquo;s the issue of the grave (tilde) and angle keys switched as well.&lt;/p>
+&lt;p>Switching these keys around would be very easy with Xorg, but Wayland once again complicates things&amp;hellip;&lt;/p>
+&lt;p>These issues almost made me return the keyboard.
+Luckily, tho, there is another option: configuring the keys one level lower than wayland (and X11), through hwdb.&lt;/p>
+&lt;p>Long story short, this will configure any Logitech keyboard with the same product id (0x4092) to use a saner configuration:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#File: /etc/udev/hwdb.d/90-logitech-keyboard.hwdb&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">evdev:input:b0003v046Dp4092*&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">KEYBOARD_KEY_700e2&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">leftmeta
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_700e3=leftalt
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_70039=leftctrl
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_70064=102nd
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_70035=grave
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_700e7=rightalt
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_700e6=rightmeta
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_7006d=compose&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>After that, simply run:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"> sudo udevadm hwdb --update &amp;amp;&amp;amp; sudo udevadm trigger
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Linux on the Microsoft Surface Go</title><link>https://balkian.com/p/linux-on-the-microsoft-surface-go/</link><pubDate>Sat, 01 Jun 2019 00:00:01 +0000</pubDate><guid>https://balkian.com/p/linux-on-the-microsoft-surface-go/</guid><description>&lt;p>Believe it or not, Surface tablets have pretty good linux support, except for the webcams in newer models.
+These are some useful notes to get Ubuntu installed in your surface go, as of Summer 2019.&lt;/p>
+&lt;h2 id="installing-the-kernel">Installing the kernel
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git clone --depth &lt;span class="m">1&lt;/span> https://github.com/jakeday/linux-surface.git ~/linux-surface
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cp -a ~/linux-surface /media/&amp;lt;your usb&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">cp -a /media/&amp;lt;your usb&amp;gt;/linux-surface ~/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> ~/linux-surface/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo sh setup.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="booting-ubuntu-first">Booting ubuntu first
+&lt;/h2>&lt;p>Switch out of Windows S mode.&lt;/p>
+&lt;p>Boot into the &amp;ldquo;Command Prompt&amp;rdquo;.&lt;/p>
+&lt;p>From Windows go to &amp;ldquo;change advanced startup options&amp;rdquo; and select &amp;ldquo;restart now&amp;rdquo;.&lt;/p>
+&lt;p>When it reboots, choose the &amp;ldquo;Troubleshoot&amp;rdquo; option, then choose the &amp;ldquo;Advanced options&amp;rdquo; option, and finally choose the &amp;ldquo;Command Prompt&amp;rdquo; option.&lt;/p>
+&lt;p>After the device reboots, login to the command prompt and then you should see a terminal with X:\windows\system32&amp;gt;&lt;/p>
+&lt;p>At the prompt, check your UEFI entries:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">bcdedit /enum firmware
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Copy UEFI entry of &amp;ldquo;Windows Boot Manager&amp;rdquo; to create a new entry for Ubuntu: bcdedit /copy {bootmgr} /d &amp;ldquo;Ubuntu&amp;rdquo;&lt;/p>
+&lt;p>Copy the printed GUID number including the braces {} using Ctrl+C&lt;/p>
+&lt;p>Set file path for the new Ubuntu entry. Replace {guid} with the returned GUID of the previous command (Ctrl+V). bcdedit /set {guid} path \EFI\ubuntu\grubx64.efi&lt;/p>
+&lt;p>Set Ubuntu as the first/ entry in the boot sequence. Again replace {guid} with the returned GUID of the copy command.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">bcdedit /set &lt;span class="o">{&lt;/span>fwbootmgr&lt;span class="o">}&lt;/span> displayorder &lt;span class="o">{&lt;/span>guid&lt;span class="o">}&lt;/span> /addfirst
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Check your UEFI entries again: bcdedit /enum firmware You should see something like this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Firmware Boot Manager
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">---------------------
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">identifier &lt;span class="o">{&lt;/span>fwbootmgr&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">displayorder &lt;span class="o">{&lt;/span>3510232e-f8eb-e811-95ce-9ecab3f9d1c4&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">{&lt;/span>bootmgr&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">{&lt;/span>2148799b-f8eb-e811-95ce-9ecab3f9d1c4&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">{&lt;/span>312e8a67-c2f6-e811-95ce-3c1ab3f9d1de&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">{&lt;/span>312e8a68-c2f6-e811-95ce-3c1ab3f9d1de&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">timeout &lt;span class="m">0&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Make sure the GUID you copied is the first one listed in displayorder. Then type exit, turn off the PC and turn it back on. After this my surface go is automatically booting to the grub bootloader which lets me choose between Windows and Ubuntu but defaults to Ubuntu after ten seconds.&lt;/p></description></item><item><title>Linux</title><link>https://balkian.com/linux/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/linux/</guid><description>&lt;img src="https://balkian.com/img/linux.png" alt="Featured image of post Linux" />&lt;h2 id="black-screen-and-lightdm-doesnt-unlock">Black screen and LightDM doesn&amp;rsquo;t unlock
+&lt;/h2>&lt;p>Add this to your /etc/lightdm/lightdm.conf file:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="k">[LightDM]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">logind-check-graphical&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">true&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>##Edit previous commands&lt;/p>
+&lt;p>&lt;code>fc&lt;/code> is a shell builtin to list and edit previous commands in an editor.
+In addition to editing a single line (which you can also do with &lt;code>C-x C-e&lt;/code>), it also allows you to edit and run several lines at the same time.
+You use it like this:&lt;/p>
+&lt;p>List previous commands&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">fc&lt;/span> -l
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">10259&lt;/span> nvim deploy.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10260* &lt;span class="nb">cd&lt;/span> ..
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10261* nvim content/cheatsheet/linux.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">10262&lt;/span> &lt;span class="nb">cd&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>List commands with date (in zsh)&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">fc&lt;/span> -ld
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10260* 19:38 &lt;span class="nb">cd&lt;/span> ..
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10261* 19:38 nvim content/cheatsheet/linux.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">10262&lt;/span> 19:40 &lt;span class="nb">cd&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">10263&lt;/span> 19:40 &lt;span class="nb">fc&lt;/span> -l
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>You can add the date too:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">fc&lt;/span> -fld
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">10262&lt;/span> 1/10/2019 19:40 &lt;span class="nb">cd&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">10263&lt;/span> 1/10/2019 19:40 &lt;span class="nb">fc&lt;/span> -l
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">10264&lt;/span> 1/10/2019 19:40 &lt;span class="nb">fc&lt;/span> -ld
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>You can edit a range of commands&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">fc&lt;/span> &lt;span class="m">10262&lt;/span> &lt;span class="m">10264&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The range can be relative to the current position, so the previous command is equivalent to:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">fc&lt;/span> -3 -1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If you save and exit, all commands are executed as a script, and it will be added to your history.&lt;/p>
+&lt;p>Source: &lt;a class="link" href="https://shapeshed.com/unix-fc/" target="_blank" rel="noopener"
+>https://shapeshed.com/unix-fc/&lt;/a>&lt;/p>
+&lt;h2 id="prevent-logoff-from-killing-tmux-sessions">Prevent logoff from killing tmux sessions
+&lt;/h2>&lt;p>Lately I&amp;rsquo;ve noticed that logging out of i3, intentionally or when i3 fails, would also kill any tmux or emacs sessions.
+This is extremely annoying.&lt;/p>
+&lt;p>This is caused by a new default in logind (systemd&amp;rsquo;s login) to kill user process on logoff.
+You can revert this setting in your logind.conf (&lt;code>/etc/systemd/logind.conf&lt;/code>):&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">KillUserProcesses&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">no&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Or only for a specific process (e.g., tmux):&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">systemd-run --scope --user tmux
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Source: &lt;a class="link" href="https://unix.stackexchange.com/questions/490267/prevent-logoff-from-killing-tmux-session" target="_blank" rel="noopener"
+>https://unix.stackexchange.com/questions/490267/prevent-logoff-from-killing-tmux-session&lt;/a>&lt;/p>
+&lt;h2 id="upload-a-temporary-file">Upload a temporary file
+&lt;/h2>&lt;p>Sometimes you just need to copy/paste a file from a server, and copying from the terminal can be a hassle.
+These two services are command-line &amp;ldquo;pastebins&amp;rdquo; just one curl away:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&amp;lt;command&amp;gt; &lt;span class="p">|&lt;/span> curl -F &lt;span class="s1">&amp;#39;sprunge=&amp;lt;-&amp;#39;&lt;/span> http://sprunge.us
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># OR&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;command&amp;gt; 2&amp;gt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="p">|&lt;/span> curl -F &lt;span class="s1">&amp;#39;f:1=&amp;lt;-&amp;#39;&lt;/span> ix.io
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># OR&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;command&amp;gt; &lt;span class="p">|&lt;/span> curl -F&lt;span class="s2">&amp;#34;file=@-&amp;#34;&lt;/span> https://ttm.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="install-fortinet-sslvpn-support-for-networkmanager">Install Fortinet SSLVPN support for NetworkManager
+&lt;/h1>&lt;p>UPM (Universidad Politécnica de Madrid) uses a propriatary VPN solution.
+The instructions for GNU/Linux on their website involve downloading a specific client (&lt;code>.tar.gz&lt;/code>) and manually running it.
+That works, but it is kind of a hassle.
+A much more convenient alternative is installing this NetworkManager plugin:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">pacman -Sy networkmanager-fortisslvpn
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Or apt get install networkmanager-fortisslvpn &lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now you can simply add a new VPN connection in NetworkManager and manage it as you would any other connection.&lt;/p></description></item></channel></rss>

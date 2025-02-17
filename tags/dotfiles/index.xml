@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Dotfiles on J. Fernando Sánchez</title><link>https://balkian.com/tags/dotfiles/</link><description>Recent content in Dotfiles on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 10 Apr 2015 17:47:00 +0000</lastBuildDate><atom:link href="https://balkian.com/tags/dotfiles/index.xml" rel="self" type="application/rss+xml"/><item><title>Sharing dotfiles</title><link>https://balkian.com/p/sharing-dotfiles/</link><pubDate>Fri, 10 Apr 2015 17:47:00 +0000</pubDate><guid>https://balkian.com/p/sharing-dotfiles/</guid><description>&lt;p>Today&amp;rsquo;s post is half a quick note, half public shaming. In other words,
+it is a reminder to be very careful with OAuth tokens and passwords.&lt;/p>
+&lt;p>As part of moving to emacs, I starting using the incredibly useful
+&lt;a class="link" href="https://github.com/defunkt/gist.el" target="_blank" rel="noopener"
+>gh.el&lt;/a>. When you first use it, the
+extension saves either your password or an OAuth token in your
+.gitconfig file. This is cool and convenient, unless you &lt;a class="link" href="https://github.com/balkian/dotfiles" target="_blank" rel="noopener"
+>happen to be
+publishing your .gitconfig file in a public
+repo&lt;/a>.&lt;/p>
+&lt;p>So, how can you still share your gitconfig without sharing your
+password/token with the rest of the world? Since Git 1.7.0, you can
+&lt;a class="link" href="http://stackoverflow.com/questions/1557183/is-it-possible-to-include-a-file-in-your-gitconfig" target="_blank" rel="noopener"
+>include other files in your
+gitconfig&lt;/a>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[include]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> path = ~/.gitconfig_secret
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And now, in your .gitconfig_secret file, you just have to add this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[github]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> user = balkian
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> token = &amp;#34;&amp;lt; Your secret token &amp;gt;&amp;#34;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>
