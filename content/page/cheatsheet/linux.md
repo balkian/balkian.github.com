@@ -2,6 +2,7 @@
 title: Linux
 author: "Fernando Sánchez"
 description: Tips and tricks for GNU/Linux and Unix
+image: "img/linux.png"
 categories:
   - linux
 tags:

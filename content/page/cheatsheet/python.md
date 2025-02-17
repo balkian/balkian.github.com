@@ -1,6 +1,7 @@
 ---
 title: Python
 description: Tips and useful libraries for python developers
+image: "img/python.png"
 categories:
   - programming
 tags:

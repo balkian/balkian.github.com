@@ -1,6 +1,7 @@
 ---
 title: Raspberry Pi
 description: Tools, links and configuration for your Raspberry Pi
+image: img/rpi.png
 tags:
   - rpi
 ---
