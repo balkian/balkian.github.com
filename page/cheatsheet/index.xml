@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cheatsheets on J. Fernando Sánchez</title><link>https://balkian.com/page/cheatsheet/</link><description>Recent content in Cheatsheets on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://balkian.com/page/cheatsheet/index.xml" rel="self" type="application/rss+xml"/><item><title>Emacs</title><link>https://balkian.com/emacs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/emacs/</guid><description>&lt;img src="https://balkian.com/img/emacs.png" alt="Featured image of post Emacs" />&lt;h2 id="show-plain-text-version">Show plain text version
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-lisp" data-lang="lisp">&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">font-lock-mode&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Linux</title><link>https://balkian.com/linux/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/linux/</guid><description>&lt;img src="https://balkian.com/img/linux.png" alt="Featured image of post Linux" />&lt;h2 id="black-screen-and-lightdm-doesnt-unlock">Black screen and LightDM doesn&amp;rsquo;t unlock
+&lt;/h2>&lt;p>Add this to your /etc/lightdm/lightdm.conf file:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="k">[LightDM]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">logind-check-graphical&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">true&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>##Edit previous commands&lt;/p>
+&lt;p>&lt;code>fc&lt;/code> is a shell builtin to list and edit previous commands in an editor.
+In addition to editing a single line (which you can also do with &lt;code>C-x C-e&lt;/code>), it also allows you to edit and run several lines at the same time.
+You use it like this:&lt;/p>
+&lt;p>List previous commands&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">fc&lt;/span> -l
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">10259&lt;/span> nvim deploy.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10260* &lt;span class="nb">cd&lt;/span> ..
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10261* nvim content/cheatsheet/linux.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">10262&lt;/span> &lt;span class="nb">cd&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>List commands with date (in zsh)&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">fc&lt;/span> -ld
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10260* 19:38 &lt;span class="nb">cd&lt;/span> ..
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10261* 19:38 nvim content/cheatsheet/linux.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">10262&lt;/span> 19:40 &lt;span class="nb">cd&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">10263&lt;/span> 19:40 &lt;span class="nb">fc&lt;/span> -l
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>You can add the date too:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">fc&lt;/span> -fld
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">10262&lt;/span> 1/10/2019 19:40 &lt;span class="nb">cd&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">10263&lt;/span> 1/10/2019 19:40 &lt;span class="nb">fc&lt;/span> -l
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">10264&lt;/span> 1/10/2019 19:40 &lt;span class="nb">fc&lt;/span> -ld
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>You can edit a range of commands&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">fc&lt;/span> &lt;span class="m">10262&lt;/span> &lt;span class="m">10264&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The range can be relative to the current position, so the previous command is equivalent to:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">fc&lt;/span> -3 -1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If you save and exit, all commands are executed as a script, and it will be added to your history.&lt;/p>
+&lt;p>Source: &lt;a class="link" href="https://shapeshed.com/unix-fc/" target="_blank" rel="noopener"
+>https://shapeshed.com/unix-fc/&lt;/a>&lt;/p>
+&lt;h2 id="prevent-logoff-from-killing-tmux-sessions">Prevent logoff from killing tmux sessions
+&lt;/h2>&lt;p>Lately I&amp;rsquo;ve noticed that logging out of i3, intentionally or when i3 fails, would also kill any tmux or emacs sessions.
+This is extremely annoying.&lt;/p>
+&lt;p>This is caused by a new default in logind (systemd&amp;rsquo;s login) to kill user process on logoff.
+You can revert this setting in your logind.conf (&lt;code>/etc/systemd/logind.conf&lt;/code>):&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">KillUserProcesses&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">no&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Or only for a specific process (e.g., tmux):&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">systemd-run --scope --user tmux
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Source: &lt;a class="link" href="https://unix.stackexchange.com/questions/490267/prevent-logoff-from-killing-tmux-session" target="_blank" rel="noopener"
+>https://unix.stackexchange.com/questions/490267/prevent-logoff-from-killing-tmux-session&lt;/a>&lt;/p>
+&lt;h2 id="upload-a-temporary-file">Upload a temporary file
+&lt;/h2>&lt;p>Sometimes you just need to copy/paste a file from a server, and copying from the terminal can be a hassle.
+These two services are command-line &amp;ldquo;pastebins&amp;rdquo; just one curl away:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&amp;lt;command&amp;gt; &lt;span class="p">|&lt;/span> curl -F &lt;span class="s1">&amp;#39;sprunge=&amp;lt;-&amp;#39;&lt;/span> http://sprunge.us
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># OR&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;command&amp;gt; 2&amp;gt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="p">|&lt;/span> curl -F &lt;span class="s1">&amp;#39;f:1=&amp;lt;-&amp;#39;&lt;/span> ix.io
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># OR&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;command&amp;gt; &lt;span class="p">|&lt;/span> curl -F&lt;span class="s2">&amp;#34;file=@-&amp;#34;&lt;/span> https://ttm.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="install-fortinet-sslvpn-support-for-networkmanager">Install Fortinet SSLVPN support for NetworkManager
+&lt;/h1>&lt;p>UPM (Universidad Politécnica de Madrid) uses a propriatary VPN solution.
+The instructions for GNU/Linux on their website involve downloading a specific client (&lt;code>.tar.gz&lt;/code>) and manually running it.
+That works, but it is kind of a hassle.
+A much more convenient alternative is installing this NetworkManager plugin:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">pacman -Sy networkmanager-fortisslvpn
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Or apt get install networkmanager-fortisslvpn &lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now you can simply add a new VPN connection in NetworkManager and manage it as you would any other connection.&lt;/p></description></item><item><title>Python</title><link>https://balkian.com/python/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/python/</guid><description>&lt;img src="https://balkian.com/img/python.png" alt="Featured image of post Python" />&lt;h2 id="interesting-libraries">Interesting libraries
+&lt;/h2>&lt;h3 id="tqdm">&lt;a class="link" href="https://github.com/tqdm/tqdm" target="_blank" rel="noopener"
+>TQDM&lt;/a>
+&lt;/h3>&lt;p>From tqdm&amp;rsquo;s github repository:&lt;/p>
+&lt;blockquote>
+&lt;p>tqdm means &amp;ldquo;progress&amp;rdquo; in Arabic (taqadum, تقدّم) and an abbreviation for &amp;ldquo;I love you so much&amp;rdquo; in Spanish (te quiero demasiado).&lt;/p>&lt;/blockquote>
+&lt;p>&lt;img src="https://raw.githubusercontent.com/tqdm/tqdm/master/images/tqdm.gif"
+loading="lazy"
+alt="TQDM in action"
+>&lt;/p>
+&lt;h2 id="tools">Tools
+&lt;/h2>&lt;h3 id="uv">&lt;a class="link" href="https://github.com/astral-sh/uv" target="_blank" rel="noopener"
+>uv&lt;/a>
+&lt;/h3>&lt;p>🚀 A single tool to replace pip, pip-tools, pipx, poetry, pyenv, twine, virtualenv, and more.
+⚡️ 10-100x faster than pip.&lt;/p>
+&lt;ul>
+&lt;li>Provides comprehensive project management, with a universal lockfile.&lt;/li>
+&lt;li>Runs scripts, with support for inline dependency metadata.&lt;/li>
+&lt;li>Installs and manages Python versions.&lt;/li>
+&lt;li>Runs and installs tools published as Python packages.&lt;/li>
+&lt;li>Includes a pip-compatible interface for a performance boost with a familiar CLI.&lt;/li>
+&lt;li>Supports Cargo-style workspaces for scalable projects.&lt;/li>
+&lt;li>Disk-space efficient, with a global cache for dependency deduplication.&lt;/li>
+&lt;li>Installable without Rust or Python via curl or pip.&lt;/li>
+&lt;li>Supports macOS, Linux, and Windows.&lt;/li>
+&lt;/ul></description></item><item><title>Raspberry Pi</title><link>https://balkian.com/raspberry-pi/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/raspberry-pi/</guid><description>&lt;img src="https://balkian.com/img/rpi.png" alt="Featured image of post Raspberry Pi" />&lt;h2 id="hdmi-flickering">HDMI flickering
+&lt;/h2>&lt;p>Avoid HDMI flickering/intermittent blanking on RPI with a 1400x1050 VGA monitor.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">hdmi_drive&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">hdmi_group&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">hdmi_mode&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">42&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">disable_overscan&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">config_hdmi_boost&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">7&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

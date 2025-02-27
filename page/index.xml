@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pages on J. Fernando Sánchez</title><link>https://balkian.com/page/</link><description>Recent content in Pages on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://balkian.com/page/index.xml" rel="self" type="application/rss+xml"/><item><title>Archives</title><link>https://balkian.com/archives/</link><pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate><guid>https://balkian.com/archives/</guid><description/></item><item><title>Links</title><link>https://balkian.com/links/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/links/</guid><description/></item><item><title>Projects</title><link>https://balkian.com/projects/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/projects/</guid><description>&lt;h1 id="ongoing-projects">Ongoing Projects
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="https://soilsim.readthedocs.io" target="_blank" rel="noopener"
+>Soil&lt;/a>: an agent-based simulator for social networks based on nx-sim and networkx.&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/balkian/soilent" target="_blank" rel="noopener"
+>Soilent&lt;/a>: an efficient scheduler for soil using rust and pyo3.&lt;/li>
+&lt;li>&lt;a class="link" href="https://senpy.readthedocs.io" target="_blank" rel="noopener"
+>Senpy&lt;/a>: a framework for semantic sentiment and emotion analysis services.&lt;/li>
+&lt;/ul>
+&lt;h1 id="past-projects">Past Projects
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a class="link" href="http://gsi.dit.upm.es/ontologies/onyx" target="_blank" rel="noopener"
+>Onyx&lt;/a>: an ontology for emotion analysis that includes concepts from W3C&amp;rsquo;s provenance.&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/balkian/ESP8266_Clock_NTP" target="_blank" rel="noopener"
+>ESP8266 Clock NTP&lt;/a>: a simple clock display using arduino, the ESP8266 and NTP (network time protocol).&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/balkian/shinesp" target="_blank" rel="noopener"
+>Shine ESP&lt;/a>: control an ws2812b LED strip over the network with an ESP8266.&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/balkian/bitter" target="_blank" rel="noopener"
+>Bitter&lt;/a>: a wrapper and CLI over the (now defunct) Twitter API to researchers to download Twitter data much faster using multiple accounts.&lt;/li>
+&lt;li>&lt;a class="link" href="http://gsi.dit.upm.es/ontologies/marl" target="_blank" rel="noopener"
+>Marl&lt;/a>: I updated this ontology, originally created by Adam Westerski, to make it compatible with the W3C&amp;rsquo;s provenance ontology.&lt;/li>
+&lt;li>&lt;a class="link" href="http://github.com/balkian/hermes" target="_blank" rel="noopener"
+>Hermes&lt;/a>: one of my first projects, developed together with David Pérez as the special custom assignment in one of our courses. Hermes is an affective bot designed to mimic the behavour of humans. It included a plug-in system for its sensors and actuators. The information from its sensors changed its emotional state, which was shown via its actuators. Among others, it could fetch inforation from Twitter or its host system and change the expressions of an external Face made with servo motors or speak via its Text-To-Speech software. For instance, it could detect it was running out of battery, showing a sad face and sending an alerting tweet. You can see it in action in these two youtube videos: &lt;a class="link" href="http://www.youtube.com/watch?v=KnEYahPD9z4" target="_blank" rel="noopener"
+>Part 1&lt;/a> and &lt;a class="link" href="http://www.youtube.com/watch?v=lQZldCTPEJc" target="_blank" rel="noopener"
+>Part 2&lt;/a>.&lt;/li>
+&lt;li>&lt;a class="link" href="http://github.com/gsi-upm/maia" target="_blank" rel="noopener"
+>Maia&lt;/a>: the Modular Architecture for Intelligent Agents is an evented agent architecture that aims to update the classical frameworks for intelligent agents with the concepts emerged from the Live Web.&lt;/li>
+&lt;li>&lt;a class="link" href="http://github.com/eestec/eestec.portal" target="_blank" rel="noopener"
+>EESTEC.net&lt;/a>: the Plone based official portal of EESTEC. It has been my first and only experience with Plone. I fixed some bugs and implemented basic features.&lt;/li>
+&lt;/ul>
+&lt;p>For more information, check my list of public repositories in &lt;a href="http://github.com/balkian">&lt;i class="fab fa-github"> Github&lt;/i>&lt;/a>.&lt;/p></description></item><item><title>Search</title><link>https://balkian.com/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/search/</guid><description/></item></channel></rss>

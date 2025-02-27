@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mouse on J. Fernando Sánchez</title><link>https://balkian.com/tags/mouse/</link><description>Recent content in Mouse on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 30 Oct 2021 00:00:01 +0000</lastBuildDate><atom:link href="https://balkian.com/tags/mouse/index.xml" rel="self" type="application/rss+xml"/><item><title>Logitech MB850 combi in linux</title><link>https://balkian.com/p/logitech-mb850-combi-in-linux/</link><pubDate>Sat, 30 Oct 2021 00:00:01 +0000</pubDate><guid>https://balkian.com/p/logitech-mb850-combi-in-linux/</guid><description>&lt;p>As a follow-up to my last post, I&amp;rsquo;ve decided to also configure my mk850 combo (k850 + m720 triathlon).&lt;/p>
+&lt;p>Some notes:&lt;/p>
+&lt;ul>
+&lt;li>The keyboard is usually connected to this PC through bluetooth. Since this is a change I usually do in the system for every keyboard, I added a rule for any bus (usb, bluetooth, etc)&lt;/li>
+&lt;li>The mouse has an additional button that registers as a keyboard. Every press maps to three key events. I&amp;rsquo;ve disabled two of them and mapped the action to F19, in case I want to use it in my DE/WM.&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">evdev:input:* &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">KEYBOARD_KEY_70039&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">leftctrl # bind capslock to w &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">evdev:input:b0005v046DpB015*&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">KEYBOARD_KEY_700e0&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">f19
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_700e2=unknown
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_7002b=unknown&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>After that, simply run:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"> sudo udevadm hwdb --update &amp;amp;&amp;amp; sudo udevadm trigger
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Make sure the settings have been applied by running &lt;code>evemu-describe&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl"> sudo /sbin/evemu-describe /dev/input/event&amp;lt;id of your device&amp;gt; &lt;span class="p">|&lt;/span> grep KEY_
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>
