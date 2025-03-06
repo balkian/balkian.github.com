@@ -257,6 +257,10 @@ Whenever a member asks you something useful that is not documented, don't just a
 Take the time to add this information yourself (e.g., by copy-pasting your response) or task that member with expanding the documentation themselves once they find an answer.
 If your organization's culture does not encourage using these docs, they will quickly get outdated and fall out of use.
 
+One example of taking this documentation approach really seriously is [Oxide (computer company)](https://oxide.computer/).
+They have a process they call [Request For Discussion (RFD)](https://rfd.shared.oxide.computer/), which they use to discuss and document both technical and organizational decisions.
+For instance, they have [RFDs on why they record every meeting](https://rfd.shared.oxide.computer/rfd/0537), [RFDs about their choice of database](https://rfd.shared.oxide.computer/rfd/0110), and even [an meta-RFD that discusses the motivation RFDs and how the process should work](https://rfd.shared.oxide.computer/rfd/0001).
+
 
 #### Trust your teammate's ability to learn
 

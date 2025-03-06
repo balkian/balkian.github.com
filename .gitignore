@@ -6,3 +6,4 @@ output
 *.pid
 *.pyc
 _gen
+*/_gen
