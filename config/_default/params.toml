@@ -78,8 +78,8 @@ enabled = true
 
 ## Comments
 [comments]
-enabled = false
-provider = "disqus"
+enabled = true
+provider = "giscus"
 
 [comments.disqusjs]
 shortname = ""
@@ -130,11 +130,11 @@ serverName = "cactus.chat"
 siteName = ""
 
 [comments.giscus]
-repo = ""
-repoID = ""
-category = ""
-categoryID = ""
-mapping = ""
+repo = "balkian/balkian.github.com"
+repoID = "MDEwOlJlcG9zaXRvcnk2OTQxMTEw"
+category = "Blog comments"
+categoryID = "DIC_kwDOAGnpts4Cnm1b"
+mapping = "pathname"
 lightTheme = ""
 darkTheme = ""
 reactionsEnabled = 1
