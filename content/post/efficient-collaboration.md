@@ -156,7 +156,7 @@ But it can also be done over a longer period of time.
 That can be perfectly acceptable, provided that the change in direction is justified and compatible with the principles of the organization.
 
 
-Failure in direction is somewhat related to communication, but it subtly different.
+Failure in direction is somewhat related to communication, but it is subtly different.
 An organization can excel at communication, but change their direction constantly.
 Arguably, a thorough communication strategy makes radical changes in direction less likely.
 On the one hand, a change in direction needs to be documented, which can be a pain.
