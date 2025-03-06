@@ -1,3 +1,20 @@
 /*
     You can add your own custom styles here.
 */
+.danger,
+.note,
+.warning {
+  border-left-width: 0.8rem !important;
+}
+
+.warning {
+  border-left-color: #ffbb00 !important;
+}
+
+.note {
+  border-left-color: #4285f4 !important;
+}
+
+.danger {
+  border-left-color: #ee0000 !important;
+}
