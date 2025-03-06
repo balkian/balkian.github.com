@@ -5,6 +5,11 @@ description:
 date: 2025-03-05T09:25:54+01:00
 image: 
 math: 
+categories:
+ - Reflections
+tags:
+ - team
+ - management
 license: 
 hidden: false
 comments: true
