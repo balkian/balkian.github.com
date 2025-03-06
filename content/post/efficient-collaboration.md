@@ -5,14 +5,10 @@ description:
 date: 2025-03-05T09:25:54+01:00
 image: 
 math: 
-categories:
- - Reflections
-tags:
- - management
 license: 
 hidden: false
 comments: true
-draft: false
+draft: true
 ---
 
 ## Background 
@@ -34,7 +30,7 @@ To do so, most projects rely on three types of staff: a) senior researchers (pos
 The level of contribution is generally inversely propotional to the level of mastery of the contributor: PhD students design and develop the main contributions (both software and experimental) under the supervision of senior researchers (advisor/supervisor), and interns take care of tasks that are narrow in scope and not crucial to any academic contribution.
 For instance, a PhD student may develop a new model for text classification, and an intern will wrap that model in an HTTP service with a nice UI.
 When the service and UI part is intricate and has some potential academic merit, that task may be conducted by a PhD student as part of their thesis.
-That was precisely the case with Senpy, which was part of my PhD thesis, and as since been used by dozens of students to develop services in the context of other research projects.
+That was precisely the case with Senpy, which was part of my PhD thesis, and it has since been used by dozens of students to develop services in the context of other research projects.
 
 
 ## Reasons to form a team
