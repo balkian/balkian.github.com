@@ -170,8 +170,6 @@ I'd argue that the path to successfully managing a research team lies in roughly
 * Fostering autonomy
 * Avoiding miscommunication
 * Optimizing your contribution
-* Coordinating with other teams
-* Creating a team
 
 The remaining of the post will be a series of tasks or rules to achieve these goals.
 
@@ -270,6 +268,49 @@ What they lack in experience, they make up for with free time, a (more) neuropla
 
 Sure, they will make mistakes (see the next section) and need some feedback (two sections above), but that is how we all learnt.
 
+#### Use tools wisely
+
+Your students probably have little experience with code versioning, reviewing processes, time management, etc.
+A good choice of tools and some training can go a long way and make your life much easier in the long run.
+It will also give your students a taste of what working in a bigger/real company feels like and a head start.
+
+For instance, using git makes it easier to collaborate on code.
+It also ensures that your results will not be lost if your student's laptop gets stolen.
+
+Using GitLab CI or GitHub Actions to deploy public services will provide more autonomy to your students.
+It will force them to commit working code, and it will make it easier to check their results and discuss the end result.
+
+Using overleaf for theses has most of the advantages for collaboration as something like google docs, while being much more flexible and easier to produce formatting results.
+You may also use something like latex on a shared folder (e.g., nextcloud), although the chances of connflicts is higher, so be careful with documents that require live collaboration.
+In both cases, make sure to make the getting started experience as simple as possible: provide a sensible template, and only focus on simple features at first.
+
+Also, on a related note, make sure every team member has a proper development setup.
+It does not matter which tool they use (VSCode, emacs, Jetbrains), as long as they are comfortable with it and they are able to focus on actual work.
+It helps to have a sensible default for your organization that is easy to set up and use, especially because most students do not have enough experience or skill with any particular tool.
+
+
+#### Encourage cooperation
+
+Do not become the center of every conversation.
+If a topic can be discussed between two students, let them handle it on their own and get back to you if they need anything.
+
+The ability to discuss with your peers and report only when needed will be extremely important for them in the future.
+They are also likely to discuss the topic more openly and more relaxed thhan with you (no matter how approachable you are).
+That might lead to valuable insights and improvements for your team and project.
+
+Moreover, this attitude of open collaboration will help create those synergies we mentioned before, and make future projects easier and more enjoyable.
+
+#### Reward proactivity
+
+The whole point of this section is to get your team to work independently when possible.
+Be explicit about this goal to make sure it is clear to everyone.
+And encourage behavior that aligns with this goal, even on a small scale.
+
+For instance, show interest when a student has shown initiative and researched something on their own, or when they go beyond the minimum requirements.
+Sometimes, you will notice that this research was not completely well oriented or it was not a very efficient use of time.
+Do not jump straight to criticize it.
+Compliment the attitude regardless, try to find the value in the results, and be gentle when providing feedback on why other topics or tasks were higher priority or a better choice.
+
 #### Don't be a perfectionist
 
 Perfect is the enemy of done.
@@ -292,7 +333,7 @@ These are some tips to help keep everyone on the team informed and aligned.
 All team members should understand the general priorities (project-wise) as well as the specific prorities of their assigned tasks.
 This will help inform their decisions when some other tasks inevitably come up, or the urgency of a task changes.
 
-#### Define boundaries
+#### Define boundaries (and abstractions)
 
 Once again, the goal is generally to achieve some sort of parallelism between your team members.
 In order to do that, they need to know how they will interact with each other.
@@ -306,9 +347,14 @@ This often takes the form of an API, a file with a given format, or a section of
 
 Take some time to define the boundary as precisely as needed at that point in the project.
 I would suggest having specific examples that you can discuss and modify.
+It is hard to discuss in the abstract, especially for inexperienced contributors.
 When in doubt, default to the simplest option (e.g., a common file vs using a database).
 Do not dwell too much on specific structural/representation details (e.g., which OWL vocabulary to use), but make sure that all the necessary bits are there.
 Converting a document or querying a document store (e.g., elasticsearch) instead of your file system is relatively easy, but making up non-existing data can be a challenge.
+
+One type of failure I've seen quite frequently in this area is to be too fuzzy about the expected results from a team (or contributor), and refusing to discuss or provide examples.
+That tends to result in multiple iterations, each of them not-quite-what-you-wanted, and frustration in both sides.
+
 
 #### Be approachable
 
@@ -389,3 +435,31 @@ Even worse, our attention span and memory are finite, so longer and dense meetin
 
 For these reasons, be very clear about these time limits, and do not extend these meetings unless it is strictly necessary.
 You can always schedule a new meeting, but be sure to provide enough time in between to process the results of the meeting, reflect and prioritize.
+
+## Beyond your team
+
+The previous points and rules focus mostly on actions that can be applied within your team, and that you can fully control.
+But teams rarely work in isolation, you will most likely
+In order to be effective, you also need to coordinate with other teams/groups, and more generally work on your organization's culture and sense of belonging.
+
+Many of the aspects I talked about in the team section apply here.
+For instance, the obsession with documentation can - and should - be applied organization-wise.
+The same goes for defining boundaries and using concrete examples when collaborating with other teams.
+For most intents and purposes, you can treat other teams as another contributor to your team.
+Just one that will be more costly and slow to interact with.
+
+If possible, I'd try to apply the rule about focusing on the big picture, and limit most meetings to those that strictly need to be involved.
+Avoid involving whole teams in discussions when the broad strokes have not been defined yet.
+The responsibilities will be dilluted in a bigger group, it will be harder to avoid misunderstandings and easier to bikeshed.
+
+On the organization's side, I would suggest having an honest conversation about your core principles.
+I really liked [Bryan Cantrill's talk about principles of technology leadership](https://www.youtube.com/watch?v=9QMGAtxUlAchttps://www.youtube.com/watch?v=9QMGAtxUlAc).
+He goes deep into the effects that principles have had on well known companies, and how to go about defining your company's principles.
+I think that writing down your principles forces you to be conscious about their trade-offs, and to be explicit about your choices and attitudes.
+
+More generally, try to define (light) processes that reward and facilitate behaviors you find positive, such as writing documentation and being proactive.
+And try to discourage the opposite type of behavior as soon as possible, to make correcting them easier.
+Apply the ideas of frequent evaluation and feedback, openness and honesty in every aspect of your organization.
+
+
+
