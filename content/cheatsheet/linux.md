@@ -1,5 +1,6 @@
 ---
-title: Linux
+title: Linux Cheatsheet
+slug: linux
 author: "Fernando Sánchez"
 description: Tips and tricks for GNU/Linux and Unix
 image: "img/linux.png"
