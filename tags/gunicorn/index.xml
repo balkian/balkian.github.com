@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Gunicorn on J. Fernando Sánchez</title><link>https://balkian.com/tags/gunicorn/</link><description>Recent content in Gunicorn on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 09 Oct 2014 10:00:00 +0000</lastBuildDate><atom:link href="https://balkian.com/tags/gunicorn/index.xml" rel="self" type="application/rss+xml"/><item><title>Proxies with Apache and python</title><link>https://balkian.com/p/proxies-with-apache-and-python/</link><pubDate>Thu, 09 Oct 2014 10:00:00 +0000</pubDate><guid>https://balkian.com/p/proxies-with-apache-and-python/</guid><description>&lt;p>This is a quick note on proxying a local python application (e.g. flask)
+to a subdirectory in Apache. This assumes that the file wsgi.py contains
+a WSGI application with the name &lt;em>application&lt;/em>. Hence, wsgi:application.&lt;/p>
+&lt;h2 id="gunicorn">Gunicorn
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-apache" data-lang="apache">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;Location&lt;/span> &lt;span class="s">/myapp/&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">ProxyPass&lt;/span> http://127.0.0.1:8888/myapp/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">ProxyPassReverse&lt;/span> http://127.0.0.1:8888/myapp/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">RequestHeader&lt;/span> set SCRIPT_NAME &lt;span class="s2">&amp;#34;/myapp/&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/Location&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Important&lt;/strong>: &lt;em>SCRIPT_NAME&lt;/em> and the end of &lt;em>ProxyPass&lt;/em> URL &lt;strong>MUST BE
+THE SAME&lt;/strong>. Otherwise, Gunicorn will fail miserably.&lt;/p>
+&lt;p>Try it with:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">venv/bin/gunicorn -w &lt;span class="m">4&lt;/span> -b 127.0.0.1:8888 --log-file - --access-logfile - wsgi:application
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="uwsgi">UWSGI
+&lt;/h2>&lt;p>This is a very simple configuration. I will try to upload one with more
+options for uwsgi (in a .ini file).&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-apache" data-lang="apache">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;Location&lt;/span> &lt;span class="s">/myapp/&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">SetHandler&lt;/span> uwsgi_handler
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">uWSGISocker&lt;/span> &lt;span class="m">127.0.0.1&lt;/span>:8888
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/Location&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Try it with:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">uwsgi --socket 127.0.0.1:8888 -w wsgi:application
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="extra-supervisor">Extra: Supervisor
+&lt;/h2>&lt;p>If everything went as expected, you can wrap your command in a
+supervisor config file and let it handle the server for you.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-ini" data-lang="ini">&lt;span class="line">&lt;span class="cl">&lt;span class="k">[unix_http_server]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">file&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">/tmp/myapp.sock ; path to your socket file&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">[supervisord]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">logfile&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">%(here)s/logs/supervisor.log&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">childlogdir&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">%(here)s/logs/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">[rpcinterface:supervisor]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">supervisor.rpcinterface_factory&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">supervisor.rpcinterface:make_main_rpcinterface&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">[supervisorctl]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">logfile&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">%(here)s/logs/supervisorctl.log&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">serverurl&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">unix:///tmp/supervisor.sock ; use a unix:// URL for a unix socket&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">[program:myapp]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">command&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">venv/bin/gunicorn -w 4 -b 0.0.0.0:5000 --log-file %(here)s/logs/gunicorn.log --access-logfile - wsgi:application&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">directory&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">%(here)s&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">environment&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">PATH=%(here)s/venv/bin/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">logfile&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">%(here)s/logs/myapp.log&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

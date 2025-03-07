@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on J. Fernando Sánchez</title><link>https://balkian.com/tags/python/</link><description>Recent content in Python on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 26 Feb 2025 23:22:59 +0100</lastBuildDate><atom:link href="https://balkian.com/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Bridging RDF, JSON-LD and Dataclasses</title><link>https://balkian.com/p/bridging-rdf-json-ld-and-dataclasses/</link><pubDate>Wed, 26 Feb 2025 23:22:59 +0100</pubDate><guid>https://balkian.com/p/bridging-rdf-json-ld-and-dataclasses/</guid><description>&lt;p>In the RDF world, data is expressed as a collection of triples.
+These triples can contain IRIs that may or may not be accessible or valid.
+And the use of these IRIs may or may not adhere to a vocabulary.
+Checking the validity of the IRIs and the semantics of the triples is an additional step.&lt;/p>
+&lt;h2 id="the-rdflib-way">The &lt;code>rdflib&lt;/code> way
+&lt;/h2>&lt;p>&lt;code>rdflib&lt;/code> only models IRIs, values and namespaces.
+Developers need to be cognisant of the URIs they are using, and the vocabularies being used.
+Prior to version 2.0, senpy followed a very similar model.
+It had a base class to represent a generic node.
+Each instance then gets its own automatically generated id, and will act like a normal dictionary, whose keys and values will be serialized as a JSON-LD dictionary.
+Multiple subclasses were also included to model specific types of node, mostly to provide convenience methods for the given subtype.
+Here is an example of a subclass, &lt;code>Entity&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">entry&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Entry&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">entry&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;vocab:property&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">25&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">entry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">jsonld&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Would print something like this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;@id&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;:Entry_202505....&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;@type&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;prefix:Entity&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;vocab:property&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">25&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Producing correct triples using this model requires using the vocabularies and URIs properly, with little to no tooling to enforce it.
+This poses a big problem for a tool like Senpy, which aims to make it easier for professionals without a background in RDF to build and consume semantic NLP ser
+If an attribute is not a URI and is not included in the global JSON-LD context, it will not generate a triple in the final graph.
+Moreover, there is way to enforce that the vocabularies and the&lt;/p>
+&lt;p>Pros:&lt;/p>
+&lt;ul>
+&lt;li>Flexible/extensible&lt;/li>
+&lt;li>Lightweight. This is mostly JSON-LD in Python&amp;rsquo;s clothing.&lt;/li>
+&lt;li>Naturally maps to both &lt;code>rdflib&lt;/code> and writing &lt;code>json-ld&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>Cons:&lt;/p>
+&lt;ul>
+&lt;li>Discoverability. Documentation and examples are needed to know which attributes to use&lt;/li>
+&lt;li>Error-prone. It is easy to misuse a property, or introduce typos&lt;/li>
+&lt;li>Tight coupling with semantics/RDF. One needs to know a thing or two about RDF, especially if new vocabularies or annotations need to be used.&lt;/li>
+&lt;/ul>
+&lt;h2 id="the-object-oriented-way">The object-oriented way
+&lt;/h2>&lt;p>An obvious alternative to this problem in an object-oriented language like python is to use classes to represent our data model.
+These classes can define the specific attributes available, and typing annotations can serve both as a guide for the developer, and as a means to automatically
+validate objects at runtime.
+There are tools like &lt;a class="link" href="https://pydantic.dev/" target="_blank" rel="noopener"
+>pydantic&lt;/a> that make this process very simple.
+Then, we only need to define how your models should be serialized into JSON-LD.
+We can thoroughly test this serialization to ensure that the resulting object is correct and produces the right RDF graph.
+Going back to our previous example, we could define an Entry class as a dataclass, and define all the possible types of annotations as attributes.&lt;/p>
+&lt;p>This model works great when all the possible attributes are known ahead of time.
+But it starts to break when the model provided is not comprehensive enough, or customers of your library need to provide their own ad-hoc annotations / attribut
+es.
+This could be solved by encouring consumers of our library to define their own subclasses whenever they need to add new attributes.
+This works perfectly fine for serialization, but it breaks if your library needs to automatically deserialize these subclasses.
+It also breaks if different parts of the code need to add their own attributes on the same data at the same time.
+This was precisely the case of &lt;code>senpy&lt;/code>, where entities are annotated by different plugins, each providing a different set of annotations.&lt;/p>
+&lt;p>Pros:&lt;/p>
+&lt;ul>
+&lt;li>Discoverability. All possible attributes are known ahead of time, including their possible types.&lt;/li>
+&lt;li>Decoupling from RDF. Developers only need to know about the dataclasses provided. The mapping to the RDF world is already encoded in the dataclass.&lt;/li>
+&lt;/ul>
+&lt;p>Cons:&lt;/p>
+&lt;ul>
+&lt;li>Rigidity. Adding new types of annotations requires modifying the models, in the main module.&lt;/li>
+&lt;li>Polymorphism.&lt;/li>
+&lt;/ul>
+&lt;h2 id="a-hybrid-approach">A hybrid approach
+&lt;/h2>&lt;p>Whichever solution is chosen in the end, it needs to:&lt;/p>
+&lt;ul>
+&lt;li>Make it easy and error-proof to add the most common types of annotations&lt;/li>
+&lt;li>Allow for additional annotations/attributes to be added&lt;/li>
+&lt;li>Allow for upgrades in the future. i.e., converting the most common custom annotations into built-in ones&lt;/li>
+&lt;li>Allow for deserialization of custom types&lt;/li>
+&lt;li>Allow multiple consumers to add their own annotations&lt;/li>
+&lt;/ul></description></item><item><title>uv - One rust tool to rule all pythons</title><link>https://balkian.com/p/uv-one-rust-tool-to-rule-all-pythons/</link><pubDate>Mon, 17 Feb 2025 23:02:47 +0100</pubDate><guid>https://balkian.com/p/uv-one-rust-tool-to-rule-all-pythons/</guid><description>&lt;img src="https://balkian.com/img/uv.png" alt="Featured image of post uv - One rust tool to rule all pythons" />&lt;p>Long story short: I&amp;rsquo;m now using &lt;a class="link" href="https://github.com/astral-sh/uv" target="_blank" rel="noopener"
+>uv&lt;/a>, and so should you.
+It is a great replacement for pip, pip-tools, pipx, poetry, pyenv, twine, virtualenv, and more.&lt;/p>
+&lt;h2 id="context">Context
+&lt;/h2>&lt;p>For years, my strategy to manage python projects has been a mix of a custom &lt;code>setup.py&lt;/code>, several hand-crafted &lt;code>requirements.txt&lt;/code> files (through &lt;code>pip freeze&lt;/code>), a custom virtualenv per project, and multiple tools to upload to PyPI.
+Although this works, this setup has many drawbacks:&lt;/p>
+&lt;ul>
+&lt;li>It requires user intervention (creating a venv, sourcing it, handling new deps). This isn&amp;rsquo;t ideal if you want new (probably inexperienced) users to use your projects.&lt;/li>
+&lt;li>On a similar note, the whole process needs to be well documented if you want other users to contribute or maintain the code.&lt;/li>
+&lt;li>Pinning dependency versions is finicky, and I&amp;rsquo;ve run into problems beause of that.&lt;/li>
+&lt;li>Creating a new project involves a template, or copying files from an older project.&lt;/li>
+&lt;/ul>
+&lt;p>Of course, this is nothing new.
+There is a whole site dedicated to &lt;a class="link" href="https://packaging.python.org/en/latest/" target="_blank" rel="noopener"
+>packaging your Python project&lt;/a>.
+A plethora of different projects have come and go, with varying degrees of success.&lt;/p>
+&lt;h2 id="alternatives-poetry">Alternatives (poetry)
+&lt;/h2>&lt;p>About a year before trying &lt;code>uv&lt;/code>, I tried to catch up with the ecosystem and get to know the &lt;code>blessed new way&lt;/code>.
+However, the task proved to be a little more difficult, as the landscape is filled with a myriad of alternatives, each with their own set of drawbacks and detractors.
+Packaging has historically been a weak spot, in ironical contradiction to the Zen of Python&amp;rsquo;s &amp;ldquo;There should be one&amp;ndash; and preferably only one &amp;ndash;obvious way to do it&amp;rdquo;,&lt;/p>
+&lt;p>I eventually settled on &lt;a class="link" href="https://python-poetry.org/" target="_blank" rel="noopener"
+>poetry&lt;/a>.
+Mostly because it seemed like the most popular alternative.&lt;/p>
+&lt;p>There are many things I liked about it.
+First of all, having a convention for dependencies (&lt;code>pyproject.toml&lt;/code>) and a tool that properly handles them was nice.
+It also removed the need to remember specific incantations to build and publish my Python projects.
+Lastly, I mixed it &lt;code>poetry2nix&lt;/code> to create reproducible python environments using nix.
+This makes for a very powerful experience.&lt;/p>
+&lt;p>However, there were multiple hiccups.
+First of all, it took me some time to figure out which specific fields to use (each tool can define ad-hoc properties in a the &lt;code>pyproject.toml&lt;/code> file), and some of them seemed redundant with the more generic ones.
+Full disclosure, this specific point might be a mistake on my side, and I do not remember the details.
+The second one is speed.
+(Re-)creating an environment took a non-negligible amount of time.&lt;/p>
+&lt;h2 id="enter-light-uv">Enter &lt;del>light&lt;/del> &lt;code>uv&lt;/code>
+&lt;/h2>&lt;p>According to its repository, &lt;code>uv &lt;/code>can replace pip, pip-tools, pipx, poetry, pyenv, twine, virtualenv, and more.
+Not only that, but it also claims to do that 10-100 times faster than pip.
+I must admit that it being written in rust was a another selling point for me, as I&amp;rsquo;m looking for excuses to collaborate in a decently-sized rust projejct.&lt;/p>
+&lt;p>Installing it is dead simple: simply download the binary (e.g., with curl) or run &lt;code>pip install uv&lt;/code>.
+You won&amp;rsquo;t need much more: &lt;code>uv&lt;/code> seems to just do the right thing out of the box.
+And it does it really, really fast.
+The rest of the time it gets out of the way.&lt;/p>
+&lt;p>My only gripe so far is that I don&amp;rsquo;t seem to find a built-in command to drop into a shell, but that is nothing that &lt;code>uv run $SHELL&lt;/code> cannot fix.&lt;/p>
+&lt;h2 id="common-operations">Common operations
+&lt;/h2>&lt;h3 id="initialize-a-repository">Initialize a repository
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">uv init
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="adding-dependencies">Adding dependencies
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">uv add senpy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="running-commands-inside-the-environment">Running commands inside the environment
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">uv run &amp;lt;COMMAND&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># e.g., run a shell using your python version and dependencies
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">uv run $SHELL
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="dependency-tree">Dependency tree
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">uv shell
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Resolved 44 packages in 1ms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">my-project v0.1.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── fastapi[standard] v0.115.8
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── pydantic v2.10.6
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── annotated-types v0.7.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── pydantic-core v2.27.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ └── typing-extensions v4.12.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── typing-extensions v4.12.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── starlette v0.45.3
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── anyio v4.8.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── exceptiongroup v1.2.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── idna v3.10
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── sniffio v1.3.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── typing-extensions v4.12.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── typing-extensions v4.12.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── email-validator v2.2.0 (extra: standard)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── dnspython v2.7.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Nix Recipe for Python Projects</title><link>https://balkian.com/p/nix-recipe-for-python-projects/</link><pubDate>Mon, 13 Nov 2023 18:21:46 +0100</pubDate><guid>https://balkian.com/p/nix-recipe-for-python-projects/</guid><description>&lt;p>This is a quick and easy recipe to add a &lt;code>default.nix&lt;/code> to any Python project with a &lt;code>requirements.txt&lt;/code> file:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-nix" data-lang="nix">&lt;span class="line">&lt;span class="cl">&lt;span class="k">with&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="sr">&amp;lt;nixpkgs&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">let&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pythonPackages&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">python311Packages&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">in&lt;/span> &lt;span class="n">pkgs&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">mkShell&lt;/span> &lt;span class="k">rec&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;impurePythonEnv&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">venvDir&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;./.venv&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">buildInputs&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># A python interpreter including the &amp;#39;venv&amp;#39; module is required to bootstrap&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># the environment.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pythonPackages&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">python&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># This execute some shell code to initialize a venv in $venvDir before&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># dropping into the shell&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pythonPackages&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">venvShellHook&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Those are dependencies that we would like to use from nixpkgs, which will&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># add them to PYTHONPATH and thus make them accessible from within the venv.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pythonPackages&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">numpy&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pythonPackages&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">requests&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># In this particular example, in order to compile any binary extensions they may&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># require, the python modules listed in the hypothetical requirements.txt need&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># the following packages to be installed locally:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">taglib&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">openssl&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">git&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">libxml2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">libxslt&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">libzip&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">zlib&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Now we can execute any commands within the virtual environment.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># This is optional and can be left out to run pip manually.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">postShellHook&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> pip install -r requirements.txt
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> &amp;#39;&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, you will get a clean environment by running:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">nix-shell
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Progress bars in python</title><link>https://balkian.com/p/progress-bars-in-python/</link><pubDate>Wed, 28 Sep 2016 18:47:00 +0000</pubDate><guid>https://balkian.com/p/progress-bars-in-python/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/noamraph/tqdm" target="_blank" rel="noopener"
+>tqdm&lt;/a> is a nice way to add progress
+bars in the command line or in a jupyter notebook.&lt;/p>
+&lt;p>&lt;img src="https://camo.githubusercontent.com/48838faaa8d00ea297f18e5bf55d3c6bb4e0ba6b/68747470733a2f2f692e696d6775722e636f6d2f686539417735432e676966"
+loading="lazy"
+alt="image"
+>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">tqdm&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">tqdm&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">time&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">tqdm&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">range&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">100&lt;/span>&lt;span class="p">)):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">time&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sleep&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Proxies with Apache and python</title><link>https://balkian.com/p/proxies-with-apache-and-python/</link><pubDate>Thu, 09 Oct 2014 10:00:00 +0000</pubDate><guid>https://balkian.com/p/proxies-with-apache-and-python/</guid><description>&lt;p>This is a quick note on proxying a local python application (e.g. flask)
+to a subdirectory in Apache. This assumes that the file wsgi.py contains
+a WSGI application with the name &lt;em>application&lt;/em>. Hence, wsgi:application.&lt;/p>
+&lt;h2 id="gunicorn">Gunicorn
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-apache" data-lang="apache">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;Location&lt;/span> &lt;span class="s">/myapp/&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">ProxyPass&lt;/span> http://127.0.0.1:8888/myapp/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">ProxyPassReverse&lt;/span> http://127.0.0.1:8888/myapp/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">RequestHeader&lt;/span> set SCRIPT_NAME &lt;span class="s2">&amp;#34;/myapp/&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/Location&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Important&lt;/strong>: &lt;em>SCRIPT_NAME&lt;/em> and the end of &lt;em>ProxyPass&lt;/em> URL &lt;strong>MUST BE
+THE SAME&lt;/strong>. Otherwise, Gunicorn will fail miserably.&lt;/p>
+&lt;p>Try it with:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">venv/bin/gunicorn -w &lt;span class="m">4&lt;/span> -b 127.0.0.1:8888 --log-file - --access-logfile - wsgi:application
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="uwsgi">UWSGI
+&lt;/h2>&lt;p>This is a very simple configuration. I will try to upload one with more
+options for uwsgi (in a .ini file).&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-apache" data-lang="apache">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;Location&lt;/span> &lt;span class="s">/myapp/&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">SetHandler&lt;/span> uwsgi_handler
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">uWSGISocker&lt;/span> &lt;span class="m">127.0.0.1&lt;/span>:8888
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/Location&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Try it with:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">uwsgi --socket 127.0.0.1:8888 -w wsgi:application
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="extra-supervisor">Extra: Supervisor
+&lt;/h2>&lt;p>If everything went as expected, you can wrap your command in a
+supervisor config file and let it handle the server for you.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-ini" data-lang="ini">&lt;span class="line">&lt;span class="cl">&lt;span class="k">[unix_http_server]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">file&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">/tmp/myapp.sock ; path to your socket file&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">[supervisord]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">logfile&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">%(here)s/logs/supervisor.log&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">childlogdir&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">%(here)s/logs/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">[rpcinterface:supervisor]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">supervisor.rpcinterface_factory&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">supervisor.rpcinterface:make_main_rpcinterface&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">[supervisorctl]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">logfile&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">%(here)s/logs/supervisorctl.log&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">serverurl&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">unix:///tmp/supervisor.sock ; use a unix:// URL for a unix socket&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">[program:myapp]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">command&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">venv/bin/gunicorn -w 4 -b 0.0.0.0:5000 --log-file %(here)s/logs/gunicorn.log --access-logfile - wsgi:application&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">directory&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">%(here)s&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">environment&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">PATH=%(here)s/venv/bin/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">logfile&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">%(here)s/logs/myapp.log&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Publishing on PyPi</title><link>https://balkian.com/p/publishing-on-pypi/</link><pubDate>Sat, 27 Sep 2014 10:00:00 +0000</pubDate><guid>https://balkian.com/p/publishing-on-pypi/</guid><description>&lt;p>Developing a python module and publishing it on Github is cool, but most
+of the times you want others to download and use it easily. That is the
+role of PyPi, the python package repository. In this post I show you how
+to publish your package in less than 10 minutes.&lt;/p>
+&lt;h2 id="choose-a-fancy-name">Choose a fancy name
+&lt;/h2>&lt;p>If you haven&amp;rsquo;t done so yet, take a minute or two to think about this.
+To publish on PyPi you need a name for your package that isn&amp;rsquo;t taken.
+What&amp;rsquo;s more, a catchy and unique name will help people remember your
+module and feel more inclined to at least try it.&lt;/p>
+&lt;p>The package name should hint what your module does, but that&amp;rsquo;s not
+always the case. That&amp;rsquo;s your call. I personally put uniqueness and
+memorability over describing the functionality.&lt;/p>
+&lt;h2 id="create-a-pypirc-configuration-file">Create a .pypirc configuration file
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">[distutils] # this tells distutils what package indexes you can push to&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">index-servers&lt;/span> &lt;span class="o">=&lt;/span>&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> pypi # the live PyPI
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> pypitest # test PyPI&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">[pypi] # authentication details for live PyPI&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">repository&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">https://pypi.python.org/pypi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">username&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">{ your_username }&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">password&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">{ your_password } # not necessary&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">[pypitest] # authentication details for test PyPI&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">repository&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">https://testpypi.python.org/pypi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">username&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">{ your_username }&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>As you can see, you need to register both in the &lt;a class="link" href="https://pypi.python.org/pypi?%3Aaction=register_form" target="_blank" rel="noopener"
+>main pypi
+repository&lt;/a> and
+the &lt;a class="link" href="https://testpypi.python.org/pypi?%3Aaction=register_form" target="_blank" rel="noopener"
+>testing
+server&lt;/a>. The
+usernames and passwords might be different, that is up to you!&lt;/p>
+&lt;h2 id="prepare-your-package">Prepare your package
+&lt;/h2>&lt;p>This should be the structure:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">root-dir/ # Any name you want
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> setup.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> setup.cfg
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LICENSE.txt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> README.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> mypackage/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> __init__.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> foo.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> bar.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> baz.py
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="setupcfg">setup.cfg
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="k">[metadata]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">description-file&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">README.md&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The markdown README is the &lt;em>de facto&lt;/em> standard in Github, but you can
+also use rST (reStructuredText), the standard in the python community.&lt;/p>
+&lt;h3 id="setuppy">setup.py
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">distutils.core&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">setup&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">setup&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;mypackage&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">packages&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;mypackage&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="c1"># this must be the same as the name above&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">version&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;{ version }&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">description&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;{ description }&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">author&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;{ name }&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">email&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;{ email }&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;https://github.com/&lt;/span>&lt;span class="si">{user}&lt;/span>&lt;span class="s1">/&lt;/span>&lt;span class="si">{package}&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1"># URL to the github repo&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">download_url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;https://github.com/&lt;/span>&lt;span class="si">{user}&lt;/span>&lt;span class="s1">/&lt;/span>&lt;span class="si">{repo}&lt;/span>&lt;span class="s1">/tarball/&lt;/span>&lt;span class="si">{version}&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">keywords&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;websockets&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;display&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;d3&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="c1"># list of keywords that represent your package&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">classifiers&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[],&lt;/span> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>You might notice that the download_url points to a Github URL. We could
+host our package anywhere, but Github is a convenient option. To create
+the tarball and the zip packages, you only need to tag a tag in your
+repository and push it to github:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git tag &lt;span class="o">{&lt;/span>version&lt;span class="o">}&lt;/span> -m &lt;span class="s2">&amp;#34;{ Description of this tag/version}&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git push --tags origin master
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="push-to-the-testingmain-pypi-server">Push to the testing/main pypi server
+&lt;/h2>&lt;p>It is advisable that you try your package on the test repository and fix
+any problems first. The process is simple:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">python setup.py register -r &lt;span class="o">{&lt;/span>pypitest/pypi&lt;span class="o">}&lt;/span> python setup.py sdist upload -r &lt;span class="o">{&lt;/span>pypitest/pypi&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If everything went as expected, you can now install your package through
+pip and browse your package&amp;rsquo;s page. For instance, check my senpy
+package: &lt;a class="link" href="https://pypi.python.org/pypi/senpy" target="_blank" rel="noopener"
+>https://pypi.python.org/pypi/senpy&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">pip install senpy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Updating EuroLoveMap</title><link>https://balkian.com/p/updating-eurolovemap/</link><pubDate>Thu, 27 Mar 2014 14:00:00 +0000</pubDate><guid>https://balkian.com/p/updating-eurolovemap/</guid><description>&lt;p>As part of the &lt;a class="link" href="http://www.opener-project.org/2013/07/18/opener-hackathon-in-amsterdam/" target="_blank" rel="noopener"
+>OpeNER
+hackathon&lt;/a>
+we decided to build a prototype that would allow us to compare how
+different countries feel about several topics. We used the OpeNER
+pipeline to get the sentiment from a set of newspaper articles we
+gathered from media in several languages. Then we aggregated those
+articles by category and country (using the source of the article or the
+language it was written in), obtaining the &amp;ldquo;overall feeling&amp;rdquo; of each
+country about each topic. Then, we used some fancy JavaScript to make
+sense out of the raw information.&lt;/p>
+&lt;p>It didn&amp;rsquo;t go too bad, it turns out &lt;a class="link" href="http://eurosentiment.eu/wp-content/uploads/2013/07/BOLv9qnCIAAJEek.jpg" target="_blank" rel="noopener"
+>we
+won&lt;/a>.&lt;/p>
+&lt;p>Now, it was time for a face-lift. I used this opportunity to play with
+new technologies and improve it:&lt;/p>
+&lt;ul>
+&lt;li>Using Flask, this time using python 3.3 and Bootstrap 3.0&lt;/li>
+&lt;li>Cool HTML5+JS cards (thanks to
+&lt;a class="link" href="http://pastetophone.com" target="_blank" rel="noopener"
+>pastetophone&lt;/a>)&lt;/li>
+&lt;li>Automatic generation of fake personal data to test the interface&lt;/li>
+&lt;li>Obfuscation of personal emails&lt;/li>
+&lt;/ul>
+&lt;p>The result can be &lt;a class="link" href="http://eurolovemap.herokuapp.com/" target="_blank" rel="noopener"
+>seen here&lt;/a>.&lt;/p>
+&lt;h2 id="publishing-a-python-3-app-on-heroku">Publishing a Python 3 app on Heroku
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">mkvirtualenv -p /usr/bin/python3.3 eurolovemap
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Since Heroku uses python 2.7 by default, we have to tell it which
+version we want, although it supports python 3.4 as well. I couldn&amp;rsquo;t
+get python 3.4 working using the
+&lt;a class="link" href="https://launchpad.net/~fkrull/&amp;#43;archive/deadsnakes" target="_blank" rel="noopener"
+>deadsnakes&lt;/a> ppa, so
+I used python 3.3 instead, which works fine but is not officially
+supported. Just create a file named &lt;em>runtime.txt&lt;/em> in your project root,
+with the python version you want to use:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">python-3.3.1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Don&amp;rsquo;t forget to freeze your dependencies so Heroku can install them:
+&lt;code>bash pip freze &amp;gt; requirements.txt&lt;/code>&lt;/p>
+&lt;h2 id="publishing-personal-emails">Publishing personal emails
+&lt;/h2>&lt;p>There are really sophisticated and effective ways to obfuscate personal
+emails so that spammers cannot easily grab yours. However, this time I
+needed something really simple to hide our emails from the simplest form
+of crawlers. Most of the team are in academia somehow, so in the end all
+our emails are available in sites like Google Scholar. Anyway, nobody
+likes getting spammed so I settled for a custom &lt;a class="link" href="http://en.wikipedia.org/wiki/Caesar_cipher" target="_blank" rel="noopener"
+>Caesar
+cipher&lt;/a>. Please, don&amp;rsquo;t use
+it for any serious application if you are concerned about being spammed.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">blur_email&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">email&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">join&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="nb">chr&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">ord&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">email&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And this is the client side:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">onload&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">(){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">elems&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">getElementsByClassName&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;profile-email&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">e&lt;/span> &lt;span class="k">in&lt;/span> &lt;span class="nx">elems&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">var&lt;/span> &lt;span class="nx">blur&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">elems&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">e&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">innerHTML&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">var&lt;/span> &lt;span class="nx">email&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">s&lt;/span> &lt;span class="k">in&lt;/span> &lt;span class="nx">blur&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">var&lt;/span> &lt;span class="nx">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">blur&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">charCodeAt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">s&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">email&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">email&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="nb">String&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fromCharCode&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">elems&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">e&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">innerHTML&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">email&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Unfortunately, this approach does not hide your email from anyone using
+&lt;a class="link" href="http://phantomjs.org/" target="_blank" rel="noopener"
+>PhantomJS&lt;/a>,
+&lt;a class="link" href="http://zombie.labnotes.org/" target="_blank" rel="noopener"
+>ZombieJS&lt;/a> or similar. For that, other
+approaches like generating a picture with the address would be
+necessary. Nevertheless, it is overkill for a really simple ad-hoc
+application with custom formatting and just a bunch of emails that would
+easily be grabbed manually.&lt;/p>
+&lt;h2 id="generation-of-fake-data">Generation of fake data
+&lt;/h2>&lt;p>To test the contact section of the site, I wanted to populate it with
+fake data. &lt;a class="link" href="https://github.com/joke2k/faker" target="_blank" rel="noopener"
+>Fake-Factory&lt;/a> is an amazing
+library that can generate fake data of almost any kind: emails,
+association names, acronyms&amp;hellip; It even lets you localise the results
+(get Spanish names, for instance) and generate factories for certain
+classes (à la Django).&lt;/p>
+&lt;p>But I also wanted pictures, enter &lt;a class="link" href="http://lorempixel.com/" target="_blank" rel="noopener"
+>Lorem Pixel&lt;/a>.
+With its API you can generate pictures of almost any size, for different
+topics (e.g. nightlife, people) and with a custom text. You can even use
+an index, so it will always show the same picture.&lt;/p>
+&lt;p>For instance, the picture below is served through Lorem Pixel.&lt;/p>
+&lt;p>&lt;img src="http://lorempixel.com/400/200/nightlife/"
+loading="lazy"
+>&lt;/p>
+&lt;p>By the way, if you only want cat pictures, take a look at
+&lt;a class="link" href="http://placekitten.com/" target="_blank" rel="noopener"
+>Placekitten&lt;/a>. And for NSFW text, there&amp;rsquo;s the
+&lt;a class="link" href="http://slipsum.com/" target="_blank" rel="noopener"
+>Samuel L. Jackson Ipsum&lt;/a>&lt;/p></description></item><item><title>Python</title><link>https://balkian.com/cheatsheet/python/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/cheatsheet/python/</guid><description>&lt;img src="https://balkian.com/img/python.png" alt="Featured image of post Python" />&lt;h2 id="interesting-libraries">Interesting libraries
+&lt;/h2>&lt;h3 id="tqdm">&lt;a class="link" href="https://github.com/tqdm/tqdm" target="_blank" rel="noopener"
+>TQDM&lt;/a>
+&lt;/h3>&lt;p>From tqdm&amp;rsquo;s github repository:&lt;/p>
+&lt;blockquote>
+&lt;p>tqdm means &amp;ldquo;progress&amp;rdquo; in Arabic (taqadum, تقدّم) and an abbreviation for &amp;ldquo;I love you so much&amp;rdquo; in Spanish (te quiero demasiado).&lt;/p>&lt;/blockquote>
+&lt;p>&lt;img src="https://raw.githubusercontent.com/tqdm/tqdm/master/images/tqdm.gif"
+loading="lazy"
+alt="TQDM in action"
+>&lt;/p>
+&lt;h2 id="tools">Tools
+&lt;/h2>&lt;h3 id="uv">&lt;a class="link" href="https://github.com/astral-sh/uv" target="_blank" rel="noopener"
+>uv&lt;/a>
+&lt;/h3>&lt;p>🚀 A single tool to replace pip, pip-tools, pipx, poetry, pyenv, twine, virtualenv, and more.
+⚡️ 10-100x faster than pip.&lt;/p>
+&lt;ul>
+&lt;li>Provides comprehensive project management, with a universal lockfile.&lt;/li>
+&lt;li>Runs scripts, with support for inline dependency metadata.&lt;/li>
+&lt;li>Installs and manages Python versions.&lt;/li>
+&lt;li>Runs and installs tools published as Python packages.&lt;/li>
+&lt;li>Includes a pip-compatible interface for a performance boost with a familiar CLI.&lt;/li>
+&lt;li>Supports Cargo-style workspaces for scalable projects.&lt;/li>
+&lt;li>Disk-space efficient, with a global cache for dependency deduplication.&lt;/li>
+&lt;li>Installable without Rust or Python via curl or pip.&lt;/li>
+&lt;li>Supports macOS, Linux, and Windows.&lt;/li>
+&lt;/ul></description></item></channel></rss>
