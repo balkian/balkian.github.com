@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Github on J. Fernando Sánchez</title><link>https://balkian.com/tags/github/</link><description>Recent content in Github on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 10 Apr 2015 17:47:00 +0000</lastBuildDate><atom:link href="https://balkian.com/tags/github/index.xml" rel="self" type="application/rss+xml"/><item><title>Sharing dotfiles</title><link>https://balkian.com/p/sharing-dotfiles/</link><pubDate>Fri, 10 Apr 2015 17:47:00 +0000</pubDate><guid>https://balkian.com/p/sharing-dotfiles/</guid><description>&lt;p>Today&amp;rsquo;s post is half a quick note, half public shaming. In other words,
+it is a reminder to be very careful with OAuth tokens and passwords.&lt;/p>
+&lt;p>As part of moving to emacs, I starting using the incredibly useful
+&lt;a class="link" href="https://github.com/defunkt/gist.el" target="_blank" rel="noopener"
+>gh.el&lt;/a>. When you first use it, the
+extension saves either your password or an OAuth token in your
+.gitconfig file. This is cool and convenient, unless you &lt;a class="link" href="https://github.com/balkian/dotfiles" target="_blank" rel="noopener"
+>happen to be
+publishing your .gitconfig file in a public
+repo&lt;/a>.&lt;/p>
+&lt;p>So, how can you still share your gitconfig without sharing your
+password/token with the rest of the world? Since Git 1.7.0, you can
+&lt;a class="link" href="http://stackoverflow.com/questions/1557183/is-it-possible-to-include-a-file-in-your-gitconfig" target="_blank" rel="noopener"
+>include other files in your
+gitconfig&lt;/a>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[include]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> path = ~/.gitconfig_secret
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And now, in your .gitconfig_secret file, you just have to add this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[github]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> user = balkian
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> token = &amp;#34;&amp;lt; Your secret token &amp;gt;&amp;#34;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Publishing on PyPi</title><link>https://balkian.com/p/publishing-on-pypi/</link><pubDate>Sat, 27 Sep 2014 10:00:00 +0000</pubDate><guid>https://balkian.com/p/publishing-on-pypi/</guid><description>&lt;p>Developing a python module and publishing it on Github is cool, but most
+of the times you want others to download and use it easily. That is the
+role of PyPi, the python package repository. In this post I show you how
+to publish your package in less than 10 minutes.&lt;/p>
+&lt;h2 id="choose-a-fancy-name">Choose a fancy name
+&lt;/h2>&lt;p>If you haven&amp;rsquo;t done so yet, take a minute or two to think about this.
+To publish on PyPi you need a name for your package that isn&amp;rsquo;t taken.
+What&amp;rsquo;s more, a catchy and unique name will help people remember your
+module and feel more inclined to at least try it.&lt;/p>
+&lt;p>The package name should hint what your module does, but that&amp;rsquo;s not
+always the case. That&amp;rsquo;s your call. I personally put uniqueness and
+memorability over describing the functionality.&lt;/p>
+&lt;h2 id="create-a-pypirc-configuration-file">Create a .pypirc configuration file
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">[distutils] # this tells distutils what package indexes you can push to&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">index-servers&lt;/span> &lt;span class="o">=&lt;/span>&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> pypi # the live PyPI
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> pypitest # test PyPI&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">[pypi] # authentication details for live PyPI&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">repository&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">https://pypi.python.org/pypi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">username&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">{ your_username }&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">password&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">{ your_password } # not necessary&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">[pypitest] # authentication details for test PyPI&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">repository&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">https://testpypi.python.org/pypi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">username&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">{ your_username }&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>As you can see, you need to register both in the &lt;a class="link" href="https://pypi.python.org/pypi?%3Aaction=register_form" target="_blank" rel="noopener"
+>main pypi
+repository&lt;/a> and
+the &lt;a class="link" href="https://testpypi.python.org/pypi?%3Aaction=register_form" target="_blank" rel="noopener"
+>testing
+server&lt;/a>. The
+usernames and passwords might be different, that is up to you!&lt;/p>
+&lt;h2 id="prepare-your-package">Prepare your package
+&lt;/h2>&lt;p>This should be the structure:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">root-dir/ # Any name you want
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> setup.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> setup.cfg
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LICENSE.txt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> README.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> mypackage/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> __init__.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> foo.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> bar.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> baz.py
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="setupcfg">setup.cfg
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="k">[metadata]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">description-file&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">README.md&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The markdown README is the &lt;em>de facto&lt;/em> standard in Github, but you can
+also use rST (reStructuredText), the standard in the python community.&lt;/p>
+&lt;h3 id="setuppy">setup.py
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">distutils.core&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">setup&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">setup&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;mypackage&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">packages&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;mypackage&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="c1"># this must be the same as the name above&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">version&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;{ version }&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">description&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;{ description }&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">author&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;{ name }&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">email&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;{ email }&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;https://github.com/&lt;/span>&lt;span class="si">{user}&lt;/span>&lt;span class="s1">/&lt;/span>&lt;span class="si">{package}&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1"># URL to the github repo&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">download_url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;https://github.com/&lt;/span>&lt;span class="si">{user}&lt;/span>&lt;span class="s1">/&lt;/span>&lt;span class="si">{repo}&lt;/span>&lt;span class="s1">/tarball/&lt;/span>&lt;span class="si">{version}&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">keywords&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;websockets&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;display&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;d3&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="c1"># list of keywords that represent your package&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">classifiers&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[],&lt;/span> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>You might notice that the download_url points to a Github URL. We could
+host our package anywhere, but Github is a convenient option. To create
+the tarball and the zip packages, you only need to tag a tag in your
+repository and push it to github:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git tag &lt;span class="o">{&lt;/span>version&lt;span class="o">}&lt;/span> -m &lt;span class="s2">&amp;#34;{ Description of this tag/version}&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git push --tags origin master
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="push-to-the-testingmain-pypi-server">Push to the testing/main pypi server
+&lt;/h2>&lt;p>It is advisable that you try your package on the test repository and fix
+any problems first. The process is simple:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">python setup.py register -r &lt;span class="o">{&lt;/span>pypitest/pypi&lt;span class="o">}&lt;/span> python setup.py sdist upload -r &lt;span class="o">{&lt;/span>pypitest/pypi&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If everything went as expected, you can now install your package through
+pip and browse your package&amp;rsquo;s page. For instance, check my senpy
+package: &lt;a class="link" href="https://pypi.python.org/pypi/senpy" target="_blank" rel="noopener"
+>https://pypi.python.org/pypi/senpy&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">pip install senpy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Creating my web</title><link>https://balkian.com/p/creating-my-web/</link><pubDate>Thu, 22 Aug 2013 14:14:22 +0000</pubDate><guid>https://balkian.com/p/creating-my-web/</guid><description>&lt;p>I&amp;rsquo;ve finally decided to set up a decent personal page. I have settled
+for github-pages because I like the idea of keeping my site in a
+repository and having someone else host and deploy it for me. The site
+will be really simple, mostly static files. Thanks to Github,
+&lt;a class="link" href="http://jekyllrb.com" target="_blank" rel="noopener"
+>Jekyll&lt;/a> will automatically generate static pages
+for my posts every time I commit anything new to this repository.&lt;/p>
+&lt;p>But Jekyll can be used independently, so if I ever choose to host the
+site myself, I can do it quite easily. Another thing that I liked about
+this approach is that the generated html files can be used in the
+future, and I will not need Jekyll to serve it. Jekyll is really simple
+and most of the things are written in plain html. That means that
+everything could be easily reused if I ever choose to change to another
+blogging framework (e.g. pelical). But, for the time being, I like the
+fact that Github takes care of the compilation as well, so I can simply
+modify or add files through the web interface should I need to.&lt;/p>
+&lt;p>I hadn&amp;rsquo;t played with HTML and CSS for a while now, so I also wanted to
+use this site as a playground. At some point, I realised I was doing
+mostly everything in plain HTML and CSS, and decided to keep it like
+that for as long as possible. As of this writing, I haven&amp;rsquo;t included
+any Javascript code in the page. Probably I will use some to add my
+&lt;a class="link" href="http://gist.github.com/balkian" target="_blank" rel="noopener"
+>gists&lt;/a> and
+&lt;a class="link" href="http://github.com/balkian" target="_blank" rel="noopener"
+>repositories&lt;/a>, but we will see about that.&lt;/p>
+&lt;p>I think the code speaks for itself, so you can check out &lt;a class="link" href="http://github.com/balkian/balkian.github.com" target="_blank" rel="noopener"
+>my repository
+on Github&lt;/a>. You can clone
+and deploy it easily like this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git clone
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">https://github.com/balkian/balkian.github.com &lt;span class="nb">cd&lt;/span> balkian.github.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">jekyll serve -w
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>I will keep updating this post with information about:&lt;/p>
+&lt;ul>
+&lt;li>Some Jekyll plugins that might be useful&lt;/li>
+&lt;li>What CSS tricks I learnt&lt;/li>
+&lt;li>The webfonts I used&lt;/li>
+&lt;li>The badge on the left side of the page&lt;/li>
+&lt;/ul></description></item></channel></rss>

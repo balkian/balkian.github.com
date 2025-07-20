@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Zigbee on J. Fernando Sánchez</title><link>https://balkian.com/tags/zigbee/</link><description>Recent content in Zigbee on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 06 Jan 2019 10:00:00 +0000</lastBuildDate><atom:link href="https://balkian.com/tags/zigbee/index.xml" rel="self" type="application/rss+xml"/><item><title>Controlling Zigbee devices with MQTT</title><link>https://balkian.com/p/controlling-zigbee-devices-with-mqtt/</link><pubDate>Sun, 06 Jan 2019 10:00:00 +0000</pubDate><guid>https://balkian.com/p/controlling-zigbee-devices-with-mqtt/</guid><description>&lt;p>This is a short tutorial on connecting a zigbee device (an Aqara cube)
+to an MQTT server, so you can control your zigbee devices from the
+network.&lt;/p>
+&lt;p>If you&amp;rsquo;re anything like me, you&amp;rsquo;re probably a sucker for IoT devices.
+For a long time, I&amp;rsquo;ve been using WiFi-enabled lights, and Amazon dash
+buttons to control them. To keep these (cheap Chinese) internet enabled
+devices away from your network and their respective cloud services,
+you&amp;rsquo;ll probably want to set up a dedicated network in your router (more
+on this on a future post, maybe). Another disadvantage of WiFi devices
+is that they&amp;rsquo;re relatively power hungry.&lt;/p>
+&lt;p>A popular alternative is using ZigBee for communication. It is a
+dedicated protocol similar to bluetooth (BLE), with lower power
+requirements and bitrate.&lt;/p>
+&lt;p>Take the (super cute) aqara cube as an example. It is a small cube that
+detects rotation on all of its axes, and tapping events. Here&amp;rsquo;s a
+video:&lt;/p>
+&lt;div class="video-wrapper">
+&lt;iframe loading="lazy"
+src="https://www.youtube.com/embed/5YtqG1wEnng"
+allowfullscreen
+title="YouTube Video"
+>
+&lt;/iframe>
+&lt;/div>
+&lt;p>To connect to zigbee devices you will need a zigbee enabled gateway
+(a.k.a. hub), which connects to your WiFi network and your zigbee
+devices. Once again, this means adding an internet-enabled device to
+your home, and probably a couple of cloud services.&lt;/p>
+&lt;p>As an alternative, you can set up your own zigbee gateway, and control
+it to your home automation platform of choice (e.g. home assistant). We
+will cover how to set up a zigbee2mqtt gateway that is also connected to
+an MQTT server, so you can use MQTT to control your devices and get
+notifications.&lt;/p>
+&lt;p>What you need:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://www.aliexpress.com/item/Original-Xiaomi-Mi-Aqara-Cube-Smart-Home-Controller-6-Action-Operation-Fr-Home-Device-Zigbee-Version/32892947622.html?spm=a2g0s.9042311.0.0.3da24c4dXV8sBI" target="_blank" rel="noopener"
+>Aqara
+cube&lt;/a>.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.aliexpress.com/item/Wireless-Zigbee-CC2531-CC2540-Zigbee-Sniffer-Bluetooth-BLE-4-0-Dongle-Capture-Module-USB-Programmer-Downloader/32907587711.html?spm=a2g0s.9042311.0.0.3da24c4dXV8sBI" target="_blank" rel="noopener"
+>CC2531 zigbee
+sniffer&lt;/a>.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.aliexpress.com/item/CFSUNBIRD-CC-DEBUGGER-Debugger-and-Programmer-for-RF-System-on-Chips-TI-ORIGINAL-Fast-hipping/32813122315.html?spm=a2g0s.9042311.0.0.3da24c4dXV8sBI" target="_blank" rel="noopener"
+>CC-debugger&lt;/a>.&lt;/li>
+&lt;/ul>
+&lt;p>You will need to flash your sniffer. For that, you only need to follow
+the instructions from the &lt;a class="link" href="https://koenkk.github.io/zigbee2mqtt/" target="_blank" rel="noopener"
+>zigbee2mqtt
+documentation&lt;/a>.&lt;/p>
+&lt;p>Once you&amp;rsquo;re done flashing, you&amp;rsquo;re ready to set up the zigbee2mqtt
+server. For convenience, I wrote a simple docker-compose to deploy a
+zigbee2mqtt server and a test mosquitto server:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">version&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;2.1&amp;#39;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">services&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">zigbee2mqtt&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">koenkk/zigbee2mqtt&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">container_name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">zigbee2mqtt &lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">restart&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">always&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">./z2m-data/:/app/data/&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">devices&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;/dev/ttyACM0&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">networks&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">hass&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">mqtt&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">eclipse-mosquitto&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">ports&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="m">1883&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">1883&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="m">9001&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">9001&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">networks&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">hass&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">./mosquitto.conf:/mosquitto/config/mosquitto.conf&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">networks&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">hass&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">driver&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">overlay&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>You can test your installation with:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">❯ mosquitto_sub -h localhost -p &lt;span class="m">1883&lt;/span> -t &lt;span class="s1">&amp;#39;zigbee2mqtt/#&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">online
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">{&lt;/span>&lt;span class="s2">&amp;#34;battery&amp;#34;&lt;/span>:17,&lt;span class="s2">&amp;#34;voltage&amp;#34;&lt;/span>:2925,&lt;span class="s2">&amp;#34;linkquality&amp;#34;&lt;/span>:149,&lt;span class="s2">&amp;#34;action&amp;#34;&lt;/span>:&lt;span class="s2">&amp;#34;rotate_right&amp;#34;&lt;/span>,&lt;span class="s2">&amp;#34;angle&amp;#34;&lt;/span>:12.8&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">{&lt;/span>&lt;span class="s2">&amp;#34;battery&amp;#34;&lt;/span>:17,&lt;span class="s2">&amp;#34;voltage&amp;#34;&lt;/span>:2925,&lt;span class="s2">&amp;#34;linkquality&amp;#34;&lt;/span>:141,&lt;span class="s2">&amp;#34;action&amp;#34;&lt;/span>:&lt;span class="s2">&amp;#34;slide&amp;#34;&lt;/span>,&lt;span class="s2">&amp;#34;side&amp;#34;&lt;/span>:2&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">{&lt;/span>&lt;span class="s2">&amp;#34;battery&amp;#34;&lt;/span>:17,&lt;span class="s2">&amp;#34;voltage&amp;#34;&lt;/span>:2925,&lt;span class="s2">&amp;#34;linkquality&amp;#34;&lt;/span>:120&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">{&lt;/span>&lt;span class="s2">&amp;#34;battery&amp;#34;&lt;/span>:17,&lt;span class="s2">&amp;#34;voltage&amp;#34;&lt;/span>:2925,&lt;span class="s2">&amp;#34;linkquality&amp;#34;&lt;/span>:141,&lt;span class="s2">&amp;#34;action&amp;#34;&lt;/span>:&lt;span class="s2">&amp;#34;wakeup&amp;#34;&lt;/span>&lt;span class="o">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>
+&lt;p>zigbee2mqtt supports the following events for the aqara cube: shake,
+wakeup, fall, tap, slide, flip180, flip90, rotate_left and
+rotate_right. Every event has additional information, such as the sides
+involved, or the degrees turned.&lt;/p>
+&lt;p>Now you are ready to set up home assistant support in zigbee2mqtt
+following &lt;a class="link" href="https://koenkk.github.io/zigbee2mqtt/integration/home_assistant.html" target="_blank" rel="noopener"
+>this
+guide&lt;/a>.&lt;/p></description></item></channel></rss>

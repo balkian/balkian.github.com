@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Programming on J. Fernando Sánchez</title><link>https://balkian.com/tags/programming/</link><description>Recent content in Programming on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://balkian.com/tags/programming/index.xml" rel="self" type="application/rss+xml"/><item><title>Python</title><link>https://balkian.com/cheatsheet/python/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/cheatsheet/python/</guid><description>&lt;img src="https://balkian.com/img/python.png" alt="Featured image of post Python" />&lt;h2 id="interesting-libraries">Interesting libraries
+&lt;/h2>&lt;h3 id="tqdm">&lt;a class="link" href="https://github.com/tqdm/tqdm" target="_blank" rel="noopener"
+>TQDM&lt;/a>
+&lt;/h3>&lt;p>From tqdm&amp;rsquo;s github repository:&lt;/p>
+&lt;blockquote>
+&lt;p>tqdm means &amp;ldquo;progress&amp;rdquo; in Arabic (taqadum, تقدّم) and an abbreviation for &amp;ldquo;I love you so much&amp;rdquo; in Spanish (te quiero demasiado).&lt;/p>&lt;/blockquote>
+&lt;p>&lt;img src="https://raw.githubusercontent.com/tqdm/tqdm/master/images/tqdm.gif"
+loading="lazy"
+alt="TQDM in action"
+>&lt;/p>
+&lt;h2 id="tools">Tools
+&lt;/h2>&lt;h3 id="uv">&lt;a class="link" href="https://github.com/astral-sh/uv" target="_blank" rel="noopener"
+>uv&lt;/a>
+&lt;/h3>&lt;p>🚀 A single tool to replace pip, pip-tools, pipx, poetry, pyenv, twine, virtualenv, and more.
+⚡️ 10-100x faster than pip.&lt;/p>
+&lt;ul>
+&lt;li>Provides comprehensive project management, with a universal lockfile.&lt;/li>
+&lt;li>Runs scripts, with support for inline dependency metadata.&lt;/li>
+&lt;li>Installs and manages Python versions.&lt;/li>
+&lt;li>Runs and installs tools published as Python packages.&lt;/li>
+&lt;li>Includes a pip-compatible interface for a performance boost with a familiar CLI.&lt;/li>
+&lt;li>Supports Cargo-style workspaces for scalable projects.&lt;/li>
+&lt;li>Disk-space efficient, with a global cache for dependency deduplication.&lt;/li>
+&lt;li>Installable without Rust or Python via curl or pip.&lt;/li>
+&lt;li>Supports macOS, Linux, and Windows.&lt;/li>
+&lt;/ul></description></item></channel></rss>

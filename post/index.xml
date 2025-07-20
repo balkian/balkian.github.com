@@ -1,0 +1,1933 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on J. Fernando Sánchez</title><link>https://balkian.com/post/</link><description>Recent content in Posts on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 20 Jul 2025 02:30:43 +0200</lastBuildDate><atom:link href="https://balkian.com/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Installing Micropython on the Super Mini ESP32-S3</title><link>https://balkian.com/p/installing-micropython-on-the-super-mini-esp32-s3/</link><pubDate>Sun, 20 Jul 2025 02:30:43 +0200</pubDate><guid>https://balkian.com/p/installing-micropython-on-the-super-mini-esp32-s3/</guid><description>&lt;h2 id="context">Context
+&lt;/h2>&lt;p>Many years ago I bought a &amp;ldquo;bargain&amp;rdquo; bluetooth scale.
+I wanted a way to automatically log my weight, and the Xiaomi equivalent was more than twice as expensive at the time.
+The problem is that it came with a very basic and somewhat sketchy software that required signing up, and none of the typical apps (openscale, gadgetbridge&amp;hellip;) supported it.
+I looked at how to reverse engineer it, but I did not have much time back then, and I wrote it off as a &amp;ldquo;future project&amp;rdquo;.
+Luckily, it had a screen, so I&amp;rsquo;ve been using it as a regular scale.
+I did not even bother to check the body composition metrics, because I got a very depressing reading of 35% body fat.&lt;/p>
+&lt;p>Flash forward to today, when I decided to finally work on it.
+In addition to trying nrfConnect, I installed the app to see the actual values..
+It turns out the composition data was completely off!!
+When a reading starts, the app needs to tell the scale some basic data about you (age, height, sex).
+Unfortunately, there is no way (that I know of) to set a default user, so when the phone is not connected, it goes back to the wildly inaccurate reading.&lt;/p>
+&lt;p>So, I decided to connect one of my idle ESP32 boards to it, to interface with the scale through bluetooth (sending the right user data) and logging the results somewhere through WiFi.&lt;/p>
+&lt;h2 id="the-problem">The problem
+&lt;/h2>&lt;p>Installing the firmware was not too difficult, after I got the board to properly register.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="err">❯&lt;/span> &lt;span class="n">uv&lt;/span> &lt;span class="k">tool&lt;/span> &lt;span class="n">run&lt;/span> &lt;span class="n">esptool&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">py&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">port&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">dev&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ttyACM4&lt;/span> &lt;span class="n">erase&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">flash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Chip&lt;/span> &lt;span class="n">type&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">ESP32&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">S3&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">QFN56&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">revision&lt;/span> &lt;span class="n">v0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Features&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">Wi&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">Fi&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">BT&lt;/span> &lt;span class="mi">5&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">LE&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">Dual&lt;/span> &lt;span class="n">Core&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">LP&lt;/span> &lt;span class="n">Core&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">240&lt;/span>&lt;span class="n">MHz&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">Embedded&lt;/span> &lt;span class="n">Flash&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="n">MB&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">XMC&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">Embedded&lt;/span> &lt;span class="n">PSRAM&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="n">MB&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">AP_3v3&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">❯&lt;/span> &lt;span class="n">uv&lt;/span> &lt;span class="k">tool&lt;/span> &lt;span class="n">run&lt;/span> &lt;span class="n">esptool&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">py&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">port&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">dev&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ttyACM4&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">baud&lt;/span> &lt;span class="mi">460800&lt;/span> &lt;span class="n">write_flash&lt;/span> &lt;span class="mi">0&lt;/span> &lt;span class="n">ESP32_GENERIC_S3&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">20250415&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">v1&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">25.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">bin&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>But then, I kept getting this error on boot: &lt;code>OSError: (-24579, 'ESP_ERR_FLASH_NOT_INITIALISED')&lt;/code>.
+And I could not copy any files or install any packages.&lt;/p>
+&lt;p>After some research, I narrowed the possibilities to:&lt;/p>
+&lt;ul>
+&lt;li>A wrong partition table, most likely due to the fact that my board only has 4MB of flash.&lt;/li>
+&lt;li>Using an unsupported type of PSRAM (less likely)&lt;/li>
+&lt;/ul>
+&lt;h2 id="the-solution">The solution
+&lt;/h2>&lt;p>At this point, I could either try to compile the firmware with a custom partition (kind of tedious), or I could use the wonderful &lt;a class="link" href="https://github.com/glenn20/mp-image-tool-esp32" target="_blank" rel="noopener"
+>mp-image-tool-esp32&lt;/a> tool to check existing firmwares and modify partition sizes.&lt;/p>
+&lt;p>I confirmed my suspicion:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="err">❯&lt;/span> &lt;span class="n">uv&lt;/span> &lt;span class="k">tool&lt;/span> &lt;span class="n">run&lt;/span> &lt;span class="n">mp&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="k">tool&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">esp32&lt;/span> &lt;span class="o">~/&lt;/span>&lt;span class="n">Downloads&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ESP32_GENERIC_S3&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">20250415&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">v1&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">25.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">bin&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Running&lt;/span> &lt;span class="n">mp&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="k">tool&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">esp32&lt;/span> &lt;span class="n">v0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">1.1&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">Python&lt;/span> &lt;span class="mf">3.12&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">11&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Opening&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">home&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">Downloads&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ESP32_GENERIC_S3&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">20250415&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">v1&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">25.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="o">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Found&lt;/span> &lt;span class="n">esp32s3&lt;/span> &lt;span class="n">firmware&lt;/span> &lt;span class="n">file&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="n">MB&lt;/span> &lt;span class="n">flash&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Partition&lt;/span> &lt;span class="n">table&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">flash&lt;/span> &lt;span class="n">size&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">8&lt;/span>&lt;span class="n">MB&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">╭──────────┬──────┬─────────┬──────────┬──────────┬──────────┬───────┬───────────╮&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">│&lt;/span> &lt;span class="n">Name&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="n">Type&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="n">SubType&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="n">Offset&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="n">Size&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="n">End&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="n">Flags&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="err">│&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">├──────────┼──────┼─────────┼──────────┼──────────┼──────────┼───────┼───────────┤&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">│&lt;/span> &lt;span class="n">nvs&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="n">data&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="n">nvs&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0x9000&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0x6000&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0xf000&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0x0&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="mf">24.0&lt;/span> &lt;span class="n">kB&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="err">│&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">│&lt;/span> &lt;span class="n">phy_init&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="n">data&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="n">phy&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0xf000&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0x1000&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0x10000&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0x0&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="mf">4.0&lt;/span> &lt;span class="n">kB&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="err">│&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">│&lt;/span> &lt;span class="n">factory&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="n">app&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="n">factory&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0x10000&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0x1f0000&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0x200000&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0x0&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="mf">1.9&lt;/span> &lt;span class="n">MB&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="err">│&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">│&lt;/span> &lt;span class="n">vfs&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="n">data&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="n">fat&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0x200000&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0x600000&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0x800000&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="mh">0x0&lt;/span> &lt;span class="err">│&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="mf">6.0&lt;/span> &lt;span class="n">MB&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="err">│&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">╰──────────┴──────┴─────────┴──────────┴──────────┴──────────┴───────┴───────────╯&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Micropython&lt;/span> &lt;span class="n">app&lt;/span> &lt;span class="n">fills&lt;/span> &lt;span class="mf">79.3&lt;/span>&lt;span class="o">%&lt;/span> &lt;span class="n">of&lt;/span> &lt;span class="n">factory&lt;/span> &lt;span class="n">partition&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="mi">410&lt;/span> &lt;span class="n">kB&lt;/span> &lt;span class="n">free&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="err">❯&lt;/span> &lt;span class="n">uv&lt;/span> &lt;span class="k">tool&lt;/span> &lt;span class="n">run&lt;/span> &lt;span class="n">mp&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="k">tool&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">esp32&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">f&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="n">MB&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">resize&lt;/span> &lt;span class="n">vfs&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="n">MB&lt;/span> &lt;span class="n">ESP32_GENERIC_S3&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">20250415&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">v1&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">25.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">bin&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">❯&lt;/span> &lt;span class="n">uv&lt;/span> &lt;span class="k">tool&lt;/span> &lt;span class="n">run&lt;/span> &lt;span class="n">esptool&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">py&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">port&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">dev&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ttyACM4&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">baud&lt;/span> &lt;span class="mi">460800&lt;/span> &lt;span class="n">write_flash&lt;/span> &lt;span class="mi">0&lt;/span> &lt;span class="n">ESP32_GENERIC_S3&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">20250415&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">v1&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">25.0&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="n">MB&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">resize&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">vfs&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">2097152.&lt;/span>&lt;span class="n">bin&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>After that, I was able to install new packages with &lt;code>mpremote&lt;/code> and &lt;code>mip&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">uv&lt;/span> &lt;span class="k">tool&lt;/span> &lt;span class="n">run&lt;/span> &lt;span class="n">mpremote&lt;/span> &lt;span class="n">mip&lt;/span> &lt;span class="n">install&lt;/span> &lt;span class="n">aioble&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>We can check that we are fully utilizing the 2MB of PSRAM:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="err">❯&lt;/span> &lt;span class="n">uv&lt;/span> &lt;span class="k">tool&lt;/span> &lt;span class="n">run&lt;/span> &lt;span class="n">mpremote&lt;/span> &lt;span class="n">exec&lt;/span> &lt;span class="s1">&amp;#39;import gc;print(gc.mem_free(), &amp;#34;bytes&amp;#34;)&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mi">2061456&lt;/span> &lt;span class="n">bytes&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If you see much less than that, you are probably using the wrong variant (try &lt;code>SPIRAM_OCT&lt;/code>).&lt;/p></description></item><item><title>RDF Is Dead</title><link>https://balkian.com/p/rdf-is-dead/</link><pubDate>Fri, 07 Mar 2025 10:24:52 +0100</pubDate><guid>https://balkian.com/p/rdf-is-dead/</guid><description>&lt;p>A big part of my research has been around vocabularies and semantic annotation.
+And, to be honest, I&amp;rsquo;ve grown increasingly dissatisfied with the field.
+To the point where I dread having to work on it.
+Some day I will write about it in length, but today I&amp;rsquo;ve stumbled upon a post that covers the topic quite well: &lt;a class="link" href="https://terminusdb.com/blog/the-semantic-web-is-dead/" target="_blank" rel="noopener"
+>The Semantic Web is Dead - &lt;del>Long Live the Semantic Web&lt;/del>&lt;/a> (styling mine).&lt;/p>
+&lt;p>In particular, this section has really resonated with me:&lt;/p>
+&lt;blockquote class="note">&lt;h1 id="academics-and-industry">Academics and Industry
+&lt;/h1>&lt;p>The political economy of academia and its interaction with industry is the origin of our current lack of a functional Semantic Web.&lt;/p>
+&lt;p>Academia is structured in a way that there is very little incentive for anyone to build usable software. Instead, you are elevated for rapidly throwing together an idea, a tiny proof of concept, and to iterate on microscopic variations of this thing to produce as many papers as possible.&lt;/p>
+&lt;p>In engineering, the devil is in the detail. You really need to get into the weeds before you can know what the right thing to do is. This is simultaneously a devastating situation for industry and academia. Nobody is going to wait around for a team of engineers to finish building a system to write about it in Academia. You’ll be passed immediately by legions of paper pushers. And in industry, you can’t just be mucking about with a system that you might have to throw away.&lt;/p>&lt;/blockquote></description></item><item><title>Tips for efficient collaboration</title><link>https://balkian.com/p/efficient-collaboration/</link><pubDate>Wed, 05 Mar 2025 09:25:54 +0100</pubDate><guid>https://balkian.com/p/efficient-collaboration/</guid><description>&lt;h2 id="background">Background
+&lt;/h2>&lt;blockquote class="note">&lt;p>TL;DR I work in academia. This post focuses on advice I&amp;rsquo;d give a younger me to be a more effective supervisor and project lead.&lt;/p>&lt;/blockquote>
+&lt;p>My role in my research group has evolved from individual contributor to project lead that manages a team of multiple students.
+This often involves coordinatating with other senior researchers and their teams.&lt;/p>
+&lt;p>This post is a collection of advice I would have given myself back when I started this journey.
+It is also an excuse to reflect on these ideas I&amp;rsquo;ve been implicitly applying everyday, and maybe learn a few things more in the process.&lt;/p>
+&lt;p>In my field, projects are often tied to a specific grant or some sort of public funding.
+This means that the main concern of the lead is to ensure that the results at the end of the project match the description in the project proposal.
+It also typically means maximizing the number of publications related to the project and their overall impact.&lt;/p>
+&lt;p>To do so, most projects rely on three types of staff: a) senior researchers (post-doc); b) junior researchers (PhD students); and c) interns doing their bachelor&amp;rsquo;s or master&amp;rsquo;s thesis.
+The level of contribution is generally inversely propotional to the level of mastery of the contributor: PhD students design and develop the main contributions (both software and experimental) under the supervision of senior researchers (advisor/supervisor), and interns take care of tasks that are narrow in scope and not crucial to any academic contribution.
+For instance, a PhD student may develop a new model for text classification, and an intern will wrap that model in an HTTP service with a nice UI.
+When the service and UI part is intricate and has some potential academic merit, that task may be conducted by a PhD student as part of their thesis.
+That was precisely the case with Senpy, which was part of my PhD thesis, and it has since been used by dozens of students to develop services in the context of other research projects.&lt;/p>
+&lt;h2 id="reasons-to-form-a-team">Reasons to form a team
+&lt;/h2>&lt;p>In my opinion, a team has two advantages over a single contributor.
+The first one is that collaboration often generates &lt;strong>synergies&lt;/strong>, leading to surprising and enriching results (a team is greater than the sum of its parts)
+Carefully selecting your team members and creating an environment that is conducing to these synergies is a topic on its own, and I will not get too deep into it here.&lt;/p>
+&lt;p>The second advantage can be summarized as &lt;strong>concurrency&lt;/strong>: tasks can be tackled by more than one member.
+This often implies some sort of parallelism.
+Tasks tend to be split between different members, in hopes of speeding up the process.
+But it can also be beneficial to have concurrency even in the absence of parallelism: different members can take turns solving the same problem.
+This is common when the task requires exclusive access to a resource (e.g., performing an experiment on an expensive machine).&lt;/p>
+&lt;h2 id="challenges-of-teams-of-students">Challenges of teams (of students)
+&lt;/h2>&lt;p>Just like in computer science, coordination in a concurrent project involves a non-negligible overhead.
+The objective is to minimize this overhead.&lt;/p>
+&lt;p>I&amp;rsquo;ve really struggled with managing teams in the past.
+Given my context, I often attributed the failures to lack of time (having to juggle teaching and research), lack of training and preparation on the intern&amp;rsquo;s side (they&amp;rsquo;re often undergrads), lack of appeal or definition of the task (too academic-y), or any other external factors.&lt;/p>
+&lt;p>While all those aspects play an important role, some of them are out of our control as a project lead in academia: grants require a certain type of project and workflow, and the quality of our interns is bounded by the quality of our degrees.
+So I think it is more constructive to focus on things that we can control.
+In other words: we have to play the hand we&amp;rsquo;re given.&lt;/p>
+&lt;p>Besides, there is no merit in achieving good results with excellent students/engineers.
+They would succeed on their own even if you weren&amp;rsquo;t there.
+The real test for a good leader is succeeding with a subpar team.&lt;/p>
+&lt;p>In that vein, I&amp;rsquo;ve reflected on my mistakes as a leader, and the inefficiencies of the teams around me.
+I&amp;rsquo;d classify my failures in the following areas:&lt;/p>
+&lt;ul>
+&lt;li>Delegation (and lack thereof). Piling up too many tasks and blocking progress.&lt;/li>
+&lt;li>Communication. Not having a coherent view of the state of affairs, the details of specific tasks, the general processes to follow, or the priorities of different tasks within a project.&lt;/li>
+&lt;li>Direction (or purpose). Not having a common direction&lt;/li>
+&lt;/ul>
+&lt;h3 id="delegation">Delegation
+&lt;/h3>&lt;p>I have a tendency to become a bottleneck in any project I am involved in: many tasks end up depending on me, either directly or indirectly. In the concurrency metaphor, I become a lock for many tasks, and a single executor for the rest.
+This issue was not that apparent early on, when most of my work was as an individual contributor or I had the bandwidth to supervise and complete my tasks.&lt;/p>
+&lt;p>I think it is quite common to feel like delegating a task in these scenarios means:&lt;/p>
+&lt;ol>
+&lt;li>Defining the task in advance&lt;/li>
+&lt;li>Choosing an assignee for the task&lt;/li>
+&lt;li>Setting a deadline for the task&lt;/li>
+&lt;li>Explaining the task and the relevant context&lt;/li>
+&lt;li>Replying to multiple questions by e-mail or in person. Extra points when the questions make you wonder if any part of the explanation was ever clear.&lt;/li>
+&lt;li>Reviewing the results after the deadline&lt;/li>
+&lt;li>Realizing the assignee misunderstood the task or delivered something not even close to what you agreed upon&lt;/li>
+&lt;li>Going back to point 3.&lt;/li>
+&lt;li>When you&amp;rsquo;re unlucky or short on time: giving up and doing the task yourself&lt;/li>
+&lt;/ol>
+&lt;p>Many times, if felt like delegating tasks only lead to frustration and wasted time.
+Especially when compared to the alternative:&lt;/p>
+&lt;ul>
+&lt;li>Defining the task&lt;/li>
+&lt;li>Setting a deadline&lt;/li>
+&lt;li>Finishing the task&lt;/li>
+&lt;li>Profit&lt;/li>
+&lt;/ul>
+&lt;p>Luckily, some students and projects were an exception to this.
+They worked autonomously and delivered something beyond the minimum requirements.
+This reinforced my helplessness and the feeling that the problem was not being able to work with experienced engineers.&lt;/p>
+&lt;p>However, I now believe that the truth lies somewhere in between.
+Sometimes your circumstances make it quite hard or inefficient to delegate tasks.
+And some times may not be good candidates for delegation.
+But most of the times you can take advantage of having an extra pair of hands, you just have to do that effectively.&lt;/p>
+&lt;h3 id="communication">Communication
+&lt;/h3>&lt;p>Small teams rely on implicit knowledge more than they realize.
+Even more so if the team is made up of highly specialized people that have worked in the same environment with mostly the same people for years.&lt;/p>
+&lt;p>Communication is a broad term.
+It includes technical and concrete things such as how a certain task should be done.
+But it also includes broader things like etiquette, organizational values, and who is more willing to help you out on certain topics on a Friday afternoon.&lt;/p>
+&lt;p>Here, I would take a page out of Python&amp;rsquo;s zen and recommend that &amp;ldquo;explicit is better than implicit&amp;rdquo;.
+Implicit (or tacit) knowledge comes with a whole set of drawbacks:&lt;/p>
+&lt;ul>
+&lt;li>It makes onboarding new users harder. Without a common knowledge base, all knowledge transference has to rely on personal interactions. Even worse, those interactions are probably organized on the spot, and are likely to miss important points.&lt;/li>
+&lt;li>It makes you heavily reliant on your current members (and their memory).&lt;/li>
+&lt;li>It impedes proper evaluationn and progress, since they are not written anywhere.&lt;/li>
+&lt;li>It increases the likelihood of misunderstandings when two members have conflicting beliefs, and makes it harder to detect them until it is too late.&lt;/li>
+&lt;li>It makes contradictions and (unknowingly) changing your mind much more likely. It can happen to the best of us, especially if you are involved in too many projects. When contraditions happen often, your colleagues will learn not to rely on your opinion.&lt;/li>
+&lt;/ul>
+&lt;p>On the other hand, communication has to go both ways.
+This means that your newer members need to be able to communicate when something is going wrong or can be improved (backpressure).
+They should also feel free to talk about their motivation, state of mind, and feelings, &lt;strong>when appropriate&lt;/strong>.
+That last part is quite subjective, of course.
+Try to find your - and your organization&amp;rsquo;s - middle ground between &amp;ldquo;I don&amp;rsquo;t care how you feel, just do your job&amp;rdquo; and &amp;ldquo;sure, you can go to the Maldives on short notice. Oh, and don&amp;rsquo;t worry about not having met a deadline in months, I&amp;rsquo;m sure you&amp;rsquo;re stressed and can use some vacation but will work remotely if we need you&amp;rdquo;.&lt;/p>
+&lt;p>I personally feel a sweet spot is treating your coworkers like people, being empathetic and compassionate.
+Part of being a good coworker is fulfilling the duties and obligations you accepted when signing your contract.
+First and foremost, because not fulfilling them means someone else will have to work harder to make up for it.
+And, secondly, because doing our part is the only way to move the organization (and research) forward.&lt;/p>
+&lt;h3 id="direction">Direction
+&lt;/h3>&lt;p>By failure in direction I mean not keeping a consistent and shared set of general goals, principles and values in your organization.
+In order to really take part in any enterprise, you need to have a clear understanding of the objectives and motivation.
+When it comes to specific tasks, &lt;em>what you&amp;rsquo;re doing&lt;/em> is often not as important as the &lt;em>why you&amp;rsquo;re doing it&lt;/em>.
+In fact, there may be times where you aren&amp;rsquo;t truly sure of what exactly it is that you are doing, but you trust the process and the motivation behind the task.&lt;/p>
+&lt;p>I&amp;rsquo;ve seen two failure modes in this regard.
+The first one is to not have a clear direction.
+The end result is that members of the team are not really that committed.
+If no other &lt;em>why&lt;/em> is provided, we are only left with &lt;em>because they pay me to do it&lt;/em>.
+And academia is not known to pay particularly well, to be honest.&lt;/p>
+&lt;p>The other mode is to provide contradicting or incompatible directions.
+This can be in a short period of time, leading to the impression that there isn&amp;rsquo;t really any conviction in the message.
+But it can also be done over a longer period of time.
+That can be perfectly acceptable, provided that the change in direction is justified and compatible with the principles of the organization.&lt;/p>
+&lt;p>Failure in direction is somewhat related to communication, but it is subtly different.
+An organization can excel at communication, but change their direction constantly.
+Arguably, a thorough communication strategy makes radical changes in direction less likely.
+On the one hand, a change in direction needs to be documented, which can be a pain.
+On the other hand, a written change is easier to spot and more likely to generate complaints.&lt;/p>
+&lt;h2 id="rules">Rules
+&lt;/h2>&lt;p>I&amp;rsquo;d argue that the path to successfully managing a research team lies in roughly the following key goals:&lt;/p>
+&lt;ul>
+&lt;li>Fostering autonomy&lt;/li>
+&lt;li>Avoiding miscommunication&lt;/li>
+&lt;li>Optimizing your contribution&lt;/li>
+&lt;/ul>
+&lt;p>The remaining of the post will be a series of tasks or rules to achieve these goals.&lt;/p>
+&lt;blockquote class="warning">&lt;p>Most of these ideas probably generalize well to collaboration outside of academia, but I hesitate to make more general claims.&lt;/p>&lt;/blockquote>
+&lt;h3 id="fostering-automony">Fostering automony
+&lt;/h3>&lt;p>The tips here are aimed at avoiding supervision overhead and training future leads.&lt;/p>
+&lt;h4 id="provide-a-simplified-version-of-the-bigger-picture">Provide a (simplified version of the) bigger picture
+&lt;/h4>&lt;p>Try to paint the bigger picture, even for menial tasks within large projects.
+For you, this may be the nth project you&amp;rsquo;re involved in this year, but the new intern may not have even heard about European projects before.
+Going back to the idea of direction, it is easier to work on something if you know the context of your work.&lt;/p>
+&lt;p>Having a general idea of the project and the context of your task will also help you make decisions on your own.
+For instance, if I am told to develop a shiny new API for text classification, I may have to ask many questions: 1) what will be input look like?; 2) what should the parameters be?; 3) am I using POST or GET requests?; 4) should I return a JSON object or an XML?&amp;hellip;
+What if, instead of that, I am also told this API will be used in the context of project X, that our organization will be the only consumers of the API, and they also give me a link to the project&amp;rsquo;s docs.
+I may be able to figure out some of those answers on my own (e.g., by finding examples in the project&amp;rsquo;s website), or decide that some questions are not vital at this point (e.g., if we are the only consumers, we can change from GET to POST if we need to much more easily).&lt;/p>
+&lt;p>One caveat here is that a link to the documentation or some vague words about the project do not constitute proper context.
+You are responsible for summarizing the important bits of the context, providing instructions on how to navigate the reference materials, and being open to answer questions that may arise in the exchange.&lt;/p>
+&lt;h4 id="do-not-discuss-implementation-details-unless-strictly-necessary">Do not discuss implementation details unless strictly necessary
+&lt;/h4>&lt;p>There is a fine line between discussing a non-trivial implementation detail and bikeshedding for hours about class names and code best practices.
+For that reason, you should try to prioritize discussing high-level parts of the problem and the assignment, and trust the student to figure out the details on their own, or come back to you for clarification.&lt;/p>
+&lt;p>It is very common that students focus on very specific details when they are sharing their progress with their supervisors.
+They will generally try to start by showing snippets of code and their results.
+I find it helpful to remind them to explain their problems top-to-bottom, starting with a sentence or two about the context of their project, the description and motivation of the specific task they were doing, and the relationship with previous (and future) tasks.
+That usually helps figure out the level of understanding of the student, whether there are any conceptual errors, and whether the specific block or problem is really worth discussing during the meeting.&lt;/p>
+&lt;p>Some technical problems will warrant a discussion in detail, either due to their complexity or their importance to the project.
+In those cases, always limit the time you will spend on that specific issue ahead of time, and make sure to allow for some time at the end of the meeting to go back to any important high-level details.&lt;/p>
+&lt;p>If there are other students that worked on similar projects, do not hesitate to refer your new student to them.
+It can be an opportunity for them to collaborate, and for the original student to work on explaining and teaching technical issues.&lt;/p>
+&lt;h4 id="provide-feedback">Provide feedback
+&lt;/h4>&lt;p>Make a point of evaluating the results of each student on every level, and provide constructive and actionable feedback to them.
+Even if no technical issues arise during the project, try to review the code and give some tips (e.g., formatting, code structure, DRY).
+Try to focus on bigger issues and enforcing best practices before nitpicking and giving feedback on small subjective improvements.&lt;/p>
+&lt;p>Make it clear when your feedback is objective/best practice (e.g., a function is deprecated) and when it is a matter of preference.
+If it is the latter, try to provide more than one alternative, to encourage them to think about it and make an educated decision.&lt;/p>
+&lt;h4 id="take-documentation-and-knowledge-transfer-seriously">Take documentation and knowledge transfer seriously
+&lt;/h4>&lt;p>Taking the time to write down basic documentation can save a lot of time in the long run.
+Besides, most of the job of mentoring a new student is lost when that student finishes their degree and leaves to find a job in industry.
+Good documentation can remain in your organization and be extended long after the intern is gone.&lt;/p>
+&lt;p>This is very obvious for specific tools, whether internal or public.
+Good documentation means any new member can check the tool and use it without much assistance.
+Even better documentation helps newcomers contribute to the tool.
+Make sure to make it clear who to approach if something is missing from the documentation, and make it easier to do so than to make assumptions and use the tool incorrectly.&lt;/p>
+&lt;p>Writing documentation can be very time consuming, and sometimes it is hard to know exactly what things to focus on when writing the docs.
+You need to anticipate the needs of the future user.
+If you are short on time, a good strategy is to delegate the writing of the documentation.
+Instead of going into details, you can write a very barebones version and training a new user to use and contribute to your tool.
+Then, leave it up to the new user to extend the documentation, including more details and pitfalls.
+As a bonus, reading and fixing the docs will give you a better sense of how well that new user understands the tool, as well as possible improvements.&lt;/p>
+&lt;p>This tip also applies to more general areas such as machine learning, graph neural networks, or simulation.
+Just remember you do not need to reinvent the wheel in those cases.
+A simple summary and a list of references to expand on the topic could be more than enough.
+Make sure to also include any specifics that apply to your organization.
+For instance, point to repositories on github (public or private) that can be used to explore the topic, examples of similar projects in the domain, etc.&lt;/p>
+&lt;p>Identify what information is important for any new hire and present it to them as clearly as possible.
+Part of that information should be where and how common knowledge is stored and shared, should they need more information in the future.
+Make this documentation as easy to discover and consume as possible.
+Centralizing this common information in the form of a wiki is often a good idea.&lt;/p>
+&lt;p>Lastly, make it easy for any member of your organization to update this common documentation, and encourage them to do so.
+Whenever a member asks you something useful that is not documented, don&amp;rsquo;t just answer the question.
+Take the time to add this information yourself (e.g., by copy-pasting your response) or task that member with expanding the documentation themselves once they find an answer.
+If your organization&amp;rsquo;s culture does not encourage using these docs, they will quickly get outdated and fall out of use.&lt;/p>
+&lt;p>One example of taking this documentation approach really seriously is &lt;a class="link" href="https://oxide.computer/" target="_blank" rel="noopener"
+>Oxide (computer company)&lt;/a>.
+They have a process they call &lt;a class="link" href="https://rfd.shared.oxide.computer/" target="_blank" rel="noopener"
+>Request For Discussion (RFD)&lt;/a>, which they use to discuss and document both technical and organizational decisions.
+For instance, they have &lt;a class="link" href="https://rfd.shared.oxide.computer/rfd/0537" target="_blank" rel="noopener"
+>RFDs on why they record every meeting&lt;/a>, &lt;a class="link" href="https://rfd.shared.oxide.computer/rfd/0110" target="_blank" rel="noopener"
+>RFDs about their choice of database&lt;/a>, and even &lt;a class="link" href="https://rfd.shared.oxide.computer/rfd/0001" target="_blank" rel="noopener"
+>an meta-RFD that discusses the motivation RFDs and how the process should work&lt;/a>.&lt;/p>
+&lt;h4 id="trust-your-teammates-ability-to-learn">Trust your teammate&amp;rsquo;s ability to learn
+&lt;/h4>&lt;p>I&amp;rsquo;ve been bitten by this way too many times.
+Your students are probably more capable of learning than you think, especially if you have set up your documentation right.
+What they lack in experience, they make up for with free time, a (more) neuroplasticity and determination.&lt;/p>
+&lt;p>Sure, they will make mistakes (see the next section) and need some feedback (two sections above), but that is how we all learnt.&lt;/p>
+&lt;h4 id="use-tools-wisely">Use tools wisely
+&lt;/h4>&lt;p>Your students probably have little experience with code versioning, reviewing processes, time management, etc.
+A good choice of tools and some training can go a long way and make your life much easier in the long run.
+It will also give your students a taste of what working in a bigger/real company feels like and a head start.&lt;/p>
+&lt;p>For instance, using git makes it easier to collaborate on code.
+It also ensures that your results will not be lost if your student&amp;rsquo;s laptop gets stolen.&lt;/p>
+&lt;p>Using GitLab CI or GitHub Actions to deploy public services will provide more autonomy to your students.
+It will force them to commit working code, and it will make it easier to check their results and discuss the end result.&lt;/p>
+&lt;p>Using overleaf for theses has most of the advantages for collaboration as something like google docs, while being much more flexible and easier to produce formatting results.
+You may also use something like latex on a shared folder (e.g., nextcloud), although the chances of connflicts is higher, so be careful with documents that require live collaboration.
+In both cases, make sure to make the getting started experience as simple as possible: provide a sensible template, and only focus on simple features at first.&lt;/p>
+&lt;p>Also, on a related note, make sure every team member has a proper development setup.
+It does not matter which tool they use (VSCode, emacs, Jetbrains), as long as they are comfortable with it and they are able to focus on actual work.
+It helps to have a sensible default for your organization that is easy to set up and use, especially because most students do not have enough experience or skill with any particular tool.&lt;/p>
+&lt;h4 id="encourage-cooperation">Encourage cooperation
+&lt;/h4>&lt;p>Do not become the center of every conversation.
+If a topic can be discussed between two students, let them handle it on their own and get back to you if they need anything.&lt;/p>
+&lt;p>The ability to discuss with your peers and report only when needed will be extremely important for them in the future.
+They are also likely to discuss the topic more openly and more relaxed thhan with you (no matter how approachable you are).
+That might lead to valuable insights and improvements for your team and project.&lt;/p>
+&lt;p>Moreover, this attitude of open collaboration will help create those synergies we mentioned before, and make future projects easier and more enjoyable.&lt;/p>
+&lt;h4 id="reward-proactivity">Reward proactivity
+&lt;/h4>&lt;p>The whole point of this section is to get your team to work independently when possible.
+Be explicit about this goal to make sure it is clear to everyone.
+And encourage behavior that aligns with this goal, even on a small scale.&lt;/p>
+&lt;p>For instance, show interest when a student has shown initiative and researched something on their own, or when they go beyond the minimum requirements.
+Sometimes, you will notice that this research was not completely well oriented or it was not a very efficient use of time.
+Do not jump straight to criticize it.
+Compliment the attitude regardless, try to find the value in the results, and be gentle when providing feedback on why other topics or tasks were higher priority or a better choice.&lt;/p>
+&lt;h4 id="dont-be-a-perfectionist">Don&amp;rsquo;t be a perfectionist
+&lt;/h4>&lt;p>Perfect is the enemy of done.
+It is also the enemy of a happy co-worker.&lt;/p>
+&lt;p>Try to remember that you are dealing with students, and you were probably no better at their age.
+Besides, you probably delegated the task beause you did not have any spare time to do it yourself.
+&lt;code>FIXME&lt;/code> is often better than &lt;code>TODO&lt;/code>.&lt;/p>
+&lt;p>Take the opportunity to provide some feedback and teach them something useful.
+Some mistakes are also worth adding to your documentation, or presenting to other students in a presentation.&lt;/p>
+&lt;h3 id="avoiding-miscommunication">Avoiding miscommunication
+&lt;/h3>&lt;p>A common source of wasted effort and unnecessary back-and-forth is miscommunication.
+These are some tips to help keep everyone on the team informed and aligned.&lt;/p>
+&lt;h4 id="make-priorities-clear">Make priorities clear
+&lt;/h4>&lt;p>All team members should understand the general priorities (project-wise) as well as the specific prorities of their assigned tasks.
+This will help inform their decisions when some other tasks inevitably come up, or the urgency of a task changes.&lt;/p>
+&lt;h4 id="define-boundaries-and-abstractions">Define boundaries (and abstractions)
+&lt;/h4>&lt;p>Once again, the goal is generally to achieve some sort of parallelism between your team members.
+In order to do that, they need to know how they will interact with each other.&lt;/p>
+&lt;p>On a more general level, this means knowing the responsibilities and scope of your work.&lt;/p>
+&lt;p>On a more specific level, it means knowing their dependency graph.
+In other words, whether the progress of one team member will depend on the results of another one.
+Whenever there is a dependency, the interface should be made very clear.
+This often takes the form of an API, a file with a given format, or a section of a document.&lt;/p>
+&lt;p>Take some time to define the boundary as precisely as needed at that point in the project.
+I would suggest having specific examples that you can discuss and modify.
+It is hard to discuss in the abstract, especially for inexperienced contributors.
+When in doubt, default to the simplest option (e.g., a common file vs using a database).
+Do not dwell too much on specific structural/representation details (e.g., which OWL vocabulary to use), but make sure that all the necessary bits are there.
+Converting a document or querying a document store (e.g., elasticsearch) instead of your file system is relatively easy, but making up non-existing data can be a challenge.&lt;/p>
+&lt;p>One type of failure I&amp;rsquo;ve seen quite frequently in this area is to be too fuzzy about the expected results from a team (or contributor), and refusing to discuss or provide examples.
+That tends to result in multiple iterations, each of them not-quite-what-you-wanted, and frustration in both sides.&lt;/p>
+&lt;h4 id="be-approachable">Be approachable
+&lt;/h4>&lt;p>Did I wrote a whole section about autonomy? Yes.
+Is the end goal to do more and talk less? Also yes.
+Thing is, no process is perfect, and misunderstandings are bound to happen at some point.
+If your only response to questions is a grumpy face or a &amp;ldquo;read the freaking docs&amp;rdquo;, your students will not alert you when something really needs your attention, and you will find out too late.
+For instance, the documentation may be unclear, or your processes may be inadvertedly alienating new members and making new hires harder.&lt;/p>
+&lt;p>Another way to be approachable is to be clear about your shortcomings, and whether something you are saying is negotiable and/or debatable.
+My rule of thumb is to err on the side of negotiable, and only be strict when it is really necessary (e.g., time constraints or an unproductive student).
+We are all more likely to finish our tasks if we feel them ours, if we a say in how and when to perform them.&lt;/p>
+&lt;p>Just to be clear, approachable does not mean you have to be their confident or their best friend.
+It also does not mean that it is okay to challenge or question you continuously.
+Some times it is okay to simply say &amp;ldquo;just do as I say&amp;rdquo;.&lt;/p>
+&lt;h4 id="review-frequently">Review frequently
+&lt;/h4>&lt;p>One type of review is individual.
+It involves reviewing code on github, or reading deliverables and papers on overleaf.
+It can help catch misunderstandings, and measure the true rate of progress in the individual tasks.
+The other type of review is done as a group, by going through the key progress and action points.
+This type of review helps everyone stay on the same page, and catch any general drifts in the project, such as misaligned priorities.&lt;/p>
+&lt;p>The frequency of each type of review depends on the specific nature of the project, the types of tasks being performed by the student, and your confidence on the student&amp;rsquo;s abilities.&lt;/p>
+&lt;h3 id="optimizing-your-contribution">Optimizing your contribution
+&lt;/h3>&lt;p>Tips on optimizing your contribution to the team.&lt;/p>
+&lt;h4 id="prioritize-prioritize-prioritize">Prioritize, prioritize, prioritize
+&lt;/h4>&lt;p>Part of your job as a project lead is to identify the main goals in a project and to prioritize the tasks that will lead you there.
+On the other hand, you are part of a research group, and you should be actively involved in its health and future.
+Lastly, you are also in charge of the life-long project that is your research career.&lt;/p>
+&lt;p>In all these cases, your goal should be to identify the long term goals, come up with a sound strategy, and prioritize the tasks that will lead you and your group there.
+Keeping your priorities straight will help you make steady progress, and avoid bikeshedding and changing goalposts.
+It will also help you steer your progress in the right direction, since we all have limited time and effort and can&amp;rsquo;t do everything at once.&lt;/p>
+&lt;p>The fact that your time is limited also means that you will need to decide how to prioritize these three roles.
+I&amp;rsquo;ve listed them in increasing level of importance for me.
+It means that it is okay to focus on a specific project for a while, but if progress in your career is stalled - usually through publication - you need to reevaluate and concentrate your efforts on that.&lt;/p>
+&lt;h4 id="be-okay-with-short-term-inefficiencies">Be okay with (short-term) inefficiencies
+&lt;/h4>&lt;p>I&amp;rsquo;ve personally struggled with delegating tasks that will take me orders of magnitude less work than they will a student.
+Thing is, most tasks will fall under this category, and your time is limited, so you have to delegate if you want to have time for more important matters.
+If you never delegate any tasks, you are not allowing your team to learn and catch up on whatever technical skills are required.
+Besides, you are not improving yourself on the managerial side of things.
+It turns out delegating is hard, it requires a whole set of non-technical skills.
+I suspect this is oftentimes the reason we don&amp;rsquo;t do delegate in the first place: delegating is hard, and technical tasks are usually more straightforward, so we just don&amp;rsquo;t want to do the work.&lt;/p>
+&lt;h4 id="dont-neglect-training">Don&amp;rsquo;t neglect training
+&lt;/h4>&lt;p>You are a senior researcher.
+You probably know how to solve problems in your domain quite efficiently.
+In my case, that means processing data and developing code.&lt;/p>
+&lt;p>That means I could dedicate my days to processing data and developing new code for my group.
+That group would likely be used in multiple projects.
+However, there is a hard limit to how much code I can push out in a day, especially if you take into account other obligations such as teaching.&lt;/p>
+&lt;p>A wiser strategy would be to set aside some of that coding time to instead help students become better programmers.
+Firstly, because those students will be thankful and more motivated to work than when they are left to learn on their own without much guidance.
+Secondly, because those students will then be more prepared to help me out if I delegate a task to them.
+And, lastly, because these students have a whole life in fron of them.
+A life full of big projects of their own, and contributions to society.
+That little training time can have a compounding effect in the future.&lt;/p>
+&lt;h4 id="set-a-time-limit-for-your-interactions-in-advance">Set a time limit for your interactions in advance
+&lt;/h4>&lt;p>Really long slots can easily lead to bikeshedding and going unnecessarily deep into implementation details, which is clearly an inefficient use of your time.
+Even worse, our attention span and memory are finite, so longer and dense meetings can lead to fatigue and to missing or dilluting important points in the conversation.&lt;/p>
+&lt;p>For these reasons, be very clear about these time limits, and do not extend these meetings unless it is strictly necessary.
+You can always schedule a new meeting, but be sure to provide enough time in between to process the results of the meeting, reflect and prioritize.&lt;/p>
+&lt;h2 id="beyond-your-team">Beyond your team
+&lt;/h2>&lt;p>The previous points and rules focus mostly on actions that can be applied within your team, and that you can fully control.
+But teams rarely work in isolation, you will most likely
+In order to be effective, you also need to coordinate with other teams/groups, and more generally work on your organization&amp;rsquo;s culture and sense of belonging.&lt;/p>
+&lt;p>Many of the aspects I talked about in the team section apply here.
+For instance, the obsession with documentation can - and should - be applied organization-wise.
+The same goes for defining boundaries and using concrete examples when collaborating with other teams.
+For most intents and purposes, you can treat other teams as another contributor to your team.
+Just one that will be more costly and slow to interact with.&lt;/p>
+&lt;p>If possible, I&amp;rsquo;d try to apply the rule about focusing on the big picture, and limit most meetings to those that strictly need to be involved.
+Avoid involving whole teams in discussions when the broad strokes have not been defined yet.
+The responsibilities will be dilluted in a bigger group, it will be harder to avoid misunderstandings and easier to bikeshed.&lt;/p>
+&lt;p>On the organization&amp;rsquo;s side, I would suggest having an honest conversation about your core principles.
+I really liked &lt;a class="link" href="https://www.youtube.com/watch?v=9QMGAtxUlAchttps://www.youtube.com/watch?v=9QMGAtxUlAc" target="_blank" rel="noopener"
+>Bryan Cantrill&amp;rsquo;s talk about principles of technology leadership&lt;/a>.
+He goes deep into the effects that principles have had on well known companies, and how to go about defining your company&amp;rsquo;s principles.
+I think that writing down your principles forces you to be conscious about their trade-offs, and to be explicit about your choices and attitudes.&lt;/p>
+&lt;p>More generally, try to define (light) processes that reward and facilitate behaviors you find positive, such as writing documentation and being proactive.
+And try to discourage the opposite type of behavior as soon as possible, to make correcting them easier.
+Apply the ideas of frequent evaluation and feedback, openness and honesty in every aspect of your organization.&lt;/p></description></item><item><title>Bridging RDF, JSON-LD and Dataclasses</title><link>https://balkian.com/p/bridging-rdf-json-ld-and-dataclasses/</link><pubDate>Wed, 26 Feb 2025 23:22:59 +0100</pubDate><guid>https://balkian.com/p/bridging-rdf-json-ld-and-dataclasses/</guid><description>&lt;p>In the RDF world, data is expressed as a collection of triples.
+These triples can contain IRIs that may or may not be accessible or valid.
+And the use of these IRIs may or may not adhere to a vocabulary.
+Checking the validity of the IRIs and the semantics of the triples is an additional step.&lt;/p>
+&lt;h2 id="the-rdflib-way">The &lt;code>rdflib&lt;/code> way
+&lt;/h2>&lt;p>&lt;code>rdflib&lt;/code> only models IRIs, values and namespaces.
+Developers need to be cognisant of the URIs they are using, and the vocabularies being used.
+Prior to version 2.0, senpy followed a very similar model.
+It had a base class to represent a generic node.
+Each instance then gets its own automatically generated id, and will act like a normal dictionary, whose keys and values will be serialized as a JSON-LD dictionary.
+Multiple subclasses were also included to model specific types of node, mostly to provide convenience methods for the given subtype.
+Here is an example of a subclass, &lt;code>Entity&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">entry&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Entry&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">entry&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;vocab:property&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">25&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">entry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">jsonld&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Would print something like this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;@id&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;:Entry_202505....&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;@type&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;prefix:Entity&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;vocab:property&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">25&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Producing correct triples using this model requires using the vocabularies and URIs properly, with little to no tooling to enforce it.
+This poses a big problem for a tool like Senpy, which aims to make it easier for professionals without a background in RDF to build and consume semantic NLP ser
+If an attribute is not a URI and is not included in the global JSON-LD context, it will not generate a triple in the final graph.
+Moreover, there is way to enforce that the vocabularies and the&lt;/p>
+&lt;p>Pros:&lt;/p>
+&lt;ul>
+&lt;li>Flexible/extensible&lt;/li>
+&lt;li>Lightweight. This is mostly JSON-LD in Python&amp;rsquo;s clothing.&lt;/li>
+&lt;li>Naturally maps to both &lt;code>rdflib&lt;/code> and writing &lt;code>json-ld&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>Cons:&lt;/p>
+&lt;ul>
+&lt;li>Discoverability. Documentation and examples are needed to know which attributes to use&lt;/li>
+&lt;li>Error-prone. It is easy to misuse a property, or introduce typos&lt;/li>
+&lt;li>Tight coupling with semantics/RDF. One needs to know a thing or two about RDF, especially if new vocabularies or annotations need to be used.&lt;/li>
+&lt;/ul>
+&lt;h2 id="the-object-oriented-way">The object-oriented way
+&lt;/h2>&lt;p>An obvious alternative to this problem in an object-oriented language like python is to use classes to represent our data model.
+These classes can define the specific attributes available, and typing annotations can serve both as a guide for the developer, and as a means to automatically
+validate objects at runtime.
+There are tools like &lt;a class="link" href="https://pydantic.dev/" target="_blank" rel="noopener"
+>pydantic&lt;/a> that make this process very simple.
+Then, we only need to define how your models should be serialized into JSON-LD.
+We can thoroughly test this serialization to ensure that the resulting object is correct and produces the right RDF graph.
+Going back to our previous example, we could define an Entry class as a dataclass, and define all the possible types of annotations as attributes.&lt;/p>
+&lt;p>This model works great when all the possible attributes are known ahead of time.
+But it starts to break when the model provided is not comprehensive enough, or customers of your library need to provide their own ad-hoc annotations / attribut
+es.
+This could be solved by encouring consumers of our library to define their own subclasses whenever they need to add new attributes.
+This works perfectly fine for serialization, but it breaks if your library needs to automatically deserialize these subclasses.
+It also breaks if different parts of the code need to add their own attributes on the same data at the same time.
+This was precisely the case of &lt;code>senpy&lt;/code>, where entities are annotated by different plugins, each providing a different set of annotations.&lt;/p>
+&lt;p>Pros:&lt;/p>
+&lt;ul>
+&lt;li>Discoverability. All possible attributes are known ahead of time, including their possible types.&lt;/li>
+&lt;li>Decoupling from RDF. Developers only need to know about the dataclasses provided. The mapping to the RDF world is already encoded in the dataclass.&lt;/li>
+&lt;/ul>
+&lt;p>Cons:&lt;/p>
+&lt;ul>
+&lt;li>Rigidity. Adding new types of annotations requires modifying the models, in the main module.&lt;/li>
+&lt;li>Polymorphism.&lt;/li>
+&lt;/ul>
+&lt;h2 id="a-hybrid-approach">A hybrid approach
+&lt;/h2>&lt;p>Whichever solution is chosen in the end, it needs to:&lt;/p>
+&lt;ul>
+&lt;li>Make it easy and error-proof to add the most common types of annotations&lt;/li>
+&lt;li>Allow for additional annotations/attributes to be added&lt;/li>
+&lt;li>Allow for upgrades in the future. i.e., converting the most common custom annotations into built-in ones&lt;/li>
+&lt;li>Allow for deserialization of custom types&lt;/li>
+&lt;li>Allow multiple consumers to add their own annotations&lt;/li>
+&lt;/ul></description></item><item><title>uv - One rust tool to rule all pythons</title><link>https://balkian.com/p/uv-one-rust-tool-to-rule-all-pythons/</link><pubDate>Mon, 17 Feb 2025 23:02:47 +0100</pubDate><guid>https://balkian.com/p/uv-one-rust-tool-to-rule-all-pythons/</guid><description>&lt;img src="https://balkian.com/img/uv.png" alt="Featured image of post uv - One rust tool to rule all pythons" />&lt;p>Long story short: I&amp;rsquo;m now using &lt;a class="link" href="https://github.com/astral-sh/uv" target="_blank" rel="noopener"
+>uv&lt;/a>, and so should you.
+It is a great replacement for pip, pip-tools, pipx, poetry, pyenv, twine, virtualenv, and more.&lt;/p>
+&lt;h2 id="context">Context
+&lt;/h2>&lt;p>For years, my strategy to manage python projects has been a mix of a custom &lt;code>setup.py&lt;/code>, several hand-crafted &lt;code>requirements.txt&lt;/code> files (through &lt;code>pip freeze&lt;/code>), a custom virtualenv per project, and multiple tools to upload to PyPI.
+Although this works, this setup has many drawbacks:&lt;/p>
+&lt;ul>
+&lt;li>It requires user intervention (creating a venv, sourcing it, handling new deps). This isn&amp;rsquo;t ideal if you want new (probably inexperienced) users to use your projects.&lt;/li>
+&lt;li>On a similar note, the whole process needs to be well documented if you want other users to contribute or maintain the code.&lt;/li>
+&lt;li>Pinning dependency versions is finicky, and I&amp;rsquo;ve run into problems beause of that.&lt;/li>
+&lt;li>Creating a new project involves a template, or copying files from an older project.&lt;/li>
+&lt;/ul>
+&lt;p>Of course, this is nothing new.
+There is a whole site dedicated to &lt;a class="link" href="https://packaging.python.org/en/latest/" target="_blank" rel="noopener"
+>packaging your Python project&lt;/a>.
+A plethora of different projects have come and go, with varying degrees of success.&lt;/p>
+&lt;h2 id="alternatives-poetry">Alternatives (poetry)
+&lt;/h2>&lt;p>About a year before trying &lt;code>uv&lt;/code>, I tried to catch up with the ecosystem and get to know the &lt;code>blessed new way&lt;/code>.
+However, the task proved to be a little more difficult, as the landscape is filled with a myriad of alternatives, each with their own set of drawbacks and detractors.
+Packaging has historically been a weak spot, in ironical contradiction to the Zen of Python&amp;rsquo;s &amp;ldquo;There should be one&amp;ndash; and preferably only one &amp;ndash;obvious way to do it&amp;rdquo;,&lt;/p>
+&lt;p>I eventually settled on &lt;a class="link" href="https://python-poetry.org/" target="_blank" rel="noopener"
+>poetry&lt;/a>.
+Mostly because it seemed like the most popular alternative.&lt;/p>
+&lt;p>There are many things I liked about it.
+First of all, having a convention for dependencies (&lt;code>pyproject.toml&lt;/code>) and a tool that properly handles them was nice.
+It also removed the need to remember specific incantations to build and publish my Python projects.
+Lastly, I mixed it &lt;code>poetry2nix&lt;/code> to create reproducible python environments using nix.
+This makes for a very powerful experience.&lt;/p>
+&lt;p>However, there were multiple hiccups.
+First of all, it took me some time to figure out which specific fields to use (each tool can define ad-hoc properties in a the &lt;code>pyproject.toml&lt;/code> file), and some of them seemed redundant with the more generic ones.
+Full disclosure, this specific point might be a mistake on my side, and I do not remember the details.
+The second one is speed.
+(Re-)creating an environment took a non-negligible amount of time.&lt;/p>
+&lt;h2 id="enter-light-uv">Enter &lt;del>light&lt;/del> &lt;code>uv&lt;/code>
+&lt;/h2>&lt;p>According to its repository, &lt;code>uv &lt;/code>can replace pip, pip-tools, pipx, poetry, pyenv, twine, virtualenv, and more.
+Not only that, but it also claims to do that 10-100 times faster than pip.
+I must admit that it being written in rust was a another selling point for me, as I&amp;rsquo;m looking for excuses to collaborate in a decently-sized rust projejct.&lt;/p>
+&lt;p>Installing it is dead simple: simply download the binary (e.g., with curl) or run &lt;code>pip install uv&lt;/code>.
+You won&amp;rsquo;t need much more: &lt;code>uv&lt;/code> seems to just do the right thing out of the box.
+And it does it really, really fast.
+The rest of the time it gets out of the way.&lt;/p>
+&lt;p>My only gripe so far is that I don&amp;rsquo;t seem to find a built-in command to drop into a shell, but that is nothing that &lt;code>uv run $SHELL&lt;/code> cannot fix.&lt;/p>
+&lt;h2 id="common-operations">Common operations
+&lt;/h2>&lt;h3 id="initialize-a-repository">Initialize a repository
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">uv init
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="adding-dependencies">Adding dependencies
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">uv add senpy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="running-commands-inside-the-environment">Running commands inside the environment
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">uv run &amp;lt;COMMAND&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># e.g., run a shell using your python version and dependencies
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">uv run $SHELL
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="dependency-tree">Dependency tree
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">uv shell
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Resolved 44 packages in 1ms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">my-project v0.1.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── fastapi[standard] v0.115.8
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── pydantic v2.10.6
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── annotated-types v0.7.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── pydantic-core v2.27.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ └── typing-extensions v4.12.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── typing-extensions v4.12.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── starlette v0.45.3
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── anyio v4.8.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── exceptiongroup v1.2.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── idna v3.10
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── sniffio v1.3.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── typing-extensions v4.12.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── typing-extensions v4.12.2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── email-validator v2.2.0 (extra: standard)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── dnspython v2.7.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Nix Recipe for Python Projects</title><link>https://balkian.com/p/nix-recipe-for-python-projects/</link><pubDate>Mon, 13 Nov 2023 18:21:46 +0100</pubDate><guid>https://balkian.com/p/nix-recipe-for-python-projects/</guid><description>&lt;p>This is a quick and easy recipe to add a &lt;code>default.nix&lt;/code> to any Python project with a &lt;code>requirements.txt&lt;/code> file:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-nix" data-lang="nix">&lt;span class="line">&lt;span class="cl">&lt;span class="k">with&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="sr">&amp;lt;nixpkgs&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="p">};&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">let&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pythonPackages&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">python311Packages&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">in&lt;/span> &lt;span class="n">pkgs&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">mkShell&lt;/span> &lt;span class="k">rec&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;impurePythonEnv&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">venvDir&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;./.venv&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">buildInputs&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># A python interpreter including the &amp;#39;venv&amp;#39; module is required to bootstrap&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># the environment.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pythonPackages&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">python&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># This execute some shell code to initialize a venv in $venvDir before&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># dropping into the shell&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pythonPackages&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">venvShellHook&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Those are dependencies that we would like to use from nixpkgs, which will&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># add them to PYTHONPATH and thus make them accessible from within the venv.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pythonPackages&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">numpy&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pythonPackages&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">requests&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># In this particular example, in order to compile any binary extensions they may&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># require, the python modules listed in the hypothetical requirements.txt need&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># the following packages to be installed locally:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">taglib&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">openssl&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">git&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">libxml2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">libxslt&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">libzip&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">zlib&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Now we can execute any commands within the virtual environment.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># This is optional and can be left out to run pip manually.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">postShellHook&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> pip install -r requirements.txt
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> &amp;#39;&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, you will get a clean environment by running:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">nix-shell
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Kanata: advanced keyboard configuration</title><link>https://balkian.com/p/kanata-advanced-keyboard-configuration/</link><pubDate>Fri, 20 Jan 2023 18:11:00 +0000</pubDate><guid>https://balkian.com/p/kanata-advanced-keyboard-configuration/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/jtroo/kanata/" target="_blank" rel="noopener"
+>Kanata&lt;/a> is a software keyboard remapper that aims to improve keyboard comfort and usability with advanced customization.
+Keyboard remappers are a good alternative to running a custom keyboard with QMK/ZMK, and have two main advantages: they work on any keyboard, and you can configure them to launch any command or program you want, not just key presses.
+On the other hand, you need to configure them on every PC/OS you&amp;rsquo;re using your keyboard with, and all the processing is done on software on top of the OS, so there may be glitches and performance issues.&lt;/p>
+&lt;p>The project was inspired by the more popular &lt;a class="link" href="https://github.com/kmonad/kmonad" target="_blank" rel="noopener"
+>KMonad&lt;/a>, and the author cites some of the &lt;a class="link" href="https://github.com/jtroo/kanata/blob/main/docs/kmonad_comparison.md" target="_blank" rel="noopener"
+>differences&lt;/a>.
+Both projects use a very similar configuration format based on lisp.
+The configuration consists of a set of general options, a base key configuration, a series of layers, and macros that can be used within those layers.
+&lt;a class="link" href="https://github.com/jtroo/kanata/blob/main/cfg_samples/kanata.kbd" target="_blank" rel="noopener"
+>Here&amp;rsquo;s a very complete config that serves as documentation&lt;/a>.&lt;/p>
+&lt;p>One big disadvantage of the lispy configuration is that you need to specify your hardware layout/all your keys, and repeat that every time you define a new layer.
+The result visually maps to your keyboard, but can be very verbose/big if you need really few changes.&lt;/p>
+&lt;p>&lt;a class="link" href="https://github.com/rvaiya/keyd/" target="_blank" rel="noopener"
+>Keyd&lt;/a> is another alternative with a more declarative configuration format, which might lend itself to smaller.&lt;/p>
+&lt;p>For now I&amp;rsquo;m just trying it out, and getting a feel for using fewer keys before I build my own ZMK keyboard.
+I particularly like the option of using mod-keys on the home row (e.g., having A work as a CTRL when held).
+Mod-tap, tap-dancing and the like are very common techniques in sub-40% layouts, where there simply aren&amp;rsquo;t enough keys for all the letters and symbols.
+In a regular-sized keyboard, these techniques can also help you stay on the home row and type more comfortably.
+At least, that&amp;rsquo;s the idea.
+We&amp;rsquo;ll see if I like it enough to stick with it.&lt;/p>
+&lt;p>For now, here&amp;rsquo;s my very simple config:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;span class="lnt">66
+&lt;/span>&lt;span class="lnt">67
+&lt;/span>&lt;span class="lnt">68
+&lt;/span>&lt;span class="lnt">69
+&lt;/span>&lt;span class="lnt">70
+&lt;/span>&lt;span class="lnt">71
+&lt;/span>&lt;span class="lnt">72
+&lt;/span>&lt;span class="lnt">73
+&lt;/span>&lt;span class="lnt">74
+&lt;/span>&lt;span class="lnt">75
+&lt;/span>&lt;span class="lnt">76
+&lt;/span>&lt;span class="lnt">77
+&lt;/span>&lt;span class="lnt">78
+&lt;/span>&lt;span class="lnt">79
+&lt;/span>&lt;span class="lnt">80
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-lisp" data-lang="lisp">&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">defcfg&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">;; Your keyboard device will likely differ from this.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">linux-dev&lt;/span> &lt;span class="nv">/dev/input/by-id/usb-Logitech_USB_Receiver-if02-event-mouse&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">;; Windows doesn&amp;#39;t need any input/output configuration entries; however, there&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">;; must still be a defcfg entry. You can keep the linux-dev entry or delete&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">;; it and leave it empty.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">defsrc&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">grv&lt;/span> &lt;span class="mi">1&lt;/span> &lt;span class="mi">2&lt;/span> &lt;span class="mi">3&lt;/span> &lt;span class="mi">4&lt;/span> &lt;span class="mi">5&lt;/span> &lt;span class="mi">6&lt;/span> &lt;span class="mi">7&lt;/span> &lt;span class="mi">8&lt;/span> &lt;span class="mi">9&lt;/span> &lt;span class="mi">0&lt;/span> &lt;span class="nf">-&lt;/span> &lt;span class="nf">=&lt;/span> &lt;span class="nv">bspc&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">tab&lt;/span> &lt;span class="nv">q&lt;/span> &lt;span class="nv">w&lt;/span> &lt;span class="nv">e&lt;/span> &lt;span class="nv">r&lt;/span> &lt;span class="no">t&lt;/span> &lt;span class="nv">y&lt;/span> &lt;span class="nv">u&lt;/span> &lt;span class="nv">i&lt;/span> &lt;span class="nv">o&lt;/span> &lt;span class="nv">p&lt;/span> &lt;span class="nv">[&lt;/span> &lt;span class="nv">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">caps&lt;/span> &lt;span class="nv">a&lt;/span> &lt;span class="nv">s&lt;/span> &lt;span class="nv">d&lt;/span> &lt;span class="nv">f&lt;/span> &lt;span class="nv">g&lt;/span> &lt;span class="nv">h&lt;/span> &lt;span class="nv">j&lt;/span> &lt;span class="nv">k&lt;/span> &lt;span class="nv">l&lt;/span> &lt;span class="c1">; &amp;#39; ret&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">lsft&lt;/span> &lt;span class="nv">\ z&lt;/span> &lt;span class="nv">x&lt;/span> &lt;span class="nv">c&lt;/span> &lt;span class="nv">v&lt;/span> &lt;span class="nv">b&lt;/span> &lt;span class="nv">n&lt;/span> &lt;span class="nv">m&lt;/span> &lt;span class="o">,&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="nf">/&lt;/span> &lt;span class="nv">rsft&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">lctl&lt;/span> &lt;span class="nv">lmet&lt;/span> &lt;span class="nv">lalt&lt;/span> &lt;span class="nv">spc&lt;/span> &lt;span class="nv">ralt&lt;/span> &lt;span class="nv">rmet&lt;/span> &lt;span class="nv">rctl&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">deflayer&lt;/span> &lt;span class="nv">qwerty&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">grv&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">@warrows&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">lctrl&lt;/span> &lt;span class="nv">@alctrl&lt;/span> &lt;span class="nv">@slsft&lt;/span> &lt;span class="nv">@dlalt&lt;/span> &lt;span class="nv">@flmet&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">@jrmet&lt;/span> &lt;span class="nv">@kralt&lt;/span> &lt;span class="nv">@lrsft&lt;/span> &lt;span class="nv">@&lt;/span>&lt;span class="c1">;rctrl _ _&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">@smartspace&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">deflayer&lt;/span> &lt;span class="nv">arrows&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">@flmet&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">left&lt;/span> &lt;span class="nv">down&lt;/span> &lt;span class="nv">up&lt;/span> &lt;span class="nv">rght&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">@smartspace&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">deflayer&lt;/span> &lt;span class="nv">colemak&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">grv&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">tab&lt;/span> &lt;span class="nv">q&lt;/span> &lt;span class="nv">w&lt;/span> &lt;span class="nv">f&lt;/span> &lt;span class="nv">p&lt;/span> &lt;span class="nv">b&lt;/span> &lt;span class="nv">j&lt;/span> &lt;span class="nv">l&lt;/span> &lt;span class="nv">u&lt;/span> &lt;span class="nv">y&lt;/span> &lt;span class="c1">; [ ] &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">lctrl&lt;/span> &lt;span class="nv">@alctrl&lt;/span> &lt;span class="nv">@rlsft&lt;/span> &lt;span class="nv">@slalt&lt;/span> &lt;span class="nv">@tlmet&lt;/span> &lt;span class="nv">g&lt;/span> &lt;span class="nv">m&lt;/span> &lt;span class="nv">@nrmet&lt;/span> &lt;span class="nv">@eralt&lt;/span> &lt;span class="nv">@irsft&lt;/span> &lt;span class="nv">@orctrl&lt;/span> &lt;span class="o">&amp;#39;&lt;/span> &lt;span class="nv">ret&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">lsft&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">z&lt;/span> &lt;span class="nv">x&lt;/span> &lt;span class="nv">c&lt;/span> &lt;span class="nv">d&lt;/span> &lt;span class="nv">v&lt;/span> &lt;span class="nv">k&lt;/span> &lt;span class="nv">h&lt;/span> &lt;span class="o">,&lt;/span> &lt;span class="o">.&lt;/span> &lt;span class="nf">/&lt;/span> &lt;span class="nv">rsft&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">@smartspace&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span> &lt;span class="nv">XX&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">deflayer&lt;/span> &lt;span class="nv">magic&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">@clmk&lt;/span> &lt;span class="nv">@qwerty&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">tab&lt;/span> &lt;span class="nv">A-tab&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">bspc&lt;/span> &lt;span class="nv">esc&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">ret&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span> &lt;span class="nv">_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">defalias&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">warrows&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">w&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">layer-toggle&lt;/span> &lt;span class="nv">arrows&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">alctrl&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">a&lt;/span> &lt;span class="nv">lctrl&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">slsft&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">s&lt;/span> &lt;span class="nv">lsft&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">dlalt&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">d&lt;/span> &lt;span class="nv">lalt&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">flmet&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">f&lt;/span> &lt;span class="nv">lmet&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">jrmet&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">j&lt;/span> &lt;span class="nv">rmet&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">kralt&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">k&lt;/span> &lt;span class="nv">ralt&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">lrsft&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">l&lt;/span> &lt;span class="nv">rsft&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">;rctrl (tap-hold 200 200 ; rctrl)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">rlsft&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">r&lt;/span> &lt;span class="nv">lsft&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">slalt&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">s&lt;/span> &lt;span class="nv">lalt&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">tlmet&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="no">t&lt;/span> &lt;span class="nv">lmet&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">nrmet&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">n&lt;/span> &lt;span class="nv">rmet&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">eralt&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">e&lt;/span> &lt;span class="nv">ralt&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">irsft&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">i&lt;/span> &lt;span class="nv">rsft&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">orctrl&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="nv">o&lt;/span> &lt;span class="nv">rctrl&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">clmk&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">layer-switch&lt;/span> &lt;span class="nv">colemak&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">qwerty&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">layer-switch&lt;/span> &lt;span class="nv">qwerty&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">smartspace&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-dance&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">300&lt;/span> &lt;span class="mi">300&lt;/span> &lt;span class="nv">spc&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">layer-toggle&lt;/span> &lt;span class="nv">magic&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">(&lt;/span>&lt;span class="nv">tap-hold&lt;/span> &lt;span class="mi">300&lt;/span> &lt;span class="mi">300&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">one-shot&lt;/span> &lt;span class="mi">300&lt;/span> &lt;span class="nv">lalt&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nv">spc&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">a&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Logitech MB850 combi in linux</title><link>https://balkian.com/p/logitech-mb850-combi-in-linux/</link><pubDate>Sat, 30 Oct 2021 00:00:01 +0000</pubDate><guid>https://balkian.com/p/logitech-mb850-combi-in-linux/</guid><description>&lt;p>As a follow-up to my last post, I&amp;rsquo;ve decided to also configure my mk850 combo (k850 + m720 triathlon).&lt;/p>
+&lt;p>Some notes:&lt;/p>
+&lt;ul>
+&lt;li>The keyboard is usually connected to this PC through bluetooth. Since this is a change I usually do in the system for every keyboard, I added a rule for any bus (usb, bluetooth, etc)&lt;/li>
+&lt;li>The mouse has an additional button that registers as a keyboard. Every press maps to three key events. I&amp;rsquo;ve disabled two of them and mapped the action to F19, in case I want to use it in my DE/WM.&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">evdev:input:* &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">KEYBOARD_KEY_70039&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">leftctrl # bind capslock to w &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">evdev:input:b0005v046DpB015*&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">KEYBOARD_KEY_700e0&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">f19
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_700e2=unknown
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_7002b=unknown&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>After that, simply run:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"> sudo udevadm hwdb --update &amp;amp;&amp;amp; sudo udevadm trigger
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Make sure the settings have been applied by running &lt;code>evemu-describe&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl"> sudo /sbin/evemu-describe /dev/input/event&amp;lt;id of your device&amp;gt; &lt;span class="p">|&lt;/span> grep KEY_
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Logitech MX Keys for Mac on Linux</title><link>https://balkian.com/p/logitech-mx-keys-for-mac-on-linux/</link><pubDate>Fri, 29 Oct 2021 00:00:01 +0000</pubDate><guid>https://balkian.com/p/logitech-mx-keys-for-mac-on-linux/</guid><description>&lt;p>I recently got Logitech MX Keys for Mac keyboard at work.
+The German version, to be more precise.
+This version was three times cheaper than the Windows equivalent with either US or ES layout.
+Since I touch type anyway, I thought it was a bargain.&lt;/p>
+&lt;p>As soon as I plugged it in, I realized there were some glaring issues with the keyboard.
+First of all, the Meta/Super and Alt keys are reversed in this keyboard.
+In the normal/full version of this keyboard, Logitech gives an option to choose between Mac, Windows and iOS host, and that changes the behavior of the keys.
+In this version, tho, only iOS and Mac are available.&lt;/p>
+&lt;p>Besides that, there&amp;rsquo;s the issue of the grave (tilde) and angle keys switched as well.&lt;/p>
+&lt;p>Switching these keys around would be very easy with Xorg, but Wayland once again complicates things&amp;hellip;&lt;/p>
+&lt;p>These issues almost made me return the keyboard.
+Luckily, tho, there is another option: configuring the keys one level lower than wayland (and X11), through hwdb.&lt;/p>
+&lt;p>Long story short, this will configure any Logitech keyboard with the same product id (0x4092) to use a saner configuration:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#File: /etc/udev/hwdb.d/90-logitech-keyboard.hwdb&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">evdev:input:b0003v046Dp4092*&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="na">KEYBOARD_KEY_700e2&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">leftmeta
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_700e3=leftalt
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_70039=leftctrl
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_70064=102nd
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_70035=grave
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_700e7=rightalt
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_700e6=rightmeta
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> KEYBOARD_KEY_7006d=compose&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>After that, simply run:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"> sudo udevadm hwdb --update &amp;amp;&amp;amp; sudo udevadm trigger
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Linux on the Microsoft Surface Go</title><link>https://balkian.com/p/linux-on-the-microsoft-surface-go/</link><pubDate>Sat, 01 Jun 2019 00:00:01 +0000</pubDate><guid>https://balkian.com/p/linux-on-the-microsoft-surface-go/</guid><description>&lt;p>Believe it or not, Surface tablets have pretty good linux support, except for the webcams in newer models.
+These are some useful notes to get Ubuntu installed in your surface go, as of Summer 2019.&lt;/p>
+&lt;h2 id="installing-the-kernel">Installing the kernel
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">git clone --depth &lt;span class="m">1&lt;/span> https://github.com/jakeday/linux-surface.git ~/linux-surface
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cp -a ~/linux-surface /media/&amp;lt;your usb&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">cp -a /media/&amp;lt;your usb&amp;gt;/linux-surface ~/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> ~/linux-surface/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo sh setup.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="booting-ubuntu-first">Booting ubuntu first
+&lt;/h2>&lt;p>Switch out of Windows S mode.&lt;/p>
+&lt;p>Boot into the &amp;ldquo;Command Prompt&amp;rdquo;.&lt;/p>
+&lt;p>From Windows go to &amp;ldquo;change advanced startup options&amp;rdquo; and select &amp;ldquo;restart now&amp;rdquo;.&lt;/p>
+&lt;p>When it reboots, choose the &amp;ldquo;Troubleshoot&amp;rdquo; option, then choose the &amp;ldquo;Advanced options&amp;rdquo; option, and finally choose the &amp;ldquo;Command Prompt&amp;rdquo; option.&lt;/p>
+&lt;p>After the device reboots, login to the command prompt and then you should see a terminal with X:\windows\system32&amp;gt;&lt;/p>
+&lt;p>At the prompt, check your UEFI entries:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">bcdedit /enum firmware
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Copy UEFI entry of &amp;ldquo;Windows Boot Manager&amp;rdquo; to create a new entry for Ubuntu: bcdedit /copy {bootmgr} /d &amp;ldquo;Ubuntu&amp;rdquo;&lt;/p>
+&lt;p>Copy the printed GUID number including the braces {} using Ctrl+C&lt;/p>
+&lt;p>Set file path for the new Ubuntu entry. Replace {guid} with the returned GUID of the previous command (Ctrl+V). bcdedit /set {guid} path \EFI\ubuntu\grubx64.efi&lt;/p>
+&lt;p>Set Ubuntu as the first/ entry in the boot sequence. Again replace {guid} with the returned GUID of the copy command.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">bcdedit /set &lt;span class="o">{&lt;/span>fwbootmgr&lt;span class="o">}&lt;/span> displayorder &lt;span class="o">{&lt;/span>guid&lt;span class="o">}&lt;/span> /addfirst
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Check your UEFI entries again: bcdedit /enum firmware You should see something like this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Firmware Boot Manager
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">---------------------
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">identifier &lt;span class="o">{&lt;/span>fwbootmgr&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">displayorder &lt;span class="o">{&lt;/span>3510232e-f8eb-e811-95ce-9ecab3f9d1c4&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">{&lt;/span>bootmgr&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">{&lt;/span>2148799b-f8eb-e811-95ce-9ecab3f9d1c4&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">{&lt;/span>312e8a67-c2f6-e811-95ce-3c1ab3f9d1de&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">{&lt;/span>312e8a68-c2f6-e811-95ce-3c1ab3f9d1de&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">timeout &lt;span class="m">0&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Make sure the GUID you copied is the first one listed in displayorder. Then type exit, turn off the PC and turn it back on. After this my surface go is automatically booting to the grub bootloader which lets me choose between Windows and Ubuntu but defaults to Ubuntu after ten seconds.&lt;/p></description></item><item><title>Controlling Zigbee devices with MQTT</title><link>https://balkian.com/p/controlling-zigbee-devices-with-mqtt/</link><pubDate>Sun, 06 Jan 2019 10:00:00 +0000</pubDate><guid>https://balkian.com/p/controlling-zigbee-devices-with-mqtt/</guid><description>&lt;p>This is a short tutorial on connecting a zigbee device (an Aqara cube)
+to an MQTT server, so you can control your zigbee devices from the
+network.&lt;/p>
+&lt;p>If you&amp;rsquo;re anything like me, you&amp;rsquo;re probably a sucker for IoT devices.
+For a long time, I&amp;rsquo;ve been using WiFi-enabled lights, and Amazon dash
+buttons to control them. To keep these (cheap Chinese) internet enabled
+devices away from your network and their respective cloud services,
+you&amp;rsquo;ll probably want to set up a dedicated network in your router (more
+on this on a future post, maybe). Another disadvantage of WiFi devices
+is that they&amp;rsquo;re relatively power hungry.&lt;/p>
+&lt;p>A popular alternative is using ZigBee for communication. It is a
+dedicated protocol similar to bluetooth (BLE), with lower power
+requirements and bitrate.&lt;/p>
+&lt;p>Take the (super cute) aqara cube as an example. It is a small cube that
+detects rotation on all of its axes, and tapping events. Here&amp;rsquo;s a
+video:&lt;/p>
+&lt;div class="video-wrapper">
+&lt;iframe loading="lazy"
+src="https://www.youtube.com/embed/5YtqG1wEnng"
+allowfullscreen
+title="YouTube Video"
+>
+&lt;/iframe>
+&lt;/div>
+&lt;p>To connect to zigbee devices you will need a zigbee enabled gateway
+(a.k.a. hub), which connects to your WiFi network and your zigbee
+devices. Once again, this means adding an internet-enabled device to
+your home, and probably a couple of cloud services.&lt;/p>
+&lt;p>As an alternative, you can set up your own zigbee gateway, and control
+it to your home automation platform of choice (e.g. home assistant). We
+will cover how to set up a zigbee2mqtt gateway that is also connected to
+an MQTT server, so you can use MQTT to control your devices and get
+notifications.&lt;/p>
+&lt;p>What you need:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://www.aliexpress.com/item/Original-Xiaomi-Mi-Aqara-Cube-Smart-Home-Controller-6-Action-Operation-Fr-Home-Device-Zigbee-Version/32892947622.html?spm=a2g0s.9042311.0.0.3da24c4dXV8sBI" target="_blank" rel="noopener"
+>Aqara
+cube&lt;/a>.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.aliexpress.com/item/Wireless-Zigbee-CC2531-CC2540-Zigbee-Sniffer-Bluetooth-BLE-4-0-Dongle-Capture-Module-USB-Programmer-Downloader/32907587711.html?spm=a2g0s.9042311.0.0.3da24c4dXV8sBI" target="_blank" rel="noopener"
+>CC2531 zigbee
+sniffer&lt;/a>.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.aliexpress.com/item/CFSUNBIRD-CC-DEBUGGER-Debugger-and-Programmer-for-RF-System-on-Chips-TI-ORIGINAL-Fast-hipping/32813122315.html?spm=a2g0s.9042311.0.0.3da24c4dXV8sBI" target="_blank" rel="noopener"
+>CC-debugger&lt;/a>.&lt;/li>
+&lt;/ul>
+&lt;p>You will need to flash your sniffer. For that, you only need to follow
+the instructions from the &lt;a class="link" href="https://koenkk.github.io/zigbee2mqtt/" target="_blank" rel="noopener"
+>zigbee2mqtt
+documentation&lt;/a>.&lt;/p>
+&lt;p>Once you&amp;rsquo;re done flashing, you&amp;rsquo;re ready to set up the zigbee2mqtt
+server. For convenience, I wrote a simple docker-compose to deploy a
+zigbee2mqtt server and a test mosquitto server:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">version&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;2.1&amp;#39;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">services&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">zigbee2mqtt&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">koenkk/zigbee2mqtt&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">container_name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">zigbee2mqtt &lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">restart&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">always&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">./z2m-data/:/app/data/&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">devices&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;/dev/ttyACM0&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">networks&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">hass&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">mqtt&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">eclipse-mosquitto&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">ports&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="m">1883&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">1883&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="m">9001&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">9001&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">networks&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">hass&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">./mosquitto.conf:/mosquitto/config/mosquitto.conf&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">networks&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">hass&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">driver&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">overlay&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>You can test your installation with:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">❯ mosquitto_sub -h localhost -p &lt;span class="m">1883&lt;/span> -t &lt;span class="s1">&amp;#39;zigbee2mqtt/#&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">online
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">{&lt;/span>&lt;span class="s2">&amp;#34;battery&amp;#34;&lt;/span>:17,&lt;span class="s2">&amp;#34;voltage&amp;#34;&lt;/span>:2925,&lt;span class="s2">&amp;#34;linkquality&amp;#34;&lt;/span>:149,&lt;span class="s2">&amp;#34;action&amp;#34;&lt;/span>:&lt;span class="s2">&amp;#34;rotate_right&amp;#34;&lt;/span>,&lt;span class="s2">&amp;#34;angle&amp;#34;&lt;/span>:12.8&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">{&lt;/span>&lt;span class="s2">&amp;#34;battery&amp;#34;&lt;/span>:17,&lt;span class="s2">&amp;#34;voltage&amp;#34;&lt;/span>:2925,&lt;span class="s2">&amp;#34;linkquality&amp;#34;&lt;/span>:141,&lt;span class="s2">&amp;#34;action&amp;#34;&lt;/span>:&lt;span class="s2">&amp;#34;slide&amp;#34;&lt;/span>,&lt;span class="s2">&amp;#34;side&amp;#34;&lt;/span>:2&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">{&lt;/span>&lt;span class="s2">&amp;#34;battery&amp;#34;&lt;/span>:17,&lt;span class="s2">&amp;#34;voltage&amp;#34;&lt;/span>:2925,&lt;span class="s2">&amp;#34;linkquality&amp;#34;&lt;/span>:120&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">{&lt;/span>&lt;span class="s2">&amp;#34;battery&amp;#34;&lt;/span>:17,&lt;span class="s2">&amp;#34;voltage&amp;#34;&lt;/span>:2925,&lt;span class="s2">&amp;#34;linkquality&amp;#34;&lt;/span>:141,&lt;span class="s2">&amp;#34;action&amp;#34;&lt;/span>:&lt;span class="s2">&amp;#34;wakeup&amp;#34;&lt;/span>&lt;span class="o">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>
+&lt;p>zigbee2mqtt supports the following events for the aqara cube: shake,
+wakeup, fall, tap, slide, flip180, flip90, rotate_left and
+rotate_right. Every event has additional information, such as the sides
+involved, or the degrees turned.&lt;/p>
+&lt;p>Now you are ready to set up home assistant support in zigbee2mqtt
+following &lt;a class="link" href="https://koenkk.github.io/zigbee2mqtt/integration/home_assistant.html" target="_blank" rel="noopener"
+>this
+guide&lt;/a>.&lt;/p></description></item><item><title>Progress bars in python</title><link>https://balkian.com/p/progress-bars-in-python/</link><pubDate>Wed, 28 Sep 2016 18:47:00 +0000</pubDate><guid>https://balkian.com/p/progress-bars-in-python/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/noamraph/tqdm" target="_blank" rel="noopener"
+>tqdm&lt;/a> is a nice way to add progress
+bars in the command line or in a jupyter notebook.&lt;/p>
+&lt;p>&lt;img src="https://camo.githubusercontent.com/48838faaa8d00ea297f18e5bf55d3c6bb4e0ba6b/68747470733a2f2f692e696d6775722e636f6d2f686539417735432e676966"
+loading="lazy"
+alt="image"
+>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">tqdm&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">tqdm&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">time&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">tqdm&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">range&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">100&lt;/span>&lt;span class="p">)):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">time&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sleep&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Sharing dotfiles</title><link>https://balkian.com/p/sharing-dotfiles/</link><pubDate>Fri, 10 Apr 2015 17:47:00 +0000</pubDate><guid>https://balkian.com/p/sharing-dotfiles/</guid><description>&lt;p>Today&amp;rsquo;s post is half a quick note, half public shaming. In other words,
+it is a reminder to be very careful with OAuth tokens and passwords.&lt;/p>
+&lt;p>As part of moving to emacs, I starting using the incredibly useful
+&lt;a class="link" href="https://github.com/defunkt/gist.el" target="_blank" rel="noopener"
+>gh.el&lt;/a>. When you first use it, the
+extension saves either your password or an OAuth token in your
+.gitconfig file. This is cool and convenient, unless you &lt;a class="link" href="https://github.com/balkian/dotfiles" target="_blank" rel="noopener"
+>happen to be
+publishing your .gitconfig file in a public
+repo&lt;/a>.&lt;/p>
+&lt;p>So, how can you still share your gitconfig without sharing your
+password/token with the rest of the world? Since Git 1.7.0, you can
+&lt;a class="link" href="http://stackoverflow.com/questions/1557183/is-it-possible-to-include-a-file-in-your-gitconfig" target="_blank" rel="noopener"
+>include other files in your
+gitconfig&lt;/a>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[include]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> path = ~/.gitconfig_secret
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And now, in your .gitconfig_secret file, you just have to add this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[github]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> user = balkian
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> token = &amp;#34;&amp;lt; Your secret token &amp;gt;&amp;#34;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Zotero</title><link>https://balkian.com/p/zotero/</link><pubDate>Tue, 09 Dec 2014 12:12:12 +0000</pubDate><guid>https://balkian.com/p/zotero/</guid><description>&lt;p>&lt;a class="link" href="https://www.zotero.org/" target="_blank" rel="noopener"
+>Zotero&lt;/a> is an Open Source tool that lets you
+organise your bibliography, syncing it with the cloud. Unlike other
+alternatives such as &lt;a class="link" href="http://www.mendeley.com" target="_blank" rel="noopener"
+>Mendeley&lt;/a>, Zotero can
+upload the attachments and data to a private cloud via WebDav.&lt;/p>
+&lt;p>If you use nginx as your web server, know that even though it provides
+partial support for webdav, Zotero needs more than that. Hence, you will
+need another webdav server, and optionally let nginx proxy to it. This
+short post provides the basics to get that set-up working under
+Debian/Ubuntu.&lt;/p>
+&lt;h2 id="setting-up-apache">Setting up Apache
+&lt;/h2>&lt;p>First we need to install Apache:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt-get install apache2
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Change the head of &amp;ldquo;/etc/apache2/sites-enabled/000-default&amp;rdquo; to:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-apache" data-lang="apache">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;VirtualHost&lt;/span> &lt;span class="s">*:880&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Then, create a file /etc/apache2/sites-available/webdav:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-apache" data-lang="apache">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">Alias&lt;/span> &lt;span class="sx">/dav&lt;/span> &lt;span class="sx">/home/webdav/dav&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;Location&lt;/span> &lt;span class="s">/dav&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">Dav&lt;/span> &lt;span class="k">on&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">Order&lt;/span> Allow,Deny
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">Allow&lt;/span> from &lt;span class="k">all&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">Dav&lt;/span> &lt;span class="k">On&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">Options&lt;/span> +Indexes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">AuthType&lt;/span> Basic
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">AuthName&lt;/span> DAV
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">AuthBasicProvider&lt;/span> file
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">AuthUserFile&lt;/span> &lt;span class="sx">/home/webdav/.htpasswd&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">Require&lt;/span> valid-user
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/Location&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Ideally, you want your webdav folders to be private, adding
+authentication to them. So you need to create the webdav and zotero
+users and add the passwords to an htpasswd file. Even though you could
+use a single user, since you will be configuring several clients with
+your credentials I encourage you to create the zotero user as well. This
+way you can always change the password for zotero without affecting any
+other application using webdav.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo adduser webdav
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo htpasswd -c /home/webdav/.htpasswd webdav
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo htpasswd /home/webdav/.htpasswd zotero
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo mkdir -p /home/webdav/dav/zotero
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Enable the site and restart apache:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo a2enmod webdav
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo a2enmod dav_fs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo a2ensite webdav
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo service apache2 restart
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>At this point everything should be working at
+&lt;a class="link" href="http://" target="_blank" rel="noopener"
+>http://&lt;/a>&amp;lt;your_host&amp;gt;:880/dav/zotero&lt;/p>
+&lt;h2 id="setting-up-nginx">Setting up NGINX
+&lt;/h2>&lt;p>After the Apache side is working, we can use nginx as a proxy to get
+cleaner URIs. In your desired site/location, add this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-nginx" data-lang="nginx">&lt;span class="line">&lt;span class="cl">&lt;span class="k">location&lt;/span> &lt;span class="s">/dav&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">client_max_body_size&lt;/span> &lt;span class="s">20M&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">proxy_set_header&lt;/span> &lt;span class="s">X-Real-IP&lt;/span> &lt;span class="nv">$remote_addr&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">proxy_set_header&lt;/span> &lt;span class="s">X-Forwarded-For&lt;/span> &lt;span class="nv">$remote_addr&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">proxy_set_header&lt;/span> &lt;span class="s">Host&lt;/span> &lt;span class="nv">$host&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">proxy_pass&lt;/span> &lt;span class="s">http://127.0.0.1:880&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now just reload nginx:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo service nginx force-reload
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="extras">Extras
+&lt;/h2>&lt;ul>
+&lt;li>&lt;a class="link" href="http://zoteroreader.com/" target="_blank" rel="noopener"
+>Zotero Reader&lt;/a> - HTML5 client&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/ajlyon/zandy" target="_blank" rel="noopener"
+>Zandy&lt;/a> - Android Open Source
+client&lt;/li>
+&lt;/ul></description></item><item><title>Proxies with Apache and python</title><link>https://balkian.com/p/proxies-with-apache-and-python/</link><pubDate>Thu, 09 Oct 2014 10:00:00 +0000</pubDate><guid>https://balkian.com/p/proxies-with-apache-and-python/</guid><description>&lt;p>This is a quick note on proxying a local python application (e.g. flask)
+to a subdirectory in Apache. This assumes that the file wsgi.py contains
+a WSGI application with the name &lt;em>application&lt;/em>. Hence, wsgi:application.&lt;/p>
+&lt;h2 id="gunicorn">Gunicorn
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-apache" data-lang="apache">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;Location&lt;/span> &lt;span class="s">/myapp/&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">ProxyPass&lt;/span> http://127.0.0.1:8888/myapp/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">ProxyPassReverse&lt;/span> http://127.0.0.1:8888/myapp/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">RequestHeader&lt;/span> set SCRIPT_NAME &lt;span class="s2">&amp;#34;/myapp/&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/Location&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Important&lt;/strong>: &lt;em>SCRIPT_NAME&lt;/em> and the end of &lt;em>ProxyPass&lt;/em> URL &lt;strong>MUST BE
+THE SAME&lt;/strong>. Otherwise, Gunicorn will fail miserably.&lt;/p>
+&lt;p>Try it with:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">venv/bin/gunicorn -w &lt;span class="m">4&lt;/span> -b 127.0.0.1:8888 --log-file - --access-logfile - wsgi:application
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="uwsgi">UWSGI
+&lt;/h2>&lt;p>This is a very simple configuration. I will try to upload one with more
+options for uwsgi (in a .ini file).&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-apache" data-lang="apache">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;Location&lt;/span> &lt;span class="s">/myapp/&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">SetHandler&lt;/span> uwsgi_handler
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">uWSGISocker&lt;/span> &lt;span class="m">127.0.0.1&lt;/span>:8888
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/Location&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Try it with:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">uwsgi --socket 127.0.0.1:8888 -w wsgi:application
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="extra-supervisor">Extra: Supervisor
+&lt;/h2>&lt;p>If everything went as expected, you can wrap your command in a
+supervisor config file and let it handle the server for you.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-ini" data-lang="ini">&lt;span class="line">&lt;span class="cl">&lt;span class="k">[unix_http_server]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">file&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">/tmp/myapp.sock ; path to your socket file&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">[supervisord]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">logfile&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">%(here)s/logs/supervisor.log&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">childlogdir&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">%(here)s/logs/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">[rpcinterface:supervisor]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">supervisor.rpcinterface_factory&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">supervisor.rpcinterface:make_main_rpcinterface&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">[supervisorctl]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">logfile&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">%(here)s/logs/supervisorctl.log&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">serverurl&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s">unix:///tmp/supervisor.sock ; use a unix:// URL for a unix socket&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">[program:myapp]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">command&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">venv/bin/gunicorn -w 4 -b 0.0.0.0:5000 --log-file %(here)s/logs/gunicorn.log --access-logfile - wsgi:application&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">directory&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">%(here)s&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">environment&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">PATH=%(here)s/venv/bin/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">logfile&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">%(here)s/logs/myapp.log&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Publishing on PyPi</title><link>https://balkian.com/p/publishing-on-pypi/</link><pubDate>Sat, 27 Sep 2014 10:00:00 +0000</pubDate><guid>https://balkian.com/p/publishing-on-pypi/</guid><description>&lt;p>Developing a python module and publishing it on Github is cool, but most
+of the times you want others to download and use it easily. That is the
+role of PyPi, the python package repository. In this post I show you how
+to publish your package in less than 10 minutes.&lt;/p>
+&lt;h2 id="choose-a-fancy-name">Choose a fancy name
+&lt;/h2>&lt;p>If you haven&amp;rsquo;t done so yet, take a minute or two to think about this.
+To publish on PyPi you need a name for your package that isn&amp;rsquo;t taken.
+What&amp;rsquo;s more, a catchy and unique name will help people remember your
+module and feel more inclined to at least try it.&lt;/p>
+&lt;p>The package name should hint what your module does, but that&amp;rsquo;s not
+always the case. That&amp;rsquo;s your call. I personally put uniqueness and
+memorability over describing the functionality.&lt;/p>
+&lt;h2 id="create-a-pypirc-configuration-file">Create a .pypirc configuration file
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="na">[distutils] # this tells distutils what package indexes you can push to&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">index-servers&lt;/span> &lt;span class="o">=&lt;/span>&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> pypi # the live PyPI
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> pypitest # test PyPI&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">[pypi] # authentication details for live PyPI&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">repository&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">https://pypi.python.org/pypi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">username&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">{ your_username }&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">password&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">{ your_password } # not necessary&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">[pypitest] # authentication details for test PyPI&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">repository&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">https://testpypi.python.org/pypi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">username&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">{ your_username }&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>As you can see, you need to register both in the &lt;a class="link" href="https://pypi.python.org/pypi?%3Aaction=register_form" target="_blank" rel="noopener"
+>main pypi
+repository&lt;/a> and
+the &lt;a class="link" href="https://testpypi.python.org/pypi?%3Aaction=register_form" target="_blank" rel="noopener"
+>testing
+server&lt;/a>. The
+usernames and passwords might be different, that is up to you!&lt;/p>
+&lt;h2 id="prepare-your-package">Prepare your package
+&lt;/h2>&lt;p>This should be the structure:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">root-dir/ # Any name you want
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> setup.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> setup.cfg
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LICENSE.txt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> README.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> mypackage/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> __init__.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> foo.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> bar.py
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> baz.py
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="setupcfg">setup.cfg
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cfg" data-lang="cfg">&lt;span class="line">&lt;span class="cl">&lt;span class="k">[metadata]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">description-file&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">README.md&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The markdown README is the &lt;em>de facto&lt;/em> standard in Github, but you can
+also use rST (reStructuredText), the standard in the python community.&lt;/p>
+&lt;h3 id="setuppy">setup.py
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">distutils.core&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">setup&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">setup&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;mypackage&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">packages&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;mypackage&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="c1"># this must be the same as the name above&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">version&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;{ version }&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">description&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;{ description }&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">author&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;{ name }&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">email&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;{ email }&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;https://github.com/&lt;/span>&lt;span class="si">{user}&lt;/span>&lt;span class="s1">/&lt;/span>&lt;span class="si">{package}&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1"># URL to the github repo&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">download_url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;https://github.com/&lt;/span>&lt;span class="si">{user}&lt;/span>&lt;span class="s1">/&lt;/span>&lt;span class="si">{repo}&lt;/span>&lt;span class="s1">/tarball/&lt;/span>&lt;span class="si">{version}&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">keywords&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;websockets&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;display&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;d3&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="c1"># list of keywords that represent your package&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">classifiers&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[],&lt;/span> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>You might notice that the download_url points to a Github URL. We could
+host our package anywhere, but Github is a convenient option. To create
+the tarball and the zip packages, you only need to tag a tag in your
+repository and push it to github:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git tag &lt;span class="o">{&lt;/span>version&lt;span class="o">}&lt;/span> -m &lt;span class="s2">&amp;#34;{ Description of this tag/version}&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git push --tags origin master
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="push-to-the-testingmain-pypi-server">Push to the testing/main pypi server
+&lt;/h2>&lt;p>It is advisable that you try your package on the test repository and fix
+any problems first. The process is simple:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">python setup.py register -r &lt;span class="o">{&lt;/span>pypitest/pypi&lt;span class="o">}&lt;/span> python setup.py sdist upload -r &lt;span class="o">{&lt;/span>pypitest/pypi&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If everything went as expected, you can now install your package through
+pip and browse your package&amp;rsquo;s page. For instance, check my senpy
+package: &lt;a class="link" href="https://pypi.python.org/pypi/senpy" target="_blank" rel="noopener"
+>https://pypi.python.org/pypi/senpy&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">pip install senpy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Updating EuroLoveMap</title><link>https://balkian.com/p/updating-eurolovemap/</link><pubDate>Thu, 27 Mar 2014 14:00:00 +0000</pubDate><guid>https://balkian.com/p/updating-eurolovemap/</guid><description>&lt;p>As part of the &lt;a class="link" href="http://www.opener-project.org/2013/07/18/opener-hackathon-in-amsterdam/" target="_blank" rel="noopener"
+>OpeNER
+hackathon&lt;/a>
+we decided to build a prototype that would allow us to compare how
+different countries feel about several topics. We used the OpeNER
+pipeline to get the sentiment from a set of newspaper articles we
+gathered from media in several languages. Then we aggregated those
+articles by category and country (using the source of the article or the
+language it was written in), obtaining the &amp;ldquo;overall feeling&amp;rdquo; of each
+country about each topic. Then, we used some fancy JavaScript to make
+sense out of the raw information.&lt;/p>
+&lt;p>It didn&amp;rsquo;t go too bad, it turns out &lt;a class="link" href="http://eurosentiment.eu/wp-content/uploads/2013/07/BOLv9qnCIAAJEek.jpg" target="_blank" rel="noopener"
+>we
+won&lt;/a>.&lt;/p>
+&lt;p>Now, it was time for a face-lift. I used this opportunity to play with
+new technologies and improve it:&lt;/p>
+&lt;ul>
+&lt;li>Using Flask, this time using python 3.3 and Bootstrap 3.0&lt;/li>
+&lt;li>Cool HTML5+JS cards (thanks to
+&lt;a class="link" href="http://pastetophone.com" target="_blank" rel="noopener"
+>pastetophone&lt;/a>)&lt;/li>
+&lt;li>Automatic generation of fake personal data to test the interface&lt;/li>
+&lt;li>Obfuscation of personal emails&lt;/li>
+&lt;/ul>
+&lt;p>The result can be &lt;a class="link" href="http://eurolovemap.herokuapp.com/" target="_blank" rel="noopener"
+>seen here&lt;/a>.&lt;/p>
+&lt;h2 id="publishing-a-python-3-app-on-heroku">Publishing a Python 3 app on Heroku
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">mkvirtualenv -p /usr/bin/python3.3 eurolovemap
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Since Heroku uses python 2.7 by default, we have to tell it which
+version we want, although it supports python 3.4 as well. I couldn&amp;rsquo;t
+get python 3.4 working using the
+&lt;a class="link" href="https://launchpad.net/~fkrull/&amp;#43;archive/deadsnakes" target="_blank" rel="noopener"
+>deadsnakes&lt;/a> ppa, so
+I used python 3.3 instead, which works fine but is not officially
+supported. Just create a file named &lt;em>runtime.txt&lt;/em> in your project root,
+with the python version you want to use:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">python-3.3.1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Don&amp;rsquo;t forget to freeze your dependencies so Heroku can install them:
+&lt;code>bash pip freze &amp;gt; requirements.txt&lt;/code>&lt;/p>
+&lt;h2 id="publishing-personal-emails">Publishing personal emails
+&lt;/h2>&lt;p>There are really sophisticated and effective ways to obfuscate personal
+emails so that spammers cannot easily grab yours. However, this time I
+needed something really simple to hide our emails from the simplest form
+of crawlers. Most of the team are in academia somehow, so in the end all
+our emails are available in sites like Google Scholar. Anyway, nobody
+likes getting spammed so I settled for a custom &lt;a class="link" href="http://en.wikipedia.org/wiki/Caesar_cipher" target="_blank" rel="noopener"
+>Caesar
+cipher&lt;/a>. Please, don&amp;rsquo;t use
+it for any serious application if you are concerned about being spammed.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">blur_email&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">email&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">join&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="nb">chr&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">ord&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">email&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And this is the client side:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">window&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">onload&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kd">function&lt;/span>&lt;span class="p">(){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">elems&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">document&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">getElementsByClassName&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;profile-email&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">e&lt;/span> &lt;span class="k">in&lt;/span> &lt;span class="nx">elems&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">var&lt;/span> &lt;span class="nx">blur&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">elems&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">e&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">innerHTML&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">var&lt;/span> &lt;span class="nx">email&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">s&lt;/span> &lt;span class="k">in&lt;/span> &lt;span class="nx">blur&lt;/span>&lt;span class="p">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">var&lt;/span> &lt;span class="nx">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">blur&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">charCodeAt&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">s&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">email&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">email&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="nb">String&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">fromCharCode&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">a&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">elems&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="nx">e&lt;/span>&lt;span class="p">].&lt;/span>&lt;span class="nx">innerHTML&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">email&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Unfortunately, this approach does not hide your email from anyone using
+&lt;a class="link" href="http://phantomjs.org/" target="_blank" rel="noopener"
+>PhantomJS&lt;/a>,
+&lt;a class="link" href="http://zombie.labnotes.org/" target="_blank" rel="noopener"
+>ZombieJS&lt;/a> or similar. For that, other
+approaches like generating a picture with the address would be
+necessary. Nevertheless, it is overkill for a really simple ad-hoc
+application with custom formatting and just a bunch of emails that would
+easily be grabbed manually.&lt;/p>
+&lt;h2 id="generation-of-fake-data">Generation of fake data
+&lt;/h2>&lt;p>To test the contact section of the site, I wanted to populate it with
+fake data. &lt;a class="link" href="https://github.com/joke2k/faker" target="_blank" rel="noopener"
+>Fake-Factory&lt;/a> is an amazing
+library that can generate fake data of almost any kind: emails,
+association names, acronyms&amp;hellip; It even lets you localise the results
+(get Spanish names, for instance) and generate factories for certain
+classes (à la Django).&lt;/p>
+&lt;p>But I also wanted pictures, enter &lt;a class="link" href="http://lorempixel.com/" target="_blank" rel="noopener"
+>Lorem Pixel&lt;/a>.
+With its API you can generate pictures of almost any size, for different
+topics (e.g. nightlife, people) and with a custom text. You can even use
+an index, so it will always show the same picture.&lt;/p>
+&lt;p>For instance, the picture below is served through Lorem Pixel.&lt;/p>
+&lt;p>&lt;img src="http://lorempixel.com/400/200/nightlife/"
+loading="lazy"
+>&lt;/p>
+&lt;p>By the way, if you only want cat pictures, take a look at
+&lt;a class="link" href="http://placekitten.com/" target="_blank" rel="noopener"
+>Placekitten&lt;/a>. And for NSFW text, there&amp;rsquo;s the
+&lt;a class="link" href="http://slipsum.com/" target="_blank" rel="noopener"
+>Samuel L. Jackson Ipsum&lt;/a>&lt;/p></description></item><item><title>Remove git files with globbing</title><link>https://balkian.com/p/remove-git-files-with-globbing/</link><pubDate>Thu, 22 Aug 2013 23:14:00 +0000</pubDate><guid>https://balkian.com/p/remove-git-files-with-globbing/</guid><description>&lt;p>A simple trick. If you want to remove all the &amp;lsquo;.swp&amp;rsquo; files from a git
+repository, just use:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git rm --cached &lt;span class="s1">&amp;#39;**.swp&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Creating my web</title><link>https://balkian.com/p/creating-my-web/</link><pubDate>Thu, 22 Aug 2013 14:14:22 +0000</pubDate><guid>https://balkian.com/p/creating-my-web/</guid><description>&lt;p>I&amp;rsquo;ve finally decided to set up a decent personal page. I have settled
+for github-pages because I like the idea of keeping my site in a
+repository and having someone else host and deploy it for me. The site
+will be really simple, mostly static files. Thanks to Github,
+&lt;a class="link" href="http://jekyllrb.com" target="_blank" rel="noopener"
+>Jekyll&lt;/a> will automatically generate static pages
+for my posts every time I commit anything new to this repository.&lt;/p>
+&lt;p>But Jekyll can be used independently, so if I ever choose to host the
+site myself, I can do it quite easily. Another thing that I liked about
+this approach is that the generated html files can be used in the
+future, and I will not need Jekyll to serve it. Jekyll is really simple
+and most of the things are written in plain html. That means that
+everything could be easily reused if I ever choose to change to another
+blogging framework (e.g. pelical). But, for the time being, I like the
+fact that Github takes care of the compilation as well, so I can simply
+modify or add files through the web interface should I need to.&lt;/p>
+&lt;p>I hadn&amp;rsquo;t played with HTML and CSS for a while now, so I also wanted to
+use this site as a playground. At some point, I realised I was doing
+mostly everything in plain HTML and CSS, and decided to keep it like
+that for as long as possible. As of this writing, I haven&amp;rsquo;t included
+any Javascript code in the page. Probably I will use some to add my
+&lt;a class="link" href="http://gist.github.com/balkian" target="_blank" rel="noopener"
+>gists&lt;/a> and
+&lt;a class="link" href="http://github.com/balkian" target="_blank" rel="noopener"
+>repositories&lt;/a>, but we will see about that.&lt;/p>
+&lt;p>I think the code speaks for itself, so you can check out &lt;a class="link" href="http://github.com/balkian/balkian.github.com" target="_blank" rel="noopener"
+>my repository
+on Github&lt;/a>. You can clone
+and deploy it easily like this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git clone
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">https://github.com/balkian/balkian.github.com &lt;span class="nb">cd&lt;/span> balkian.github.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">jekyll serve -w
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>I will keep updating this post with information about:&lt;/p>
+&lt;ul>
+&lt;li>Some Jekyll plugins that might be useful&lt;/li>
+&lt;li>What CSS tricks I learnt&lt;/li>
+&lt;li>The webfonts I used&lt;/li>
+&lt;li>The badge on the left side of the page&lt;/li>
+&lt;/ul></description></item><item><title>Emacs: show plain text version</title><link>https://balkian.com/p/emacs-show-plain-text-version/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/p/emacs-show-plain-text-version/</guid><description>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-lisp" data-lang="lisp">&lt;span class="line">&lt;span class="cl">&lt;span class="p">(&lt;/span>&lt;span class="nv">font-lock-mode&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Fixing HDMI flickering</title><link>https://balkian.com/p/fixing-hdmi-flickering/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/p/fixing-hdmi-flickering/</guid><description>&lt;img src="https://balkian.com/img/rpi.png" alt="Featured image of post Fixing HDMI flickering" />&lt;p>Use this config to avoid HDMI flickering/intermittent blanking on RPI with a 1400x1050 VGA monitor.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">hdmi_drive&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">hdmi_group&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">hdmi_mode&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">42&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">disable_overscan&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">config_hdmi_boost&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">7&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

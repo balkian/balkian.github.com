@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Rdf on J. Fernando Sánchez</title><link>https://balkian.com/tags/rdf/</link><description>Recent content in Rdf on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 26 Feb 2025 23:22:59 +0100</lastBuildDate><atom:link href="https://balkian.com/tags/rdf/index.xml" rel="self" type="application/rss+xml"/><item><title>Bridging RDF, JSON-LD and Dataclasses</title><link>https://balkian.com/p/bridging-rdf-json-ld-and-dataclasses/</link><pubDate>Wed, 26 Feb 2025 23:22:59 +0100</pubDate><guid>https://balkian.com/p/bridging-rdf-json-ld-and-dataclasses/</guid><description>&lt;p>In the RDF world, data is expressed as a collection of triples.
+These triples can contain IRIs that may or may not be accessible or valid.
+And the use of these IRIs may or may not adhere to a vocabulary.
+Checking the validity of the IRIs and the semantics of the triples is an additional step.&lt;/p>
+&lt;h2 id="the-rdflib-way">The &lt;code>rdflib&lt;/code> way
+&lt;/h2>&lt;p>&lt;code>rdflib&lt;/code> only models IRIs, values and namespaces.
+Developers need to be cognisant of the URIs they are using, and the vocabularies being used.
+Prior to version 2.0, senpy followed a very similar model.
+It had a base class to represent a generic node.
+Each instance then gets its own automatically generated id, and will act like a normal dictionary, whose keys and values will be serialized as a JSON-LD dictionary.
+Multiple subclasses were also included to model specific types of node, mostly to provide convenience methods for the given subtype.
+Here is an example of a subclass, &lt;code>Entity&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">entry&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">Entry&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">entry&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;vocab:property&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">25&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">entry&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">jsonld&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Would print something like this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;@id&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;:Entry_202505....&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;@type&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;prefix:Entity&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;vocab:property&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">25&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Producing correct triples using this model requires using the vocabularies and URIs properly, with little to no tooling to enforce it.
+This poses a big problem for a tool like Senpy, which aims to make it easier for professionals without a background in RDF to build and consume semantic NLP ser
+If an attribute is not a URI and is not included in the global JSON-LD context, it will not generate a triple in the final graph.
+Moreover, there is way to enforce that the vocabularies and the&lt;/p>
+&lt;p>Pros:&lt;/p>
+&lt;ul>
+&lt;li>Flexible/extensible&lt;/li>
+&lt;li>Lightweight. This is mostly JSON-LD in Python&amp;rsquo;s clothing.&lt;/li>
+&lt;li>Naturally maps to both &lt;code>rdflib&lt;/code> and writing &lt;code>json-ld&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>Cons:&lt;/p>
+&lt;ul>
+&lt;li>Discoverability. Documentation and examples are needed to know which attributes to use&lt;/li>
+&lt;li>Error-prone. It is easy to misuse a property, or introduce typos&lt;/li>
+&lt;li>Tight coupling with semantics/RDF. One needs to know a thing or two about RDF, especially if new vocabularies or annotations need to be used.&lt;/li>
+&lt;/ul>
+&lt;h2 id="the-object-oriented-way">The object-oriented way
+&lt;/h2>&lt;p>An obvious alternative to this problem in an object-oriented language like python is to use classes to represent our data model.
+These classes can define the specific attributes available, and typing annotations can serve both as a guide for the developer, and as a means to automatically
+validate objects at runtime.
+There are tools like &lt;a class="link" href="https://pydantic.dev/" target="_blank" rel="noopener"
+>pydantic&lt;/a> that make this process very simple.
+Then, we only need to define how your models should be serialized into JSON-LD.
+We can thoroughly test this serialization to ensure that the resulting object is correct and produces the right RDF graph.
+Going back to our previous example, we could define an Entry class as a dataclass, and define all the possible types of annotations as attributes.&lt;/p>
+&lt;p>This model works great when all the possible attributes are known ahead of time.
+But it starts to break when the model provided is not comprehensive enough, or customers of your library need to provide their own ad-hoc annotations / attribut
+es.
+This could be solved by encouring consumers of our library to define their own subclasses whenever they need to add new attributes.
+This works perfectly fine for serialization, but it breaks if your library needs to automatically deserialize these subclasses.
+It also breaks if different parts of the code need to add their own attributes on the same data at the same time.
+This was precisely the case of &lt;code>senpy&lt;/code>, where entities are annotated by different plugins, each providing a different set of annotations.&lt;/p>
+&lt;p>Pros:&lt;/p>
+&lt;ul>
+&lt;li>Discoverability. All possible attributes are known ahead of time, including their possible types.&lt;/li>
+&lt;li>Decoupling from RDF. Developers only need to know about the dataclasses provided. The mapping to the RDF world is already encoded in the dataclass.&lt;/li>
+&lt;/ul>
+&lt;p>Cons:&lt;/p>
+&lt;ul>
+&lt;li>Rigidity. Adding new types of annotations requires modifying the models, in the main module.&lt;/li>
+&lt;li>Polymorphism.&lt;/li>
+&lt;/ul>
+&lt;h2 id="a-hybrid-approach">A hybrid approach
+&lt;/h2>&lt;p>Whichever solution is chosen in the end, it needs to:&lt;/p>
+&lt;ul>
+&lt;li>Make it easy and error-proof to add the most common types of annotations&lt;/li>
+&lt;li>Allow for additional annotations/attributes to be added&lt;/li>
+&lt;li>Allow for upgrades in the future. i.e., converting the most common custom annotations into built-in ones&lt;/li>
+&lt;li>Allow for deserialization of custom types&lt;/li>
+&lt;li>Allow multiple consumers to add their own annotations&lt;/li>
+&lt;/ul></description></item></channel></rss>
