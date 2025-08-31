@@ -36,3 +36,20 @@ From tqdm's github repository:
 * Disk-space efficient, with a global cache for dependency deduplication.
 * Installable without Rust or Python via curl or pip.
 * Supports macOS, Linux, and Windows.
+
+### [pipdeptree](https://pypi.org/project/pipdeptree/)
+
+A tool to generate a dependency tree from a virtualenv.
+
+Useful to generate a clean `requirements.txt` or to clean up one that was generated with `pip freeze`.
+Usage:
+
+```
+$ pipdeptree --exclude pip,pipdeptree,setuptools,wheel --warn silence | grep -E '^\w+' | tee requirements-clean.txt
+Flask==0.10.1
+gnureadline==8.0.0
+Lookupy==0.1
+pipdeptree==2.0.0b1
+setuptools==47.1.1
+wheel==0.34.2
+```
