@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Programming on J. Fernando Sánchez</title><link>https://balkian.com/categories/programming/</link><description>Recent content in Programming on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 26 Feb 2025 23:22:59 +0100</lastBuildDate><atom:link href="https://balkian.com/categories/programming/index.xml" rel="self" type="application/rss+xml"/><item><title>Bridging RDF, JSON-LD and Dataclasses</title><link>https://balkian.com/p/bridging-rdf-json-ld-and-dataclasses/</link><pubDate>Wed, 26 Feb 2025 23:22:59 +0100</pubDate><guid>https://balkian.com/p/bridging-rdf-json-ld-and-dataclasses/</guid><description>&lt;p&gt;In the RDF world, data is expressed as a collection of triples.
+These triples can contain IRIs that may or may not be accessible or valid.
+And the use of these IRIs may or may not adhere to a vocabulary.
+Checking the validity of the IRIs and the semantics of the triples is an additional step.&lt;/p&gt;
+&lt;h2 id="the-rdflib-way"&gt;The &lt;code&gt;rdflib&lt;/code&gt; way
+&lt;/h2&gt;&lt;p&gt;&lt;code&gt;rdflib&lt;/code&gt; only models IRIs, values and namespaces.
+Developers need to be cognisant of the URIs they are using, and the vocabularies being used.
+Prior to version 2.0, senpy followed a very similar model.
+It had a base class to represent a generic node.
+Each instance then gets its own automatically generated id, and will act like a normal dictionary, whose keys and values will be serialized as a JSON-LD dictionary.
+Multiple subclasses were also included to model specific types of node, mostly to provide convenience methods for the given subtype.
+Here is an example of a subclass, &lt;code&gt;Entity&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;entry&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Entry&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;vocab:property&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;25&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;jsonld&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Would print something like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;@id&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;:Entry_202505....&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;@type&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;prefix:Entity&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;vocab:property&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;25&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Producing correct triples using this model requires using the vocabularies and URIs properly, with little to no tooling to enforce it.
+This poses a big problem for a tool like Senpy, which aims to make it easier for professionals without a background in RDF to build and consume semantic NLP ser
+If an attribute is not a URI and is not included in the global JSON-LD context, it will not generate a triple in the final graph.
+Moreover, there is way to enforce that the vocabularies and the&lt;/p&gt;
+&lt;p&gt;Pros:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Flexible/extensible&lt;/li&gt;
+&lt;li&gt;Lightweight. This is mostly JSON-LD in Python&amp;rsquo;s clothing.&lt;/li&gt;
+&lt;li&gt;Naturally maps to both &lt;code&gt;rdflib&lt;/code&gt; and writing &lt;code&gt;json-ld&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Cons:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Discoverability. Documentation and examples are needed to know which attributes to use&lt;/li&gt;
+&lt;li&gt;Error-prone. It is easy to misuse a property, or introduce typos&lt;/li&gt;
+&lt;li&gt;Tight coupling with semantics/RDF. One needs to know a thing or two about RDF, especially if new vocabularies or annotations need to be used.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="the-object-oriented-way"&gt;The object-oriented way
+&lt;/h2&gt;&lt;p&gt;An obvious alternative to this problem in an object-oriented language like python is to use classes to represent our data model.
+These classes can define the specific attributes available, and typing annotations can serve both as a guide for the developer, and as a means to automatically
+validate objects at runtime.
+There are tools like &lt;a class="link" href="https://pydantic.dev/" target="_blank" rel="noopener"
+&gt;pydantic&lt;/a&gt; that make this process very simple.
+Then, we only need to define how your models should be serialized into JSON-LD.
+We can thoroughly test this serialization to ensure that the resulting object is correct and produces the right RDF graph.
+Going back to our previous example, we could define an Entry class as a dataclass, and define all the possible types of annotations as attributes.&lt;/p&gt;
+&lt;p&gt;This model works great when all the possible attributes are known ahead of time.
+But it starts to break when the model provided is not comprehensive enough, or customers of your library need to provide their own ad-hoc annotations / attribut
+es.
+This could be solved by encouring consumers of our library to define their own subclasses whenever they need to add new attributes.
+This works perfectly fine for serialization, but it breaks if your library needs to automatically deserialize these subclasses.
+It also breaks if different parts of the code need to add their own attributes on the same data at the same time.
+This was precisely the case of &lt;code&gt;senpy&lt;/code&gt;, where entities are annotated by different plugins, each providing a different set of annotations.&lt;/p&gt;
+&lt;p&gt;Pros:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Discoverability. All possible attributes are known ahead of time, including their possible types.&lt;/li&gt;
+&lt;li&gt;Decoupling from RDF. Developers only need to know about the dataclasses provided. The mapping to the RDF world is already encoded in the dataclass.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Cons:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Rigidity. Adding new types of annotations requires modifying the models, in the main module.&lt;/li&gt;
+&lt;li&gt;Polymorphism.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="a-hybrid-approach"&gt;A hybrid approach
+&lt;/h2&gt;&lt;p&gt;Whichever solution is chosen in the end, it needs to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Make it easy and error-proof to add the most common types of annotations&lt;/li&gt;
+&lt;li&gt;Allow for additional annotations/attributes to be added&lt;/li&gt;
+&lt;li&gt;Allow for upgrades in the future. i.e., converting the most common custom annotations into built-in ones&lt;/li&gt;
+&lt;li&gt;Allow for deserialization of custom types&lt;/li&gt;
+&lt;li&gt;Allow multiple consumers to add their own annotations&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>uv - One rust tool to rule all pythons</title><link>https://balkian.com/p/uv-one-rust-tool-to-rule-all-pythons/</link><pubDate>Mon, 17 Feb 2025 23:02:47 +0100</pubDate><guid>https://balkian.com/p/uv-one-rust-tool-to-rule-all-pythons/</guid><description>&lt;img src="https://balkian.com/img/uv.png" alt="Featured image of post uv - One rust tool to rule all pythons" /&gt;&lt;p&gt;Long story short: I&amp;rsquo;m now using &lt;a class="link" href="https://github.com/astral-sh/uv" target="_blank" rel="noopener"
+&gt;uv&lt;/a&gt;, and so should you.
+It is a great replacement for pip, pip-tools, pipx, poetry, pyenv, twine, virtualenv, and more.&lt;/p&gt;
+&lt;h2 id="context"&gt;Context
+&lt;/h2&gt;&lt;p&gt;For years, my strategy to manage python projects has been a mix of a custom &lt;code&gt;setup.py&lt;/code&gt;, several hand-crafted &lt;code&gt;requirements.txt&lt;/code&gt; files (through &lt;code&gt;pip freeze&lt;/code&gt;), a custom virtualenv per project, and multiple tools to upload to PyPI.
+Although this works, this setup has many drawbacks:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It requires user intervention (creating a venv, sourcing it, handling new deps). This isn&amp;rsquo;t ideal if you want new (probably inexperienced) users to use your projects.&lt;/li&gt;
+&lt;li&gt;On a similar note, the whole process needs to be well documented if you want other users to contribute or maintain the code.&lt;/li&gt;
+&lt;li&gt;Pinning dependency versions is finicky, and I&amp;rsquo;ve run into problems beause of that.&lt;/li&gt;
+&lt;li&gt;Creating a new project involves a template, or copying files from an older project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Of course, this is nothing new.
+There is a whole site dedicated to &lt;a class="link" href="https://packaging.python.org/en/latest/" target="_blank" rel="noopener"
+&gt;packaging your Python project&lt;/a&gt;.
+A plethora of different projects have come and go, with varying degrees of success.&lt;/p&gt;
+&lt;h2 id="alternatives-poetry"&gt;Alternatives (poetry)
+&lt;/h2&gt;&lt;p&gt;About a year before trying &lt;code&gt;uv&lt;/code&gt;, I tried to catch up with the ecosystem and get to know the &lt;code&gt;blessed new way&lt;/code&gt;.
+However, the task proved to be a little more difficult, as the landscape is filled with a myriad of alternatives, each with their own set of drawbacks and detractors.
+Packaging has historically been a weak spot, in ironical contradiction to the Zen of Python&amp;rsquo;s &amp;ldquo;There should be one&amp;ndash; and preferably only one &amp;ndash;obvious way to do it&amp;rdquo;,&lt;/p&gt;
+&lt;p&gt;I eventually settled on &lt;a class="link" href="https://python-poetry.org/" target="_blank" rel="noopener"
+&gt;poetry&lt;/a&gt;.
+Mostly because it seemed like the most popular alternative.&lt;/p&gt;
+&lt;p&gt;There are many things I liked about it.
+First of all, having a convention for dependencies (&lt;code&gt;pyproject.toml&lt;/code&gt;) and a tool that properly handles them was nice.
+It also removed the need to remember specific incantations to build and publish my Python projects.
+Lastly, I mixed it &lt;code&gt;poetry2nix&lt;/code&gt; to create reproducible python environments using nix.
+This makes for a very powerful experience.&lt;/p&gt;
+&lt;p&gt;However, there were multiple hiccups.
+First of all, it took me some time to figure out which specific fields to use (each tool can define ad-hoc properties in a the &lt;code&gt;pyproject.toml&lt;/code&gt; file), and some of them seemed redundant with the more generic ones.
+Full disclosure, this specific point might be a mistake on my side, and I do not remember the details.
+The second one is speed.
+(Re-)creating an environment took a non-negligible amount of time.&lt;/p&gt;
+&lt;h2 id="enter-light-uv"&gt;Enter &lt;del&gt;light&lt;/del&gt; &lt;code&gt;uv&lt;/code&gt;
+&lt;/h2&gt;&lt;p&gt;According to its repository, &lt;code&gt;uv &lt;/code&gt;can replace pip, pip-tools, pipx, poetry, pyenv, twine, virtualenv, and more.
+Not only that, but it also claims to do that 10-100 times faster than pip.
+I must admit that it being written in rust was a another selling point for me, as I&amp;rsquo;m looking for excuses to collaborate in a decently-sized rust projejct.&lt;/p&gt;
+&lt;p&gt;Installing it is dead simple: simply download the binary (e.g., with curl) or run &lt;code&gt;pip install uv&lt;/code&gt;.
+You won&amp;rsquo;t need much more: &lt;code&gt;uv&lt;/code&gt; seems to just do the right thing out of the box.
+And it does it really, really fast.
+The rest of the time it gets out of the way.&lt;/p&gt;
+&lt;p&gt;My only gripe so far is that I don&amp;rsquo;t seem to find a built-in command to drop into a shell, but that is nothing that &lt;code&gt;uv run $SHELL&lt;/code&gt; cannot fix.&lt;/p&gt;
+&lt;h2 id="common-operations"&gt;Common operations
+&lt;/h2&gt;&lt;h3 id="initialize-a-repository"&gt;Initialize a repository
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uv init
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="adding-dependencies"&gt;Adding dependencies
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uv add senpy
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="running-commands-inside-the-environment"&gt;Running commands inside the environment
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uv run &amp;lt;COMMAND&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;# e.g., run a shell using your python version and dependencies
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uv run $SHELL
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="dependency-tree"&gt;Dependency tree
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;span class="lnt"&gt;19
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uv shell
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Resolved 44 packages in 1ms
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;my-project v0.1.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;├── fastapi[standard] v0.115.8
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── pydantic v2.10.6
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ │ ├── annotated-types v0.7.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ │ ├── pydantic-core v2.27.2
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ │ │ └── typing-extensions v4.12.2
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ │ └── typing-extensions v4.12.2
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── starlette v0.45.3
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ │ └── anyio v4.8.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ │ ├── exceptiongroup v1.2.2
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ │ ├── idna v3.10
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ │ ├── sniffio v1.3.1
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ │ └── typing-extensions v4.12.2
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── typing-extensions v4.12.2
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ ├── email-validator v2.2.0 (extra: standard)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;│ │ ├── dnspython v2.7.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>Python</title><link>https://balkian.com/cheatsheet/python/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/cheatsheet/python/</guid><description>&lt;img src="https://balkian.com/img/python.png" alt="Featured image of post Python" /&gt;&lt;h2 id="interesting-libraries"&gt;Interesting libraries
+&lt;/h2&gt;&lt;h3 id="tqdm"&gt;&lt;a class="link" href="https://github.com/tqdm/tqdm" target="_blank" rel="noopener"
+&gt;TQDM&lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;From tqdm&amp;rsquo;s github repository:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;tqdm means &amp;ldquo;progress&amp;rdquo; in Arabic (taqadum, تقدّم) and an abbreviation for &amp;ldquo;I love you so much&amp;rdquo; in Spanish (te quiero demasiado).&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src="https://raw.githubusercontent.com/tqdm/tqdm/master/images/tqdm.gif"
+loading="lazy"
+alt="TQDM in action"
+&gt;&lt;/p&gt;
+&lt;h2 id="tools"&gt;Tools
+&lt;/h2&gt;&lt;h3 id="uv"&gt;&lt;a class="link" href="https://github.com/astral-sh/uv" target="_blank" rel="noopener"
+&gt;uv&lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;🚀 A single tool to replace pip, pip-tools, pipx, poetry, pyenv, twine, virtualenv, and more.
+⚡️ 10-100x faster than pip.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Provides comprehensive project management, with a universal lockfile.&lt;/li&gt;
+&lt;li&gt;Runs scripts, with support for inline dependency metadata.&lt;/li&gt;
+&lt;li&gt;Installs and manages Python versions.&lt;/li&gt;
+&lt;li&gt;Runs and installs tools published as Python packages.&lt;/li&gt;
+&lt;li&gt;Includes a pip-compatible interface for a performance boost with a familiar CLI.&lt;/li&gt;
+&lt;li&gt;Supports Cargo-style workspaces for scalable projects.&lt;/li&gt;
+&lt;li&gt;Disk-space efficient, with a global cache for dependency deduplication.&lt;/li&gt;
+&lt;li&gt;Installable without Rust or Python via curl or pip.&lt;/li&gt;
+&lt;li&gt;Supports macOS, Linux, and Windows.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="pipdeptree"&gt;&lt;a class="link" href="https://pypi.org/project/pipdeptree/" target="_blank" rel="noopener"
+&gt;pipdeptree&lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;A tool to generate a dependency tree from a virtualenv.&lt;/p&gt;
+&lt;p&gt;Useful to generate a clean &lt;code&gt;requirements.txt&lt;/code&gt; or to clean up one that was generated with &lt;code&gt;pip freeze&lt;/code&gt;.
+Usage:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-gdscript3" data-lang="gdscript3"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="n"&gt;pipdeptree&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;exclude&lt;/span&gt; &lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;pipdeptree&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;setuptools&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;wheel&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;warn&lt;/span&gt; &lt;span class="n"&gt;silence&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;E&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;^\w+&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;tee&lt;/span&gt; &lt;span class="n"&gt;requirements&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;clean&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;txt&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mf"&gt;0.10&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;gnureadline&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mf"&gt;8.0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Lookupy&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mf"&gt;0.1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;pipdeptree&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mf"&gt;2.0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="n"&gt;b1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;setuptools&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mf"&gt;47.1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;wheel&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mf"&gt;0.34&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item></channel></rss>

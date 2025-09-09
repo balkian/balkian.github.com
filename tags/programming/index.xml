@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Programming on J. Fernando Sánchez</title><link>https://balkian.com/tags/programming/</link><description>Recent content in Programming on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://balkian.com/tags/programming/index.xml" rel="self" type="application/rss+xml"/><item><title>Python</title><link>https://balkian.com/cheatsheet/python/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/cheatsheet/python/</guid><description>&lt;img src="https://balkian.com/img/python.png" alt="Featured image of post Python" /&gt;&lt;h2 id="interesting-libraries"&gt;Interesting libraries
+&lt;/h2&gt;&lt;h3 id="tqdm"&gt;&lt;a class="link" href="https://github.com/tqdm/tqdm" target="_blank" rel="noopener"
+&gt;TQDM&lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;From tqdm&amp;rsquo;s github repository:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;tqdm means &amp;ldquo;progress&amp;rdquo; in Arabic (taqadum, تقدّم) and an abbreviation for &amp;ldquo;I love you so much&amp;rdquo; in Spanish (te quiero demasiado).&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src="https://raw.githubusercontent.com/tqdm/tqdm/master/images/tqdm.gif"
+loading="lazy"
+alt="TQDM in action"
+&gt;&lt;/p&gt;
+&lt;h2 id="tools"&gt;Tools
+&lt;/h2&gt;&lt;h3 id="uv"&gt;&lt;a class="link" href="https://github.com/astral-sh/uv" target="_blank" rel="noopener"
+&gt;uv&lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;🚀 A single tool to replace pip, pip-tools, pipx, poetry, pyenv, twine, virtualenv, and more.
+⚡️ 10-100x faster than pip.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Provides comprehensive project management, with a universal lockfile.&lt;/li&gt;
+&lt;li&gt;Runs scripts, with support for inline dependency metadata.&lt;/li&gt;
+&lt;li&gt;Installs and manages Python versions.&lt;/li&gt;
+&lt;li&gt;Runs and installs tools published as Python packages.&lt;/li&gt;
+&lt;li&gt;Includes a pip-compatible interface for a performance boost with a familiar CLI.&lt;/li&gt;
+&lt;li&gt;Supports Cargo-style workspaces for scalable projects.&lt;/li&gt;
+&lt;li&gt;Disk-space efficient, with a global cache for dependency deduplication.&lt;/li&gt;
+&lt;li&gt;Installable without Rust or Python via curl or pip.&lt;/li&gt;
+&lt;li&gt;Supports macOS, Linux, and Windows.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="pipdeptree"&gt;&lt;a class="link" href="https://pypi.org/project/pipdeptree/" target="_blank" rel="noopener"
+&gt;pipdeptree&lt;/a&gt;
+&lt;/h3&gt;&lt;p&gt;A tool to generate a dependency tree from a virtualenv.&lt;/p&gt;
+&lt;p&gt;Useful to generate a clean &lt;code&gt;requirements.txt&lt;/code&gt; or to clean up one that was generated with &lt;code&gt;pip freeze&lt;/code&gt;.
+Usage:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-gdscript3" data-lang="gdscript3"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="n"&gt;pipdeptree&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;exclude&lt;/span&gt; &lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;pipdeptree&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;setuptools&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;wheel&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;warn&lt;/span&gt; &lt;span class="n"&gt;silence&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;E&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;^\w+&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;tee&lt;/span&gt; &lt;span class="n"&gt;requirements&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;clean&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;txt&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mf"&gt;0.10&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;gnureadline&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mf"&gt;8.0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;Lookupy&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mf"&gt;0.1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;pipdeptree&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mf"&gt;2.0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="n"&gt;b1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;setuptools&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mf"&gt;47.1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;wheel&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mf"&gt;0.34&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item></channel></rss>

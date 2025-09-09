@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Rust on J. Fernando Sánchez</title><link>https://balkian.com/tags/rust/</link><description>Recent content in Rust on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 20 Jan 2023 18:11:00 +0000</lastBuildDate><atom:link href="https://balkian.com/tags/rust/index.xml" rel="self" type="application/rss+xml"/><item><title>Kanata: advanced keyboard configuration</title><link>https://balkian.com/p/kanata-advanced-keyboard-configuration/</link><pubDate>Fri, 20 Jan 2023 18:11:00 +0000</pubDate><guid>https://balkian.com/p/kanata-advanced-keyboard-configuration/</guid><description>&lt;p&gt;&lt;a class="link" href="https://github.com/jtroo/kanata/" target="_blank" rel="noopener"
+&gt;Kanata&lt;/a&gt; is a software keyboard remapper that aims to improve keyboard comfort and usability with advanced customization.
+Keyboard remappers are a good alternative to running a custom keyboard with QMK/ZMK, and have two main advantages: they work on any keyboard, and you can configure them to launch any command or program you want, not just key presses.
+On the other hand, you need to configure them on every PC/OS you&amp;rsquo;re using your keyboard with, and all the processing is done on software on top of the OS, so there may be glitches and performance issues.&lt;/p&gt;
+&lt;p&gt;The project was inspired by the more popular &lt;a class="link" href="https://github.com/kmonad/kmonad" target="_blank" rel="noopener"
+&gt;KMonad&lt;/a&gt;, and the author cites some of the &lt;a class="link" href="https://github.com/jtroo/kanata/blob/main/docs/kmonad_comparison.md" target="_blank" rel="noopener"
+&gt;differences&lt;/a&gt;.
+Both projects use a very similar configuration format based on lisp.
+The configuration consists of a set of general options, a base key configuration, a series of layers, and macros that can be used within those layers.
+&lt;a class="link" href="https://github.com/jtroo/kanata/blob/main/cfg_samples/kanata.kbd" target="_blank" rel="noopener"
+&gt;Here&amp;rsquo;s a very complete config that serves as documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;One big disadvantage of the lispy configuration is that you need to specify your hardware layout/all your keys, and repeat that every time you define a new layer.
+The result visually maps to your keyboard, but can be very verbose/big if you need really few changes.&lt;/p&gt;
+&lt;p&gt;&lt;a class="link" href="https://github.com/rvaiya/keyd/" target="_blank" rel="noopener"
+&gt;Keyd&lt;/a&gt; is another alternative with a more declarative configuration format, which might lend itself to smaller.&lt;/p&gt;
+&lt;p&gt;For now I&amp;rsquo;m just trying it out, and getting a feel for using fewer keys before I build my own ZMK keyboard.
+I particularly like the option of using mod-keys on the home row (e.g., having A work as a CTRL when held).
+Mod-tap, tap-dancing and the like are very common techniques in sub-40% layouts, where there simply aren&amp;rsquo;t enough keys for all the letters and symbols.
+In a regular-sized keyboard, these techniques can also help you stay on the home row and type more comfortably.
+At least, that&amp;rsquo;s the idea.
+We&amp;rsquo;ll see if I like it enough to stick with it.&lt;/p&gt;
+&lt;p&gt;For now, here&amp;rsquo;s my very simple config:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;span class="lnt"&gt;19
+&lt;/span&gt;&lt;span class="lnt"&gt;20
+&lt;/span&gt;&lt;span class="lnt"&gt;21
+&lt;/span&gt;&lt;span class="lnt"&gt;22
+&lt;/span&gt;&lt;span class="lnt"&gt;23
+&lt;/span&gt;&lt;span class="lnt"&gt;24
+&lt;/span&gt;&lt;span class="lnt"&gt;25
+&lt;/span&gt;&lt;span class="lnt"&gt;26
+&lt;/span&gt;&lt;span class="lnt"&gt;27
+&lt;/span&gt;&lt;span class="lnt"&gt;28
+&lt;/span&gt;&lt;span class="lnt"&gt;29
+&lt;/span&gt;&lt;span class="lnt"&gt;30
+&lt;/span&gt;&lt;span class="lnt"&gt;31
+&lt;/span&gt;&lt;span class="lnt"&gt;32
+&lt;/span&gt;&lt;span class="lnt"&gt;33
+&lt;/span&gt;&lt;span class="lnt"&gt;34
+&lt;/span&gt;&lt;span class="lnt"&gt;35
+&lt;/span&gt;&lt;span class="lnt"&gt;36
+&lt;/span&gt;&lt;span class="lnt"&gt;37
+&lt;/span&gt;&lt;span class="lnt"&gt;38
+&lt;/span&gt;&lt;span class="lnt"&gt;39
+&lt;/span&gt;&lt;span class="lnt"&gt;40
+&lt;/span&gt;&lt;span class="lnt"&gt;41
+&lt;/span&gt;&lt;span class="lnt"&gt;42
+&lt;/span&gt;&lt;span class="lnt"&gt;43
+&lt;/span&gt;&lt;span class="lnt"&gt;44
+&lt;/span&gt;&lt;span class="lnt"&gt;45
+&lt;/span&gt;&lt;span class="lnt"&gt;46
+&lt;/span&gt;&lt;span class="lnt"&gt;47
+&lt;/span&gt;&lt;span class="lnt"&gt;48
+&lt;/span&gt;&lt;span class="lnt"&gt;49
+&lt;/span&gt;&lt;span class="lnt"&gt;50
+&lt;/span&gt;&lt;span class="lnt"&gt;51
+&lt;/span&gt;&lt;span class="lnt"&gt;52
+&lt;/span&gt;&lt;span class="lnt"&gt;53
+&lt;/span&gt;&lt;span class="lnt"&gt;54
+&lt;/span&gt;&lt;span class="lnt"&gt;55
+&lt;/span&gt;&lt;span class="lnt"&gt;56
+&lt;/span&gt;&lt;span class="lnt"&gt;57
+&lt;/span&gt;&lt;span class="lnt"&gt;58
+&lt;/span&gt;&lt;span class="lnt"&gt;59
+&lt;/span&gt;&lt;span class="lnt"&gt;60
+&lt;/span&gt;&lt;span class="lnt"&gt;61
+&lt;/span&gt;&lt;span class="lnt"&gt;62
+&lt;/span&gt;&lt;span class="lnt"&gt;63
+&lt;/span&gt;&lt;span class="lnt"&gt;64
+&lt;/span&gt;&lt;span class="lnt"&gt;65
+&lt;/span&gt;&lt;span class="lnt"&gt;66
+&lt;/span&gt;&lt;span class="lnt"&gt;67
+&lt;/span&gt;&lt;span class="lnt"&gt;68
+&lt;/span&gt;&lt;span class="lnt"&gt;69
+&lt;/span&gt;&lt;span class="lnt"&gt;70
+&lt;/span&gt;&lt;span class="lnt"&gt;71
+&lt;/span&gt;&lt;span class="lnt"&gt;72
+&lt;/span&gt;&lt;span class="lnt"&gt;73
+&lt;/span&gt;&lt;span class="lnt"&gt;74
+&lt;/span&gt;&lt;span class="lnt"&gt;75
+&lt;/span&gt;&lt;span class="lnt"&gt;76
+&lt;/span&gt;&lt;span class="lnt"&gt;77
+&lt;/span&gt;&lt;span class="lnt"&gt;78
+&lt;/span&gt;&lt;span class="lnt"&gt;79
+&lt;/span&gt;&lt;span class="lnt"&gt;80
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-lisp" data-lang="lisp"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;defcfg&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;;; Your keyboard device will likely differ from this.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;linux-dev&lt;/span&gt; &lt;span class="nv"&gt;/dev/input/by-id/usb-Logitech_USB_Receiver-if02-event-mouse&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;;; Windows doesn&amp;#39;t need any input/output configuration entries; however, there&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;;; must still be a defcfg entry. You can keep the linux-dev entry or delete&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;;; it and leave it empty.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;defsrc&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;grv&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt; &lt;span class="mi"&gt;7&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="mi"&gt;9&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="nf"&gt;-&lt;/span&gt; &lt;span class="nf"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;bspc&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;tab&lt;/span&gt; &lt;span class="nv"&gt;q&lt;/span&gt; &lt;span class="nv"&gt;w&lt;/span&gt; &lt;span class="nv"&gt;e&lt;/span&gt; &lt;span class="nv"&gt;r&lt;/span&gt; &lt;span class="no"&gt;t&lt;/span&gt; &lt;span class="nv"&gt;y&lt;/span&gt; &lt;span class="nv"&gt;u&lt;/span&gt; &lt;span class="nv"&gt;i&lt;/span&gt; &lt;span class="nv"&gt;o&lt;/span&gt; &lt;span class="nv"&gt;p&lt;/span&gt; &lt;span class="nv"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;caps&lt;/span&gt; &lt;span class="nv"&gt;a&lt;/span&gt; &lt;span class="nv"&gt;s&lt;/span&gt; &lt;span class="nv"&gt;d&lt;/span&gt; &lt;span class="nv"&gt;f&lt;/span&gt; &lt;span class="nv"&gt;g&lt;/span&gt; &lt;span class="nv"&gt;h&lt;/span&gt; &lt;span class="nv"&gt;j&lt;/span&gt; &lt;span class="nv"&gt;k&lt;/span&gt; &lt;span class="nv"&gt;l&lt;/span&gt; &lt;span class="c1"&gt;; &amp;#39; ret&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;lsft&lt;/span&gt; &lt;span class="nv"&gt;\ z&lt;/span&gt; &lt;span class="nv"&gt;x&lt;/span&gt; &lt;span class="nv"&gt;c&lt;/span&gt; &lt;span class="nv"&gt;v&lt;/span&gt; &lt;span class="nv"&gt;b&lt;/span&gt; &lt;span class="nv"&gt;n&lt;/span&gt; &lt;span class="nv"&gt;m&lt;/span&gt; &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="nf"&gt;/&lt;/span&gt; &lt;span class="nv"&gt;rsft&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;lctl&lt;/span&gt; &lt;span class="nv"&gt;lmet&lt;/span&gt; &lt;span class="nv"&gt;lalt&lt;/span&gt; &lt;span class="nv"&gt;spc&lt;/span&gt; &lt;span class="nv"&gt;ralt&lt;/span&gt; &lt;span class="nv"&gt;rmet&lt;/span&gt; &lt;span class="nv"&gt;rctl&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;deflayer&lt;/span&gt; &lt;span class="nv"&gt;qwerty&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;grv&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;@warrows&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;lctrl&lt;/span&gt; &lt;span class="nv"&gt;@alctrl&lt;/span&gt; &lt;span class="nv"&gt;@slsft&lt;/span&gt; &lt;span class="nv"&gt;@dlalt&lt;/span&gt; &lt;span class="nv"&gt;@flmet&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;@jrmet&lt;/span&gt; &lt;span class="nv"&gt;@kralt&lt;/span&gt; &lt;span class="nv"&gt;@lrsft&lt;/span&gt; &lt;span class="nv"&gt;@&lt;/span&gt;&lt;span class="c1"&gt;;rctrl _ _&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;@smartspace&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;deflayer&lt;/span&gt; &lt;span class="nv"&gt;arrows&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;@flmet&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;left&lt;/span&gt; &lt;span class="nv"&gt;down&lt;/span&gt; &lt;span class="nv"&gt;up&lt;/span&gt; &lt;span class="nv"&gt;rght&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;@smartspace&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;deflayer&lt;/span&gt; &lt;span class="nv"&gt;colemak&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;grv&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;tab&lt;/span&gt; &lt;span class="nv"&gt;q&lt;/span&gt; &lt;span class="nv"&gt;w&lt;/span&gt; &lt;span class="nv"&gt;f&lt;/span&gt; &lt;span class="nv"&gt;p&lt;/span&gt; &lt;span class="nv"&gt;b&lt;/span&gt; &lt;span class="nv"&gt;j&lt;/span&gt; &lt;span class="nv"&gt;l&lt;/span&gt; &lt;span class="nv"&gt;u&lt;/span&gt; &lt;span class="nv"&gt;y&lt;/span&gt; &lt;span class="c1"&gt;; [ ] &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;lctrl&lt;/span&gt; &lt;span class="nv"&gt;@alctrl&lt;/span&gt; &lt;span class="nv"&gt;@rlsft&lt;/span&gt; &lt;span class="nv"&gt;@slalt&lt;/span&gt; &lt;span class="nv"&gt;@tlmet&lt;/span&gt; &lt;span class="nv"&gt;g&lt;/span&gt; &lt;span class="nv"&gt;m&lt;/span&gt; &lt;span class="nv"&gt;@nrmet&lt;/span&gt; &lt;span class="nv"&gt;@eralt&lt;/span&gt; &lt;span class="nv"&gt;@irsft&lt;/span&gt; &lt;span class="nv"&gt;@orctrl&lt;/span&gt; &lt;span class="o"&gt;&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;ret&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;lsft&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;z&lt;/span&gt; &lt;span class="nv"&gt;x&lt;/span&gt; &lt;span class="nv"&gt;c&lt;/span&gt; &lt;span class="nv"&gt;d&lt;/span&gt; &lt;span class="nv"&gt;v&lt;/span&gt; &lt;span class="nv"&gt;k&lt;/span&gt; &lt;span class="nv"&gt;h&lt;/span&gt; &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="nf"&gt;/&lt;/span&gt; &lt;span class="nv"&gt;rsft&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;@smartspace&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt; &lt;span class="nv"&gt;XX&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;deflayer&lt;/span&gt; &lt;span class="nv"&gt;magic&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;@clmk&lt;/span&gt; &lt;span class="nv"&gt;@qwerty&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;tab&lt;/span&gt; &lt;span class="nv"&gt;A-tab&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;bspc&lt;/span&gt; &lt;span class="nv"&gt;esc&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;ret&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt; &lt;span class="nv"&gt;_&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;defalias&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;warrows&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="nv"&gt;w&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;layer-toggle&lt;/span&gt; &lt;span class="nv"&gt;arrows&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;alctrl&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="nv"&gt;a&lt;/span&gt; &lt;span class="nv"&gt;lctrl&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;slsft&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="nv"&gt;s&lt;/span&gt; &lt;span class="nv"&gt;lsft&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;dlalt&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="nv"&gt;d&lt;/span&gt; &lt;span class="nv"&gt;lalt&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;flmet&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="nv"&gt;f&lt;/span&gt; &lt;span class="nv"&gt;lmet&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;jrmet&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="nv"&gt;j&lt;/span&gt; &lt;span class="nv"&gt;rmet&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;kralt&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="nv"&gt;k&lt;/span&gt; &lt;span class="nv"&gt;ralt&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;lrsft&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="nv"&gt;l&lt;/span&gt; &lt;span class="nv"&gt;rsft&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;;rctrl (tap-hold 200 200 ; rctrl)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;rlsft&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="nv"&gt;r&lt;/span&gt; &lt;span class="nv"&gt;lsft&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;slalt&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="nv"&gt;s&lt;/span&gt; &lt;span class="nv"&gt;lalt&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;tlmet&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="no"&gt;t&lt;/span&gt; &lt;span class="nv"&gt;lmet&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;nrmet&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="nv"&gt;n&lt;/span&gt; &lt;span class="nv"&gt;rmet&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;eralt&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="nv"&gt;e&lt;/span&gt; &lt;span class="nv"&gt;ralt&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;irsft&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="nv"&gt;i&lt;/span&gt; &lt;span class="nv"&gt;rsft&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;orctrl&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="nv"&gt;o&lt;/span&gt; &lt;span class="nv"&gt;rctrl&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;clmk&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;layer-switch&lt;/span&gt; &lt;span class="nv"&gt;colemak&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;qwerty&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;layer-switch&lt;/span&gt; &lt;span class="nv"&gt;qwerty&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;smartspace&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-dance&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;300&lt;/span&gt; &lt;span class="mi"&gt;300&lt;/span&gt; &lt;span class="nv"&gt;spc&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;layer-toggle&lt;/span&gt; &lt;span class="nv"&gt;magic&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;tap-hold&lt;/span&gt; &lt;span class="mi"&gt;300&lt;/span&gt; &lt;span class="mi"&gt;300&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;one-shot&lt;/span&gt; &lt;span class="mi"&gt;300&lt;/span&gt; &lt;span class="nv"&gt;lalt&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;spc&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;a&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item></channel></rss>

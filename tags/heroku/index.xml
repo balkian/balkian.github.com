@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Heroku on J. Fernando Sánchez</title><link>https://balkian.com/tags/heroku/</link><description>Recent content in Heroku on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 27 Mar 2014 14:00:00 +0000</lastBuildDate><atom:link href="https://balkian.com/tags/heroku/index.xml" rel="self" type="application/rss+xml"/><item><title>Updating EuroLoveMap</title><link>https://balkian.com/p/updating-eurolovemap/</link><pubDate>Thu, 27 Mar 2014 14:00:00 +0000</pubDate><guid>https://balkian.com/p/updating-eurolovemap/</guid><description>&lt;p&gt;As part of the &lt;a class="link" href="http://www.opener-project.org/2013/07/18/opener-hackathon-in-amsterdam/" target="_blank" rel="noopener"
+&gt;OpeNER
+hackathon&lt;/a&gt;
+we decided to build a prototype that would allow us to compare how
+different countries feel about several topics. We used the OpeNER
+pipeline to get the sentiment from a set of newspaper articles we
+gathered from media in several languages. Then we aggregated those
+articles by category and country (using the source of the article or the
+language it was written in), obtaining the &amp;ldquo;overall feeling&amp;rdquo; of each
+country about each topic. Then, we used some fancy JavaScript to make
+sense out of the raw information.&lt;/p&gt;
+&lt;p&gt;It didn&amp;rsquo;t go too bad, it turns out &lt;a class="link" href="http://eurosentiment.eu/wp-content/uploads/2013/07/BOLv9qnCIAAJEek.jpg" target="_blank" rel="noopener"
+&gt;we
+won&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Now, it was time for a face-lift. I used this opportunity to play with
+new technologies and improve it:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Using Flask, this time using python 3.3 and Bootstrap 3.0&lt;/li&gt;
+&lt;li&gt;Cool HTML5+JS cards (thanks to
+&lt;a class="link" href="http://pastetophone.com" target="_blank" rel="noopener"
+&gt;pastetophone&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Automatic generation of fake personal data to test the interface&lt;/li&gt;
+&lt;li&gt;Obfuscation of personal emails&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The result can be &lt;a class="link" href="http://eurolovemap.herokuapp.com/" target="_blank" rel="noopener"
+&gt;seen here&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="publishing-a-python-3-app-on-heroku"&gt;Publishing a Python 3 app on Heroku
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mkvirtualenv -p /usr/bin/python3.3 eurolovemap
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Since Heroku uses python 2.7 by default, we have to tell it which
+version we want, although it supports python 3.4 as well. I couldn&amp;rsquo;t
+get python 3.4 working using the
+&lt;a class="link" href="https://launchpad.net/~fkrull/&amp;#43;archive/deadsnakes" target="_blank" rel="noopener"
+&gt;deadsnakes&lt;/a&gt; ppa, so
+I used python 3.3 instead, which works fine but is not officially
+supported. Just create a file named &lt;em&gt;runtime.txt&lt;/em&gt; in your project root,
+with the python version you want to use:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;python-3.3.1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Don&amp;rsquo;t forget to freeze your dependencies so Heroku can install them:
+&lt;code&gt;bash pip freze &amp;gt; requirements.txt&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="publishing-personal-emails"&gt;Publishing personal emails
+&lt;/h2&gt;&lt;p&gt;There are really sophisticated and effective ways to obfuscate personal
+emails so that spammers cannot easily grab yours. However, this time I
+needed something really simple to hide our emails from the simplest form
+of crawlers. Most of the team are in academia somehow, so in the end all
+our emails are available in sites like Google Scholar. Anyway, nobody
+likes getting spammed so I settled for a custom &lt;a class="link" href="http://en.wikipedia.org/wiki/Caesar_cipher" target="_blank" rel="noopener"
+&gt;Caesar
+cipher&lt;/a&gt;. Please, don&amp;rsquo;t use
+it for any serious application if you are concerned about being spammed.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;blur_email&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="nb"&gt;chr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;ord&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;And this is the client side:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;onload&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;elems&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getElementsByClassName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;profile-email&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;e&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;elems&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;blur&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;elems&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;innerHTML&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;email&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;s&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;blur&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;blur&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;charCodeAt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;s&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;email&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;email&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;fromCharCode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;elems&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;innerHTML&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;email&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Unfortunately, this approach does not hide your email from anyone using
+&lt;a class="link" href="http://phantomjs.org/" target="_blank" rel="noopener"
+&gt;PhantomJS&lt;/a&gt;,
+&lt;a class="link" href="http://zombie.labnotes.org/" target="_blank" rel="noopener"
+&gt;ZombieJS&lt;/a&gt; or similar. For that, other
+approaches like generating a picture with the address would be
+necessary. Nevertheless, it is overkill for a really simple ad-hoc
+application with custom formatting and just a bunch of emails that would
+easily be grabbed manually.&lt;/p&gt;
+&lt;h2 id="generation-of-fake-data"&gt;Generation of fake data
+&lt;/h2&gt;&lt;p&gt;To test the contact section of the site, I wanted to populate it with
+fake data. &lt;a class="link" href="https://github.com/joke2k/faker" target="_blank" rel="noopener"
+&gt;Fake-Factory&lt;/a&gt; is an amazing
+library that can generate fake data of almost any kind: emails,
+association names, acronyms&amp;hellip; It even lets you localise the results
+(get Spanish names, for instance) and generate factories for certain
+classes (à la Django).&lt;/p&gt;
+&lt;p&gt;But I also wanted pictures, enter &lt;a class="link" href="http://lorempixel.com/" target="_blank" rel="noopener"
+&gt;Lorem Pixel&lt;/a&gt;.
+With its API you can generate pictures of almost any size, for different
+topics (e.g. nightlife, people) and with a custom text. You can even use
+an index, so it will always show the same picture.&lt;/p&gt;
+&lt;p&gt;For instance, the picture below is served through Lorem Pixel.&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://lorempixel.com/400/200/nightlife/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;By the way, if you only want cat pictures, take a look at
+&lt;a class="link" href="http://placekitten.com/" target="_blank" rel="noopener"
+&gt;Placekitten&lt;/a&gt;. And for NSFW text, there&amp;rsquo;s the
+&lt;a class="link" href="http://slipsum.com/" target="_blank" rel="noopener"
+&gt;Samuel L. Jackson Ipsum&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

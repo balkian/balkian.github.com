@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pages on J. Fernando Sánchez</title><link>https://balkian.com/page/</link><description>Recent content in Pages on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://balkian.com/page/index.xml" rel="self" type="application/rss+xml"/><item><title>Archives</title><link>https://balkian.com/archives/</link><pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate><guid>https://balkian.com/archives/</guid><description/></item><item><title>About</title><link>https://balkian.com/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/about/</guid><description>&lt;p&gt;Hello there, stranger! &amp;#x1f44b;&lt;/p&gt;
+&lt;h2 id="about-me"&gt;About me
+&lt;/h2&gt;&lt;p&gt;My name is Fernando, and I like learning and solving hard problems.
+Especially when it comes to computers, engineering and languages.&lt;/p&gt;
+&lt;p&gt;I currently work at the Technical University of Madrid (UPM) as an assistant professor in the school of Telecommunications Engineering.
+You can check out my &lt;a class="link" href="https://balkian.com/page/projects" &gt;previous projects&lt;/a&gt;, and &lt;a class="link" href="https://scholar.google.com/citations?user=JLNusZ8AAAAJ&amp;amp;hl=en" target="_blank" rel="noopener"
+&gt;my publications&lt;/a&gt;.
+Feel free to get in touch through the comment section, an e-mail (&lt;code&gt;my first initial&lt;/code&gt; &lt;code&gt;@sanchezrada.es&lt;/code&gt;) or any other platform.
+I am always happy to help and collaborate.&lt;/p&gt;
+&lt;h2 id="about-this-blog"&gt;About this blog
+&lt;/h2&gt;&lt;p&gt;I use this blog for future reference, to write down some of the lessons I learn so.
+I also see it as an exercise in reflection and sorting out my ideas.
+Although I mostly do this for myself, to keep some lasting notes for the future, I also do it in hopes it might help someone like me in the future.&lt;/p&gt;
+&lt;p&gt;Each post is an independent note.
+To keep some structure I will try to stick to general categories (e.g., programming, project management, linux), and add meaningful tags to help you and me find this information in the future.
+You may also use the &lt;a class="link" href="https://balkian.com/search" &gt;search bar&lt;/a&gt; if you are looking for something specific and wondering if I&amp;rsquo;ve covered it.
+For short thematically connected snippets and tips, I keep a dedicated section with &lt;a class="link" href="https://balkian.com/cheatsheet" &gt;Cheatsheets&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Links</title><link>https://balkian.com/links/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/links/</guid><description/></item><item><title>Projects</title><link>https://balkian.com/projects/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/projects/</guid><description>&lt;h1 id="ongoing-projects"&gt;Ongoing Projects
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://soilsim.readthedocs.io" target="_blank" rel="noopener"
+&gt;Soil&lt;/a&gt;: an agent-based simulator for social networks based on nx-sim and networkx.&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://github.com/balkian/soilent" target="_blank" rel="noopener"
+&gt;Soilent&lt;/a&gt;: an efficient scheduler for soil using rust and pyo3.&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://senpy.readthedocs.io" target="_blank" rel="noopener"
+&gt;Senpy&lt;/a&gt;: a framework for semantic sentiment and emotion analysis services.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="past-projects"&gt;Past Projects
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="http://gsi.dit.upm.es/ontologies/onyx" target="_blank" rel="noopener"
+&gt;Onyx&lt;/a&gt;: an ontology for emotion analysis that includes concepts from W3C&amp;rsquo;s provenance.&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://github.com/balkian/ESP8266_Clock_NTP" target="_blank" rel="noopener"
+&gt;ESP8266 Clock NTP&lt;/a&gt;: a simple clock display using arduino, the ESP8266 and NTP (network time protocol).&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://github.com/balkian/shinesp" target="_blank" rel="noopener"
+&gt;Shine ESP&lt;/a&gt;: control an ws2812b LED strip over the network with an ESP8266.&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://github.com/balkian/bitter" target="_blank" rel="noopener"
+&gt;Bitter&lt;/a&gt;: a wrapper and CLI over the (now defunct) Twitter API to researchers to download Twitter data much faster using multiple accounts.&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="http://gsi.dit.upm.es/ontologies/marl" target="_blank" rel="noopener"
+&gt;Marl&lt;/a&gt;: I updated this ontology, originally created by Adam Westerski, to make it compatible with the W3C&amp;rsquo;s provenance ontology.&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="http://github.com/balkian/hermes" target="_blank" rel="noopener"
+&gt;Hermes&lt;/a&gt;: one of my first projects, developed together with David Pérez as the special custom assignment in one of our courses. Hermes is an affective bot designed to mimic the behavour of humans. It included a plug-in system for its sensors and actuators. The information from its sensors changed its emotional state, which was shown via its actuators. Among others, it could fetch inforation from Twitter or its host system and change the expressions of an external Face made with servo motors or speak via its Text-To-Speech software. For instance, it could detect it was running out of battery, showing a sad face and sending an alerting tweet. You can see it in action in these two youtube videos: &lt;a class="link" href="http://www.youtube.com/watch?v=KnEYahPD9z4" target="_blank" rel="noopener"
+&gt;Part 1&lt;/a&gt; and &lt;a class="link" href="http://www.youtube.com/watch?v=lQZldCTPEJc" target="_blank" rel="noopener"
+&gt;Part 2&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="http://github.com/gsi-upm/maia" target="_blank" rel="noopener"
+&gt;Maia&lt;/a&gt;: the Modular Architecture for Intelligent Agents is an evented agent architecture that aims to update the classical frameworks for intelligent agents with the concepts emerged from the Live Web.&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="http://github.com/eestec/eestec.portal" target="_blank" rel="noopener"
+&gt;EESTEC.net&lt;/a&gt;: the Plone based official portal of EESTEC. I fixed some bugs and implemented basic features.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For more information, check my list of public repositories in &lt;a href="http://github.com/balkian"&gt;&lt;i class="fab fa-github"&gt; Github&lt;/i&gt;&lt;/a&gt;.&lt;/p&gt;</description></item><item><title>Search</title><link>https://balkian.com/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://balkian.com/search/</guid><description/></item></channel></rss>
