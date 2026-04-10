@@ -10,7 +10,7 @@ comments: true
 draft: false
 ---
 
-TL;DR (PPPoE retriever is a nice python multiplatform tool to get your PPPoE credentials)[https://guillermodotn.github.io/posts/Retrieve_PPPoE_credentials/#what-do-i-need]
+TL;DR [PPPoE retriever](https://github.com/balkian/pppoe-retriever/tree/main) is a nice python multiplatform tool to get your PPPoE credentials
 
 I recently moved to an ISP that provides provides an ONT+Router combo.
 The ONT is a small device that connects a fiber cable to an ethernet one.
