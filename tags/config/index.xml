@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Config on J. Fernando Sánchez</title><link>https://balkian.com/tags/config/</link><description>Recent content in Config on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 01 Jun 2019 00:00:01 +0000</lastBuildDate><atom:link href="https://balkian.com/tags/config/index.xml" rel="self" type="application/rss+xml"/><item><title>Linux on the Microsoft Surface Go</title><link>https://balkian.com/p/linux-on-the-microsoft-surface-go/</link><pubDate>Sat, 01 Jun 2019 00:00:01 +0000</pubDate><guid>https://balkian.com/p/linux-on-the-microsoft-surface-go/</guid><description>&lt;p&gt;Believe it or not, Surface tablets have pretty good linux support, except for the webcams in newer models.
+These are some useful notes to get Ubuntu installed in your surface go, as of Summer 2019.&lt;/p&gt;
+&lt;h2 id="installing-the-kernel"&gt;Installing the kernel
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git clone --depth &lt;span class="m"&gt;1&lt;/span&gt; https://github.com/jakeday/linux-surface.git ~/linux-surface
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cp -a ~/linux-surface /media/&amp;lt;your usb&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cp -a /media/&amp;lt;your usb&amp;gt;/linux-surface ~/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/linux-surface/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo sh setup.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="booting-ubuntu-first"&gt;Booting ubuntu first
+&lt;/h2&gt;&lt;p&gt;Switch out of Windows S mode.&lt;/p&gt;
+&lt;p&gt;Boot into the &amp;ldquo;Command Prompt&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;From Windows go to &amp;ldquo;change advanced startup options&amp;rdquo; and select &amp;ldquo;restart now&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;When it reboots, choose the &amp;ldquo;Troubleshoot&amp;rdquo; option, then choose the &amp;ldquo;Advanced options&amp;rdquo; option, and finally choose the &amp;ldquo;Command Prompt&amp;rdquo; option.&lt;/p&gt;
+&lt;p&gt;After the device reboots, login to the command prompt and then you should see a terminal with X:\windows\system32&amp;gt;&lt;/p&gt;
+&lt;p&gt;At the prompt, check your UEFI entries:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;bcdedit /enum firmware
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Copy UEFI entry of &amp;ldquo;Windows Boot Manager&amp;rdquo; to create a new entry for Ubuntu: bcdedit /copy {bootmgr} /d &amp;ldquo;Ubuntu&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;Copy the printed GUID number including the braces {} using Ctrl+C&lt;/p&gt;
+&lt;p&gt;Set file path for the new Ubuntu entry. Replace {guid} with the returned GUID of the previous command (Ctrl+V). bcdedit /set {guid} path \EFI\ubuntu\grubx64.efi&lt;/p&gt;
+&lt;p&gt;Set Ubuntu as the first/ entry in the boot sequence. Again replace {guid} with the returned GUID of the copy command.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;bcdedit /set &lt;span class="o"&gt;{&lt;/span&gt;fwbootmgr&lt;span class="o"&gt;}&lt;/span&gt; displayorder &lt;span class="o"&gt;{&lt;/span&gt;guid&lt;span class="o"&gt;}&lt;/span&gt; /addfirst
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Check your UEFI entries again: bcdedit /enum firmware You should see something like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Firmware Boot Manager
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;---------------------
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;identifier &lt;span class="o"&gt;{&lt;/span&gt;fwbootmgr&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;displayorder &lt;span class="o"&gt;{&lt;/span&gt;3510232e-f8eb-e811-95ce-9ecab3f9d1c4&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;{&lt;/span&gt;bootmgr&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;{&lt;/span&gt;2148799b-f8eb-e811-95ce-9ecab3f9d1c4&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;{&lt;/span&gt;312e8a67-c2f6-e811-95ce-3c1ab3f9d1de&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;{&lt;/span&gt;312e8a68-c2f6-e811-95ce-3c1ab3f9d1de&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;timeout &lt;span class="m"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Make sure the GUID you copied is the first one listed in displayorder. Then type exit, turn off the PC and turn it back on. After this my surface go is automatically booting to the grub bootloader which lets me choose between Windows and Ubuntu but defaults to Ubuntu after ten seconds.&lt;/p&gt;</description></item></channel></rss>

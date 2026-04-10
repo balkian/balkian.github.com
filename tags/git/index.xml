@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Git on J. Fernando Sánchez</title><link>https://balkian.com/tags/git/</link><description>Recent content in Git on J. Fernando Sánchez</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 10 Apr 2015 17:47:00 +0000</lastBuildDate><atom:link href="https://balkian.com/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>Sharing dotfiles</title><link>https://balkian.com/p/sharing-dotfiles/</link><pubDate>Fri, 10 Apr 2015 17:47:00 +0000</pubDate><guid>https://balkian.com/p/sharing-dotfiles/</guid><description>&lt;p&gt;Today&amp;rsquo;s post is half a quick note, half public shaming. In other words,
+it is a reminder to be very careful with OAuth tokens and passwords.&lt;/p&gt;
+&lt;p&gt;As part of moving to emacs, I starting using the incredibly useful
+&lt;a class="link" href="https://github.com/defunkt/gist.el" target="_blank" rel="noopener"
+&gt;gh.el&lt;/a&gt;. When you first use it, the
+extension saves either your password or an OAuth token in your
+.gitconfig file. This is cool and convenient, unless you &lt;a class="link" href="https://github.com/balkian/dotfiles" target="_blank" rel="noopener"
+&gt;happen to be
+publishing your .gitconfig file in a public
+repo&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;So, how can you still share your gitconfig without sharing your
+password/token with the rest of the world? Since Git 1.7.0, you can
+&lt;a class="link" href="http://stackoverflow.com/questions/1557183/is-it-possible-to-include-a-file-in-your-gitconfig" target="_blank" rel="noopener"
+&gt;include other files in your
+gitconfig&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[include]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; path = ~/.gitconfig_secret
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;And now, in your .gitconfig_secret file, you just have to add this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[github]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; user = balkian
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; token = &amp;#34;&amp;lt; Your secret token &amp;gt;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>Remove git files with globbing</title><link>https://balkian.com/p/remove-git-files-with-globbing/</link><pubDate>Thu, 22 Aug 2013 23:14:00 +0000</pubDate><guid>https://balkian.com/p/remove-git-files-with-globbing/</guid><description>&lt;p&gt;A simple trick. If you want to remove all the &amp;lsquo;.swp&amp;rsquo; files from a git
+repository, just use:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git rm --cached &lt;span class="s1"&gt;&amp;#39;**.swp&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>Creating my web</title><link>https://balkian.com/p/creating-my-web/</link><pubDate>Thu, 22 Aug 2013 14:14:22 +0000</pubDate><guid>https://balkian.com/p/creating-my-web/</guid><description>&lt;p&gt;I&amp;rsquo;ve finally decided to set up a decent personal page. I have settled
+for github-pages because I like the idea of keeping my site in a
+repository and having someone else host and deploy it for me. The site
+will be really simple, mostly static files. Thanks to Github,
+&lt;a class="link" href="http://jekyllrb.com" target="_blank" rel="noopener"
+&gt;Jekyll&lt;/a&gt; will automatically generate static pages
+for my posts every time I commit anything new to this repository.&lt;/p&gt;
+&lt;p&gt;But Jekyll can be used independently, so if I ever choose to host the
+site myself, I can do it quite easily. Another thing that I liked about
+this approach is that the generated html files can be used in the
+future, and I will not need Jekyll to serve it. Jekyll is really simple
+and most of the things are written in plain html. That means that
+everything could be easily reused if I ever choose to change to another
+blogging framework (e.g. pelical). But, for the time being, I like the
+fact that Github takes care of the compilation as well, so I can simply
+modify or add files through the web interface should I need to.&lt;/p&gt;
+&lt;p&gt;I hadn&amp;rsquo;t played with HTML and CSS for a while now, so I also wanted to
+use this site as a playground. At some point, I realised I was doing
+mostly everything in plain HTML and CSS, and decided to keep it like
+that for as long as possible. As of this writing, I haven&amp;rsquo;t included
+any Javascript code in the page. Probably I will use some to add my
+&lt;a class="link" href="http://gist.github.com/balkian" target="_blank" rel="noopener"
+&gt;gists&lt;/a&gt; and
+&lt;a class="link" href="http://github.com/balkian" target="_blank" rel="noopener"
+&gt;repositories&lt;/a&gt;, but we will see about that.&lt;/p&gt;
+&lt;p&gt;I think the code speaks for itself, so you can check out &lt;a class="link" href="http://github.com/balkian/balkian.github.com" target="_blank" rel="noopener"
+&gt;my repository
+on Github&lt;/a&gt;. You can clone
+and deploy it easily like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git clone
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;https://github.com/balkian/balkian.github.com &lt;span class="nb"&gt;cd&lt;/span&gt; balkian.github.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;jekyll serve -w
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;I will keep updating this post with information about:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Some Jekyll plugins that might be useful&lt;/li&gt;
+&lt;li&gt;What CSS tricks I learnt&lt;/li&gt;
+&lt;li&gt;The webfonts I used&lt;/li&gt;
+&lt;li&gt;The badge on the left side of the page&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>
